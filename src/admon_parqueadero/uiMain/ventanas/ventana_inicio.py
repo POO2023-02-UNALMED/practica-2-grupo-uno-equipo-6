@@ -15,7 +15,7 @@ class VentanaInicio(tk.Frame):
 
     def configurar_menu(self):
         menu = tk.Menu(self.parent)
-        menu_inicio = tk.Menu(menu)
+        menu_inicio = tk.Menu(menu, tearoff=False)
         menu.add_cascade(label="Inicio", menu=menu_inicio)
         menu_inicio.add_command(label="Salir de la applicacion", command=self.salir)
         menu_inicio.add_command(
