@@ -1,5 +1,7 @@
 import tkinter as tk
 
+from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
+
 
 class VentanaInicio(tk.Frame):
     def __init__(self, master: tk.Tk, *args, **kwargs) -> None:
@@ -34,13 +36,9 @@ class VentanaInicio(tk.Frame):
         p4 = tk.Frame(p1, highlightbackground="black", highlightthickness=2)
         p4.pack(side="bottom", padx=10, pady=10)
 
-        msg_bienvenida = tk.Label(  # TODO: poner el mensaje de bienvenida
+        msg_bienvenida = LabelAjustable(  # TODO: poner el mensaje de bienvenida
             p3,
             text="Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
-        )
-        msg_bienvenida.bind(
-            "<Configure>",
-            lambda _: msg_bienvenida.config(wraplength=msg_bienvenida.winfo_width()),
         )
         msg_bienvenida.pack(expand=True, fill="x")
 
@@ -56,7 +54,6 @@ class VentanaInicio(tk.Frame):
 
         p6 = tk.Frame(p2, highlightbackground="black", highlightthickness=2)
         p6.pack(side="bottom")
-
 
     def salir(self):
         self.parent.destroy()
