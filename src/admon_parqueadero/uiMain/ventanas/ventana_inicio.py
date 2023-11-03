@@ -90,13 +90,13 @@ class Biografias(tk.Frame):
             ],
         ]
 
-        self.titulo = tk.Label(
+        self.titulo = LabelAjustable(
             self, text="Breve hoja de vida de los desarrolladores", font="Arial 12 bold"
         )
-        self.titulo.pack(pady=(0, 10))
+        self.titulo.pack(pady=(0, 10), fill="x")
 
-        self.label = tk.Label(self, text=self.biografia_str(0))
-        self.label.pack()
+        self.label = LabelAjustable(self, text=self.biografia_str(0))
+        self.label.pack(fill="x")
 
         self.bind("<Button-1>", lambda _: self.manejar_click())
         self.titulo.bind("<Button-1>", lambda _: self.manejar_click())
