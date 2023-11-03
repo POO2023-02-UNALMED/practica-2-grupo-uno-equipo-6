@@ -1,3 +1,5 @@
+from typing import Optional
+
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.parqueadero.plaza import Plaza
 
@@ -8,7 +10,7 @@ class Vehiculo:
     ) -> None:
         self.placa = Vehiculo.normalizarPlaca(placa)
         self.dueno = dueno
-        self.plaza: Plaza | None = None
+        self.plaza: Optional[Plaza] = None
         self.marca = marca
         self.color = color
         self.modelo = modelo
@@ -25,10 +27,10 @@ class Vehiculo:
     def setDueno(self, dueno: Cliente) -> None:
         self.dueno = dueno
 
-    def getPlaza(self) -> Plaza | None:
+    def getPlaza(self) -> Optional[Plaza]:
         return self.plaza
 
-    def setPlaza(self, plaza: Plaza | None) -> None:
+    def setPlaza(self, plaza: Optional[Plaza]) -> None:
         self.plaza = plaza
 
     def getMarca(self) -> str:

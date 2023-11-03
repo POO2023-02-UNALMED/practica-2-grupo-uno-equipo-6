@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from enum import Enum
-from typing import Self
 
 
 class TipoEstado(Enum):
@@ -11,5 +12,5 @@ class TipoEstado(Enum):
         return self.value
 
     @classmethod
-    def segunNumero(cls, estado: int) -> Self:
+    def segunNumero(cls, estado: int) -> TipoEstado:
         return cls(estado)

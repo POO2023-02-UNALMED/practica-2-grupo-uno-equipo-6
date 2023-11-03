@@ -1,0 +1,17 @@
+[project]
+name = "admon_parqueadero"
+version = "0.1.0"
+requires-python = ">=3.9"
+dependencies = ["tk"]
+
+[project.optional-dependencies]
+dev = ["mypy", "black"]
+
+[project.scripts]
+admon_parqueadero = "admon_parqueadero:main"
+
+[tool.mypy]
+python_version = "3.9"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
+packages = ["admon_parqueadero"]
+strict = true

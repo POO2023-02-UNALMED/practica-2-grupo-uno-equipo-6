@@ -1,3 +1,5 @@
+from typing import Optional
+
 import random
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.vehiculos.tipo_vehiculo import TipoVehiculo
@@ -18,7 +20,7 @@ class Carro(Vehiculo):
         tipo: TipoVehiculo,
         puestos: int,
         discapacitado: bool,
-        precioVenta: float | None = None,
+        precioVenta: Optional[float] = None,
     ):
         super().__init__(placa, dueno, marca, color, modelo)
         self.tipo = tipo
