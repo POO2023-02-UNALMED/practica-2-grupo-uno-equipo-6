@@ -50,7 +50,7 @@ class VentanaInicio(tk.Frame):
         p2.pack(expand=True, fill="both", padx=(5, 10), pady=10)
 
         p5 = Biografias(p2, highlightbackground="black", highlightthickness=2)
-        p5.pack(side="top")
+        p5.pack(side="top", padx=10, pady=10, fill="x")
 
         p6 = tk.Frame(p2, highlightbackground="black", highlightthickness=2)
         p6.pack(side="bottom")
