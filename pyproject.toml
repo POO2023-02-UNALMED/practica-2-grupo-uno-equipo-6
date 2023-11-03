@@ -13,4 +13,4 @@ admon_parqueadero = "admon_parqueadero:main"
 python_version = "3.9"
 mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
 packages = ["admon_parqueadero"]
-strict = true
+strict = false

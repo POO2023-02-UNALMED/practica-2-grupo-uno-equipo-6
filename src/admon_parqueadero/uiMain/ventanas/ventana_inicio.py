@@ -49,7 +49,7 @@ class VentanaInicio(tk.Frame):
         p2 = tk.Frame(frame_der, highlightbackground="black", highlightthickness=2)
         p2.pack(expand=True, fill="both", padx=(5, 10), pady=10)
 
-        p5 = tk.Frame(p2, highlightbackground="black", highlightthickness=2)
+        p5 = Biografias(p2, highlightbackground="black", highlightthickness=2)
         p5.pack(side="top")
 
         p6 = tk.Frame(p2, highlightbackground="black", highlightthickness=2)
@@ -60,3 +60,57 @@ class VentanaInicio(tk.Frame):
 
     def mostrar_descripcion(self):
         pass
+
+
+class Biografias(tk.Frame):
+    def __init__(self, master: tk.Misc, *args, **kwargs):
+        super().__init__(master, *args, **kwargs)
+
+        self.biografia_mostrada = 0
+        self.biografias = [  # TODO: poner biografias
+            [
+                ("Nombre", "abc"),
+                ("Fecha de nacimiento", "..."),
+            ],
+            [
+                ("Nombre", "def"),
+                ("Fecha de nacimiento", "..."),
+            ],
+            [
+                ("Nombre", "ghi"),
+                ("Fecha de nacimiento", "..."),
+            ],
+            [
+                ("Nombre", "jkl"),
+                ("Fecha de nacimiento", "..."),
+            ],
+            [
+                ("Nombre", "mno"),
+                ("Fecha de nacimiento", "..."),
+            ],
+        ]
+
+        self.titulo = tk.Label(
+            self, text="Breve hoja de vida de los desarrolladores", font="Arial 12 bold"
+        )
+        self.titulo.pack(pady=(0, 10))
+
+        self.label = tk.Label(self, text=self.biografia_str(0))
+        self.label.pack()
+
+        self.bind("<Button-1>", lambda _: self.manejar_click())
+        self.titulo.bind("<Button-1>", lambda _: self.manejar_click())
+        self.label.bind("<Button-1>", lambda _: self.manejar_click())
+
+    def manejar_click(self) -> None:
+        self.biografia_mostrada += 1
+        if self.biografia_mostrada == len(self.biografias):
+            self.biografia_mostrada = 0
+        self.label.config(text=self.biografia_str(self.biografia_mostrada))
+
+    def biografia_str(self, indice_biografia: int) -> str:
+        biografia = self.biografias[indice_biografia]
+        s = ""
+        for k, v in biografia:
+            s += f"{k}: {v}\n"
+        return s

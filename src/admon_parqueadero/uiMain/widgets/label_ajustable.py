@@ -4,7 +4,7 @@ import tkinter as tk
 class LabelAjustable(tk.Label):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.bind("<Configure>", lambda _: self.configure_wraplength())
+        self.bind("<Configure>", lambda _: self.configurar_wraplength())
 
-    def configure_wraplength(self):
+    def configurar_wraplength(self):
         self.config(wraplength=self.winfo_width())
