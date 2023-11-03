@@ -90,23 +90,27 @@ class Biografias(tk.Frame):
             ],
         ]
 
-        self.titulo = LabelAjustable(
+        self.label_titulo = LabelAjustable(
             self, text="Breve hoja de vida de los desarrolladores", font="Arial 12 bold"
         )
-        self.titulo.pack(pady=(0, 10), fill="x")
+        self.label_titulo.pack(pady=(0, 10), fill="x")
 
-        self.label = LabelAjustable(self, text=self.biografia_str(0))
-        self.label.pack(fill="x")
+        self.label_biografia = LabelAjustable(self, text=self.biografia_str(0))
+        self.label_biografia.pack(fill="x")
+
+        self.label_nota = LabelAjustable(self, text="Click para cambiar de desarrollador", font="Arial 9 italic", foreground="blue")
+        self.label_nota.pack(fill="x")
 
         self.bind("<Button-1>", lambda _: self.manejar_click())
-        self.titulo.bind("<Button-1>", lambda _: self.manejar_click())
-        self.label.bind("<Button-1>", lambda _: self.manejar_click())
+        self.label_titulo.bind("<Button-1>", lambda _: self.manejar_click())
+        self.label_biografia.bind("<Button-1>", lambda _: self.manejar_click())
+        self.label_nota.bind("<Button-1>", lambda _: self.manejar_click())
 
     def manejar_click(self) -> None:
         self.biografia_mostrada += 1
         if self.biografia_mostrada == len(self.biografias):
             self.biografia_mostrada = 0
-        self.label.config(text=self.biografia_str(self.biografia_mostrada))
+        self.label_biografia.config(text=self.biografia_str(self.biografia_mostrada))
 
     def biografia_str(self, indice_biografia: int) -> str:
         biografia = self.biografias[indice_biografia]
