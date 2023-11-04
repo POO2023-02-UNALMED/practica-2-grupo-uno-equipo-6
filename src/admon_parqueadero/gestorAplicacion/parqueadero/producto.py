@@ -1,2 +1,4 @@
 class Producto:
-    pass
+    
+    def __eq__(self, otroProducto: Producto) -> bool:
+        return id(self) == id(otroProducto)
