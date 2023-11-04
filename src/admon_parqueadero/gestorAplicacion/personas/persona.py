@@ -24,7 +24,7 @@ class Persona:
     def getTelefono(self) -> int:
         return self._telefono
     
-    def setCorreo(self, correo: int) -> None:
+    def setCorreo(self, correo: str) -> None:
         self._correo = correo
 
     def getCorreo(self) -> str:

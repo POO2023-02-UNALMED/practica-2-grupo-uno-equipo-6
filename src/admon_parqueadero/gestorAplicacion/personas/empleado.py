@@ -5,10 +5,21 @@ from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstad
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
 from admon_parqueadero.gestorAplicacion.vehiculos.moto import Moto
-from admon_parqueadero.gestorAplicacion.almacen import Almacen
+from admon_parqueadero.gestorAplicacion.parqueadero.almacen import Almacen
+from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
+
 
 class Empleado(Persona):
-    def __init__(nombre: str, cedula: int, telefono: int, correo: str,direccion: str, cargo: str, salario: float) -> None:
+    def __init__(
+        self,
+        nombre: str,
+        cedula: int,
+        telefono: int,
+        correo: str,
+        direccion: str,
+        cargo: str,
+        salario: float,
+    ) -> None:
         super().__init__(nombre, cedula, telefono, correo, direccion)
         self._cargo = cargo
         self._salario = salario
@@ -26,7 +37,7 @@ class Empleado(Persona):
 
     def getSalario(self) -> float:
         return self._salario
-    
+
     def setComision(self, comision: float) -> None:
         self._comision = comision
 
@@ -44,68 +55,65 @@ class Empleado(Persona):
         r: list[Producto] = []
 
         if self.getCargo() == "Mecanico":
-            
             if isinstance(vehiculo, Carro):
-                
                 if vehiculo.getMotor().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getMotor())
-                
+
                 if vehiculo.getTransmision().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getTransmision())
-                
+
                 if vehiculo.getAcelerador().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getAcelerador())
-                
+
                 if vehiculo.getFreno().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getFreno())
-                
+
                 if vehiculo.getBateria().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getBateria())
-                
+
                 if vehiculo.getPedal().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getPedal())
-                
+
                 for p in vehiculo.getDepositos():
                     if p.getEstado() == TipoEstado.MAL_ESTADO:
                         r.append(p)
-                
+
                 for p in vehiculo.getLlantas():
                     if p.getEstado() == TipoEstado.MAL_ESTADO:
                         r.append(p)
-                
+
                 for p in vehiculo.getRines():
                     if p.getEstado() == TipoEstado.MAL_ESTADO:
                         r.append(p)
-                
+
                 for p in vehiculo.getAmortiguadores():
                     if p.getEstado() == TipoEstado.MAL_ESTADO:
                         r.append(p)
 
             if isinstance(vehiculo, Moto):
-
                 if vehiculo.getMotor().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getMotor())
-                
+
                 if vehiculo.getTransmision().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getTransmision())
-                
+
                 if vehiculo.getAcelerador().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getAcelerador())
-                
+
                 if vehiculo.getFreno().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getFreno())
-                
+
                 if vehiculo.getCadena().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getCadena())
 
-                if vehiculo.getPedales().getEstado() ==  TipoEstado.MAL_ESTADO:
+                if vehiculo.getPedales().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getPedales())
 
                 if vehiculo.getBateria().getEstado() == TipoEstado.MAL_ESTADO:
                     r.append(vehiculo.getBateria())
-                
+
                 if vehiculo.getAmortiguador().getEstado() == TipoEstado.MAL_ESTADO:
-                    r.append(vehiculo.getAmortiduador)
+                    r.append(vehiculo.getAmortiguador())
 
                 for p in vehiculo.getDepositos():
                     if p.getEstado() == TipoEstado.MAL_ESTADO:
@@ -120,31 +128,32 @@ class Empleado(Persona):
                         r.append(p)
 
             return r
-        
-        return None
+
+        return r
 
     # Metodo para cambiar un componente de un vehiculo por otro
-    def cambiar(productoViejo: Producto, productonuevo: Producto, vehiculo: Vehiculo) -> None:
+    def cambiar(
+        self, productoViejo: Producto, productoNuevo: Producto, vehiculo: Vehiculo
+    ) -> None:
         productoNuevo.setMarca(vehiculo.getMarca())
         productoNuevo.setPrecio(0)
 
         if isinstance(vehiculo, Carro):
-
             if vehiculo.getMotor() == productoViejo:
                 vehiculo.setMotor(productoNuevo)
-            
+
             if vehiculo.getTransmision() == productoViejo:
                 vehiculo.setTransmision(productoNuevo)
-            
+
             if vehiculo.getAcelerador() == productoViejo:
                 vehiculo.setAcelerador(productoNuevo)
-            
+
             if vehiculo.getFreno() == productoViejo:
                 vehiculo.setFreno(productoNuevo)
 
             if vehiculo.getBateria() == productoViejo:
                 vehiculo.setBateria(productoNuevo)
-            
+
             if vehiculo.getPedal() == productoViejo:
                 vehiculo.setPedal(productoNuevo)
 
@@ -155,7 +164,7 @@ class Empleado(Persona):
                     i = 0
                     return
                 i += 1
-            
+
             i = 0
 
             for p in vehiculo.getLlantas():
@@ -164,7 +173,7 @@ class Empleado(Persona):
                     i = 0
                     return
                 i += 1
-            
+
             i = 0
 
             for p in vehiculo.getRines():
@@ -173,7 +182,7 @@ class Empleado(Persona):
                     i = 0
                     return
                 i += 1
-            
+
             i = 0
 
             for p in vehiculo.getAmortiguadores():
@@ -182,23 +191,22 @@ class Empleado(Persona):
                     i = 0
                     return
                 i += 1
-            
+
             i = 0
 
         if isinstance(vehiculo, Moto):
-
             if vehiculo.getMotor() == productoViejo:
                 vehiculo.setMotor(productoNuevo)
-            
+
             if vehiculo.getTransmision() == productoViejo:
                 vehiculo.setTransmision(productoNuevo)
-            
+
             if vehiculo.getAcelerador() == productoViejo:
                 vehiculo.setAcelerador(productoNuevo)
-            
+
             if vehiculo.getFreno() == productoViejo:
                 vehiculo.setFreno(productoNuevo)
-            
+
             if vehiculo.getCadena() == productoViejo:
                 vehiculo.setCadena(productoNuevo)
 
@@ -207,10 +215,10 @@ class Empleado(Persona):
 
             if vehiculo.getBateria() == productoViejo:
                 vehiculo.setBateria(productoNuevo)
-            
+
             if vehiculo.getAmortiguador() == productoViejo:
                 vehiculo.setAmortiguador(productoNuevo)
-            
+
             i = 0
             for p in vehiculo.getDepositos():
                 if p == productoViejo:
@@ -218,7 +226,7 @@ class Empleado(Persona):
                     i = 0
                     return
                 i += 1
-            
+
             i = 0
             for p in vehiculo.getLlantas():
                 if p == productoViejo:

@@ -1,5 +1,5 @@
 class Almacen:
-    def __init__(capacidadMaxima: int) -> None:
+    def __init__(self, capacidadMaxima: int) -> None:
         self._capacidadMaxima = capacidadMaxima
 
     def setCapacidadMaxima(self, capMax) -> None:
@@ -7,5 +7,3 @@ class Almacen:
 
     def getCapacidadMaxima(self) -> int:
         return self._capacidadMaxima
-
-    
