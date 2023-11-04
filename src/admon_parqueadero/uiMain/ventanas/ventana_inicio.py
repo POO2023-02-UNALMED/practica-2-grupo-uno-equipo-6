@@ -167,7 +167,8 @@ class Imagenes(tk.Frame):
     @staticmethod
     def encontrar_raiz_proyecto(desde: Optional[Path] = None, n: int = 0) -> Path:
         if n > 10:
-            return Path(".")
+            print("Advertencia: No fue encontrada la raiz del proyecto, usando la carpeta superior")
+            return Path("..")
         if desde is None:
             desde = Path.cwd()
         if "pyproject.toml" in map(lambda p: p.name, desde.iterdir()):
