@@ -111,23 +111,23 @@ class Moto(Vehiculo):
     def setAmortiguador(self, amortiguador: Producto) -> None:
         self._amortiguador = amortiguador
 
-    # metodo que crea cuatro Productos tipo llanta y los agrega al array self.llantas
+    # metodo que crea cuatro Productos tipo llanta y los agrega al array self._llantas
     def inicializarLlantas(self) -> None:
-        self._llantas = []  # se asigna a self.llantas una lista
+        self._llantas = []  # se asigna a self._llantas una lista
         for _ in range(2):
             self._llantas.append(
                 Producto(TipoProducto.LLANTA, Moto.inicializarEstado(), self.getMarca())
             )
 
-    # metodo que crea cuatro Productos tipo Rin y los agrega a self.rines
+    # metodo que crea cuatro Productos tipo Rin y los agrega a self._rines
     def inicializarRines(self) -> None:
-        self._rines = []  # se asigna a self.rines una lista
+        self._rines = []  # se asigna a self._rines una lista
         for _ in range(2):
             self._rines.append(
                 Producto(TipoProducto.RIN, Moto.inicializarEstado(), self.getMarca())
             )
 
-    # metodo que crea los depositos y los asigna a self.depositos
+    # metodo que crea los depositos y los asigna a self._depositos
     def inicializarDepositos(self) -> None:
         self._depositos = []
         self._depositos.append(

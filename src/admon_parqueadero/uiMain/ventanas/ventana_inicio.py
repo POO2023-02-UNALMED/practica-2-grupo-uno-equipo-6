@@ -1,12 +1,12 @@
 from pathlib import Path
 import tkinter as tk
-from typing import Optional
+from typing import Any, Optional
 
 from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
 
 
 class VentanaInicio(tk.Frame):
-    def __init__(self, master: tk.Tk, *args, **kwargs) -> None:
+    def __init__(self, master: tk.Tk, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
         self.parent = master
 
@@ -15,7 +15,7 @@ class VentanaInicio(tk.Frame):
         self.configurar_frames_izq()
         self.configuar_frames_der()
 
-    def configurar_menu(self):
+    def configurar_menu(self) -> None:
         menu = tk.Menu(self.parent)
         menu_inicio = tk.Menu(menu, tearoff=False)
         menu.add_cascade(label="Inicio", menu=menu_inicio)
@@ -25,7 +25,7 @@ class VentanaInicio(tk.Frame):
         )
         self.parent.config(menu=menu)
 
-    def configurar_frames_izq(self):
+    def configurar_frames_izq(self) -> None:
         frame_izq = tk.Frame(self)
         frame_izq.place(relwidth=0.5, relheight=1)
 
@@ -50,7 +50,7 @@ class VentanaInicio(tk.Frame):
         btn_ingreso = tk.Button(p4, text="Ingresar", command=self.ingresar)
         btn_ingreso.pack(side="bottom", padx=10, pady=10)
 
-    def configuar_frames_der(self):
+    def configuar_frames_der(self) -> None:
         frame_der = tk.Frame(self)
         frame_der.place(relx=0.5, relwidth=0.5, relheight=1)
 
@@ -63,18 +63,18 @@ class VentanaInicio(tk.Frame):
         p6 = tk.Frame(p2, highlightbackground="black", highlightthickness=2)
         p6.pack(side="bottom")
 
-    def salir(self):
+    def salir(self) -> None:
         self.parent.destroy()
 
-    def mostrar_descripcion(self):
+    def mostrar_descripcion(self) -> None:
         pass
 
-    def ingresar(self):
+    def ingresar(self) -> None:
         pass
 
 
 class Biografias(tk.Frame):
-    def __init__(self, master: tk.Misc, *args, **kwargs):
+    def __init__(self, master: tk.Misc, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
 
         self.biografia_mostrada = 0
@@ -134,7 +134,7 @@ class Biografias(tk.Frame):
 
 
 class Imagenes(tk.Frame):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
 
         self.raiz = Imagenes.encontrar_raiz_proyecto()

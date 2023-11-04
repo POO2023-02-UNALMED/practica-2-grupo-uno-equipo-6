@@ -150,9 +150,9 @@ class Carro(Vehiculo):
             return f"{marca} {modelo} {color}\n{tipo} {puestos} puestos\nPrecio: {precioVenta}"
         return f"{marca} {modelo} {color}\n{tipo} {puestos} puestos\n"
 
-    # metodo que crea cuatro Productos tipo llanta y los agrega al array self.llantas
+    # metodo que crea cuatro Productos tipo llanta y los agrega al array self._llantas
     def _inicializarLlantas(self) -> None:
-        self._llantas = []  # se asigna a self.llantas una lista
+        self._llantas = []  # se asigna a self._llantas una lista
         for _ in range(4):
             self._llantas.append(
                 Producto(
@@ -160,15 +160,15 @@ class Carro(Vehiculo):
                 )
             )
 
-    # metodo que crea cuatro Productos tipo Rin y los agrega a self.rines
+    # metodo que crea cuatro Productos tipo Rin y los agrega a self._rines
     def _inicializarRines(self) -> None:
-        self._rines = []  # se asigna a self.rines una lista
+        self._rines = []  # se asigna a self._rines una lista
         for _ in range(4):
             self._rines.append(
                 Producto(TipoProducto.RIN, Carro.inicializarEstado(), self.getMarca())
             )
 
-    # metodo que crea los depositos y los asigna a self.depositos
+    # metodo que crea los depositos y los asigna a self._depositos
     def _inicializarDepositos(self) -> None:
         self._depositos = []
         self._depositos.append(
