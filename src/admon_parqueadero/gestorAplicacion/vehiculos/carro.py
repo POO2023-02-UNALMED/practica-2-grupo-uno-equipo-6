@@ -25,12 +25,12 @@ class Carro(Vehiculo):
         super().__init__(placa, dueno, marca, color, modelo)
         self._tipo = tipo
         self._puestos = puestos
-        self._motor = self.inicializarProducto(TipoProducto.MOTOR)
-        self._transmision = self.inicializarProducto(TipoProducto.TRANSMISION)
-        self._acelerador = self.inicializarProducto(TipoProducto.ACELERADOR)
-        self._freno = self.inicializarProducto(TipoProducto.FRENO)
-        self._bateria = self.inicializarProducto(TipoProducto.BATERIA)
-        self._pedal = self.inicializarProducto(TipoProducto.PEDAL)
+        self._motor = self._inicializarProducto(TipoProducto.MOTOR)
+        self._transmision = self._inicializarProducto(TipoProducto.TRANSMISION)
+        self._acelerador = self._inicializarProducto(TipoProducto.ACELERADOR)
+        self._freno = self._inicializarProducto(TipoProducto.FRENO)
+        self._bateria = self._inicializarProducto(TipoProducto.BATERIA)
+        self._pedal = self._inicializarProducto(TipoProducto.PEDAL)
         self._precioVenta = 0.0
         self._discapacitado = discapacitado
         self._inicializarDepositos()
@@ -46,13 +46,13 @@ class Carro(Vehiculo):
             self._bateria.setEstado(TipoEstado.EXCELENTE_ESTADO)
             self._pedal.setEstado(TipoEstado.EXCELENTE_ESTADO)
             self._transmision.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            for p in self.depositos:
+            for p in self._depositos:
                 p.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            for p in self.llantas:
+            for p in self._llantas:
                 p.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            for p in self.rines:
+            for p in self._rines:
                 p.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            for p in self.amortiguadores:
+            for p in self._amortiguadores:
                 p.setEstado(TipoEstado.EXCELENTE_ESTADO)
 
     def isDiscapacitado(self) -> bool:
@@ -116,28 +116,28 @@ class Carro(Vehiculo):
         self._pedal = pedal
 
     def getDepositos(self) -> list[Producto]:
-        return self.depositos
+        return self._depositos
 
     def setDepositos(self, depositos: list[Producto]) -> None:
-        self.depositos = depositos
+        self._depositos = depositos
 
     def getLlantas(self) -> list[Producto]:
-        return self.llantas
+        return self._llantas
 
     def setLlantas(self, llantas: list[Producto]) -> None:
-        self.llantas = llantas
+        self._llantas = llantas
 
     def getRines(self) -> list[Producto]:
-        return self.rines
+        return self._rines
 
     def setRines(self, rines: list[Producto]) -> None:
-        self.rines = rines
+        self._rines = rines
 
     def getAmortiguadores(self) -> list[Producto]:
-        return self.amortiguadores
+        return self._amortiguadores
 
     def setAmortiguadores(self, amortiguadores: list[Producto]) -> None:
-        self.amortiguadores = amortiguadores
+        self._amortiguadores = amortiguadores
 
     def __str__(self) -> str:
         marca = self.getMarca().title()
@@ -152,9 +152,9 @@ class Carro(Vehiculo):
 
     # metodo que crea cuatro Productos tipo llanta y los agrega al array self.llantas
     def _inicializarLlantas(self) -> None:
-        self.llantas = []  # se asigna a self.llantas una lista
+        self._llantas = []  # se asigna a self.llantas una lista
         for _ in range(4):
-            self.llantas.append(
+            self._llantas.append(
                 Producto(
                     TipoProducto.LLANTA, Carro.inicializarEstado(), self.getMarca()
                 )
@@ -162,34 +162,34 @@ class Carro(Vehiculo):
 
     # metodo que crea cuatro Productos tipo Rin y los agrega a self.rines
     def _inicializarRines(self) -> None:
-        self.rines = []  # se asigna a self.rines una lista
+        self._rines = []  # se asigna a self.rines una lista
         for _ in range(4):
-            self.rines.append(
+            self._rines.append(
                 Producto(TipoProducto.RIN, Carro.inicializarEstado(), self.getMarca())
             )
 
     # metodo que crea los depositos y los asigna a self.depositos
     def _inicializarDepositos(self) -> None:
-        self.depositos = []
-        self.depositos.append(
+        self._depositos = []
+        self._depositos.append(
             Producto(TipoProducto.GASOLINA, Carro.inicializarEstado(), self.getMarca())
         )
-        self.depositos.append(
+        self._depositos.append(
             Producto(TipoProducto.ACEITE, Carro.inicializarEstado(), self.getMarca())
         )
-        self.depositos.append(
+        self._depositos.append(
             Producto(TipoProducto.LIQUIDOS, Carro.inicializarEstado(), self.getMarca())
         )
 
     # metodo para asignar un solo producto
-    def inicializarProducto(self, tipo: TipoProducto) -> Producto:
+    def _inicializarProducto(self, tipo: TipoProducto) -> Producto:
         return Producto(tipo, Carro.inicializarEstado(), self.getMarca())
 
     # metodo para crear los amortiguadores
     def _inicializarAmortiguadores(self) -> None:
-        self.amortiguadores = []
+        self._amortiguadores = []
         for _ in range(4):
-            self.amortiguadores.append(
+            self._amortiguadores.append(
                 Producto(
                     TipoProducto.AMORTIGUADOR,
                     Carro.inicializarEstado(),

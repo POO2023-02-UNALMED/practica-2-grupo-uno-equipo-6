@@ -6,7 +6,7 @@ from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
 
 
 class Producto:
-    def __init__(self, tipo: TipoProducto, estado: TipoEstado, marca="") -> None:
+    def __init__(self, tipo: TipoProducto, estado: TipoEstado, marca: str = "") -> None:
         self._tipo = tipo
         self._marca = marca
         self._estado = estado
