@@ -33,10 +33,10 @@ class Carro(Vehiculo):
         self._pedal = self.inicializarProducto(TipoProducto.PEDAL)
         self._precioVenta = 0.0
         self._discapacitado = discapacitado
-        self.inicializarDepositos()
-        self.inicializarLlantas()
-        self.inicializarRines()
-        self.inicializarAmortiguadores()
+        self._inicializarDepositos()
+        self._inicializarLlantas()
+        self._inicializarRines()
+        self._inicializarAmortiguadores()
 
         if precioVenta is not None:
             self._precioVenta = precioVenta
@@ -151,7 +151,7 @@ class Carro(Vehiculo):
         return f"{marca} {modelo} {color}\n{tipo} {puestos} puestos\n"
 
     # metodo que crea cuatro Productos tipo llanta y los agrega al array self.llantas
-    def inicializarLlantas(self) -> None:
+    def _inicializarLlantas(self) -> None:
         self.llantas = []  # se asigna a self.llantas una lista
         for _ in range(4):
             self.llantas.append(
@@ -161,7 +161,7 @@ class Carro(Vehiculo):
             )
 
     # metodo que crea cuatro Productos tipo Rin y los agrega a self.rines
-    def inicializarRines(self) -> None:
+    def _inicializarRines(self) -> None:
         self.rines = []  # se asigna a self.rines una lista
         for _ in range(4):
             self.rines.append(
@@ -169,7 +169,7 @@ class Carro(Vehiculo):
             )
 
     # metodo que crea los depositos y los asigna a self.depositos
-    def inicializarDepositos(self) -> None:
+    def _inicializarDepositos(self) -> None:
         self.depositos = []
         self.depositos.append(
             Producto(TipoProducto.GASOLINA, Carro.inicializarEstado(), self.getMarca())
@@ -186,7 +186,7 @@ class Carro(Vehiculo):
         return Producto(tipo, Carro.inicializarEstado(), self.getMarca())
 
     # metodo para crear los amortiguadores
-    def inicializarAmortiguadores(self) -> None:
+    def _inicializarAmortiguadores(self) -> None:
         self.amortiguadores = []
         for _ in range(4):
             self.amortiguadores.append(
