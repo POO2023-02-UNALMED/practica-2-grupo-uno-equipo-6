@@ -116,7 +116,7 @@ class Moto(Vehiculo):
         self._llantas = []  # se asigna a self.llantas una lista
         for _ in range(2):
             self._llantas.append(
-                Producto(TipoProducto.LLANTA, self.getMarca(), Moto.inicializarEstado())
+                Producto(TipoProducto.LLANTA, Moto.inicializarEstado(), self.getMarca())
             )
 
     # metodo que crea cuatro Productos tipo Rin y los agrega a self.rines
@@ -124,25 +124,25 @@ class Moto(Vehiculo):
         self._rines = []  # se asigna a self.rines una lista
         for _ in range(2):
             self._rines.append(
-                Producto(TipoProducto.RIN, self.getMarca(), Moto.inicializarEstado())
+                Producto(TipoProducto.RIN, Moto.inicializarEstado(), self.getMarca())
             )
 
     # metodo que crea los depositos y los asigna a self.depositos
     def inicializarDepositos(self) -> None:
         self._depositos = []
         self._depositos.append(
-            Producto(TipoProducto.GASOLINA, self.getMarca(), Moto.inicializarEstado())
+            Producto(TipoProducto.GASOLINA, Moto.inicializarEstado(), self.getMarca())
         )
         self._depositos.append(
-            Producto(TipoProducto.ACEITE, self.getMarca(), Moto.inicializarEstado())
+            Producto(TipoProducto.ACEITE, Moto.inicializarEstado(), self.getMarca())
         )
         self._depositos.append(
-            Producto(TipoProducto.LIQUIDOS, self.getMarca(), Moto.inicializarEstado())
+            Producto(TipoProducto.LIQUIDOS, Moto.inicializarEstado(), self.getMarca())
         )
 
     # metodo para asignar un solo producto
     def inicializarProducto(self, tipo: TipoProducto) -> Producto:
-        return Producto(tipo, self.getMarca(), Moto.inicializarEstado())
+        return Producto(tipo, Moto.inicializarEstado(), self.getMarca())
 
     @classmethod
     def inicializarEstado(cls) -> TipoEstado:

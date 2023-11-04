@@ -23,29 +23,29 @@ class Carro(Vehiculo):
         precioVenta: Optional[float] = None,
     ):
         super().__init__(placa, dueno, marca, color, modelo)
-        self.tipo = tipo
-        self.puestos = puestos
-        self.motor = self.inicializarProducto(TipoProducto.MOTOR)
-        self.transmision = self.inicializarProducto(TipoProducto.TRANSMISION)
-        self.acelerador = self.inicializarProducto(TipoProducto.ACELERADOR)
-        self.freno = self.inicializarProducto(TipoProducto.FRENO)
-        self.bateria = self.inicializarProducto(TipoProducto.BATERIA)
-        self.pedal = self.inicializarProducto(TipoProducto.PEDAL)
+        self._tipo = tipo
+        self._puestos = puestos
+        self._motor = self.inicializarProducto(TipoProducto.MOTOR)
+        self._transmision = self.inicializarProducto(TipoProducto.TRANSMISION)
+        self._acelerador = self.inicializarProducto(TipoProducto.ACELERADOR)
+        self._freno = self.inicializarProducto(TipoProducto.FRENO)
+        self._bateria = self.inicializarProducto(TipoProducto.BATERIA)
+        self._pedal = self.inicializarProducto(TipoProducto.PEDAL)
+        self._precioVenta = 0.0
+        self._discapacitado = discapacitado
         self.inicializarDepositos()
         self.inicializarLlantas()
         self.inicializarRines()
         self.inicializarAmortiguadores()
-        self.precioVenta = 0.0
-        self.discapacitado = discapacitado
 
         if precioVenta is not None:
-            self.precioVenta = precioVenta
-            self.motor.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            self.acelerador.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            self.freno.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            self.bateria.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            self.pedal.setEstado(TipoEstado.EXCELENTE_ESTADO)
-            self.transmision.setEstado(TipoEstado.EXCELENTE_ESTADO)
+            self._precioVenta = precioVenta
+            self._motor.setEstado(TipoEstado.EXCELENTE_ESTADO)
+            self._acelerador.setEstado(TipoEstado.EXCELENTE_ESTADO)
+            self._freno.setEstado(TipoEstado.EXCELENTE_ESTADO)
+            self._bateria.setEstado(TipoEstado.EXCELENTE_ESTADO)
+            self._pedal.setEstado(TipoEstado.EXCELENTE_ESTADO)
+            self._transmision.setEstado(TipoEstado.EXCELENTE_ESTADO)
             for p in self.depositos:
                 p.setEstado(TipoEstado.EXCELENTE_ESTADO)
             for p in self.llantas:
@@ -56,64 +56,64 @@ class Carro(Vehiculo):
                 p.setEstado(TipoEstado.EXCELENTE_ESTADO)
 
     def isDiscapacitado(self) -> bool:
-        return self.discapacitado
+        return self._discapacitado
 
     def setDiscapacitado(self, discapacitado: bool) -> None:
-        self.discapacitado = discapacitado
+        self._discapacitado = discapacitado
 
     def getPrecioVenta(self) -> float:
-        return self.precioVenta
+        return self._precioVenta
 
     def setPrecioVenta(self, precioVenta: float) -> None:
-        self.precioVenta = precioVenta
+        self._precioVenta = precioVenta
 
     def getTipo(self) -> str:
-        return self.tipo.name
+        return self._tipo.name
 
     def setTipo(self, tipo: TipoVehiculo) -> None:
-        self.tipo = tipo
+        self._tipo = tipo
 
     def getPuestos(self) -> int:
-        return self.puestos
+        return self._puestos
 
     def setPuestos(self, puestos: int) -> None:
-        self.puestos = puestos
+        self._puestos = puestos
 
     def getMotor(self) -> Producto:
-        return self.motor
+        return self._motor
 
     def setMotor(self, motor: Producto) -> None:
-        self.motor = motor
+        self._motor = motor
 
     def getTransmision(self) -> Producto:
-        return self.transmision
+        return self._transmision
 
     def setTransmision(self, transmision: Producto) -> None:
-        self.transmision = transmision
+        self._transmision = transmision
 
     def getAcelerador(self) -> Producto:
-        return self.acelerador
+        return self._acelerador
 
     def setAcelerador(self, acelerador: Producto) -> None:
-        self.acelerador = acelerador
+        self._acelerador = acelerador
 
     def getFreno(self) -> Producto:
-        return self.freno
+        return self._freno
 
     def setFreno(self, freno: Producto) -> None:
-        self.freno = freno
+        self._freno = freno
 
     def getBateria(self) -> Producto:
-        return self.bateria
+        return self._bateria
 
     def setBateria(self, bateria: Producto) -> None:
-        self.bateria = bateria
+        self._bateria = bateria
 
     def getPedal(self) -> Producto:
-        return self.pedal
+        return self._pedal
 
     def setPedal(self, pedal: Producto) -> None:
-        self.pedal = pedal
+        self._pedal = pedal
 
     def getDepositos(self) -> list[Producto]:
         return self.depositos
@@ -145,7 +145,7 @@ class Carro(Vehiculo):
         color = self.getColor().title()
         tipo = self.getTipo().title()
         puestos = self.getPuestos()
-        if self.precioVenta != 0:  # para los carros para venta se imprime su valor
+        if self._precioVenta != 0:  # para los carros para venta se imprime su valor
             precioVenta = round(self.getPrecioVenta(), 2)
             return f"{marca} {modelo} {color}\n{tipo} {puestos} puestos\nPrecio: {precioVenta}"
         return f"{marca} {modelo} {color}\n{tipo} {puestos} puestos\n"
@@ -156,7 +156,7 @@ class Carro(Vehiculo):
         for _ in range(4):
             self.llantas.append(
                 Producto(
-                    TipoProducto.LLANTA, self.getMarca(), Carro.inicializarEstado()
+                    TipoProducto.LLANTA, Carro.inicializarEstado(), self.getMarca()
                 )
             )
 
@@ -165,25 +165,25 @@ class Carro(Vehiculo):
         self.rines = []  # se asigna a self.rines una lista
         for _ in range(4):
             self.rines.append(
-                Producto(TipoProducto.RIN, self.getMarca(), Carro.inicializarEstado())
+                Producto(TipoProducto.RIN, Carro.inicializarEstado(), self.getMarca())
             )
 
     # metodo que crea los depositos y los asigna a self.depositos
     def inicializarDepositos(self) -> None:
         self.depositos = []
         self.depositos.append(
-            Producto(TipoProducto.GASOLINA, self.getMarca(), Carro.inicializarEstado())
+            Producto(TipoProducto.GASOLINA, Carro.inicializarEstado(), self.getMarca())
         )
         self.depositos.append(
-            Producto(TipoProducto.ACEITE, self.getMarca(), Carro.inicializarEstado())
+            Producto(TipoProducto.ACEITE, Carro.inicializarEstado(), self.getMarca())
         )
         self.depositos.append(
-            Producto(TipoProducto.LIQUIDOS, self.getMarca(), Carro.inicializarEstado())
+            Producto(TipoProducto.LIQUIDOS, Carro.inicializarEstado(), self.getMarca())
         )
 
     # metodo para asignar un solo producto
     def inicializarProducto(self, tipo: TipoProducto) -> Producto:
-        return Producto(tipo, self.getMarca(), Carro.inicializarEstado())
+        return Producto(tipo, Carro.inicializarEstado(), self.getMarca())
 
     # metodo para crear los amortiguadores
     def inicializarAmortiguadores(self) -> None:
@@ -192,8 +192,8 @@ class Carro(Vehiculo):
             self.amortiguadores.append(
                 Producto(
                     TipoProducto.AMORTIGUADOR,
-                    self.getMarca(),
                     Carro.inicializarEstado(),
+                    self.getMarca(),
                 )
             )
 

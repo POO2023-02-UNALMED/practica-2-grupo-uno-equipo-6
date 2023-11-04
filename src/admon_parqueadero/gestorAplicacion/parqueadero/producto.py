@@ -1,15 +1,16 @@
-from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
+from __future__ import annotations
+
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
 
 
 class Producto:
-    def __init__(self, tipo: TipoProducto, marca: str, estado: TipoEstado) -> None:
+    def __init__(self, tipo: TipoProducto, estado: TipoEstado, marca="") -> None:
         self._tipo = tipo
-        self._marca = ""
+        self._marca = marca
         self._estado = estado
-        self._precio = 0
+        self._precio = 0.0
 
     def setTipo(self, tipo: TipoProducto) -> None:
         self._tipo = tipo
@@ -35,5 +36,7 @@ class Producto:
     def getEstado(self) -> TipoEstado:
         return self._estado
 
-    def __eq__(self, otroProducto: Producto) -> bool:
+    def __eq__(self, otroProducto: object) -> bool:
+        if not isinstance(otroProducto, Producto):
+            return NotImplemented
         return id(self) == id(otroProducto)

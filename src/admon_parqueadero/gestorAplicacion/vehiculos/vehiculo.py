@@ -8,61 +8,61 @@ class Vehiculo:
     def __init__(
         self, placa: str, dueno: Cliente, marca: str, color: str, modelo: str
     ) -> None:
-        self.placa = Vehiculo.normalizarPlaca(placa)
-        self.dueno = dueno
-        self.plaza: Optional[Plaza] = None
-        self.marca = marca
-        self.color = color
-        self.modelo = modelo
+        self._placa = Vehiculo.normalizarPlaca(placa)
+        self._dueno = dueno
+        self._plaza: Optional[Plaza] = None
+        self._marca = marca
+        self._color = color
+        self._modelo = modelo
 
     def getPlaca(self) -> str:
-        return self.placa
+        return self._placa
 
     def setPlaca(self, placa: str) -> None:
-        self.placa = Vehiculo.normalizarPlaca(placa)
+        self._placa = Vehiculo.normalizarPlaca(placa)
 
     def getDueno(self) -> Cliente:
-        return self.dueno
+        return self._dueno
 
     def setDueno(self, dueno: Cliente) -> None:
-        self.dueno = dueno
+        self._dueno = dueno
 
     def getPlaza(self) -> Optional[Plaza]:
-        return self.plaza
+        return self._plaza
 
     def setPlaza(self, plaza: Optional[Plaza]) -> None:
-        self.plaza = plaza
+        self._plaza = plaza
 
     def getMarca(self) -> str:
-        return self.marca
+        return self._marca
 
     def setMarca(self, marca: str) -> None:
-        self.marca = marca
+        self._marca = marca
 
     def getColor(self) -> str:
-        return self.color
+        return self._color
 
     def setColor(self, color: str) -> None:
-        self.color = color
+        self._color = color
 
     def getModelo(self) -> str:
-        return self.modelo
+        return self._modelo
 
     def setModelo(self, modelo: str) -> None:
-        self.modelo = modelo
+        self._modelo = modelo
 
     def estaParqueado(self) -> bool:
         """
         Este método retorna true si el vehículo se encuentra en el parqueadero, false si no lo está.
         El vehículo se considera parqueado si el atributo plaza no es null.
         """
-        return self.plaza is not None
+        return self._plaza is not None
 
     def registradoPor(self, cliente: Cliente) -> bool:
         """
         Retorna true si el vehículo fue registrado por el cliente pasado como parámetro.
         """
-        return self.dueno.getCedula() == cliente.getCedula()
+        return self._dueno.getCedula() == cliente.getCedula()
 
     @staticmethod
     def normalizarPlaca(placa: str) -> str:

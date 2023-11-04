@@ -1,5 +1,7 @@
 class Persona:
-    def __init__(self, nombre: str, cedula: int, telefono: int, correo: str, direccion: str) -> None:
+    def __init__(
+        self, nombre: str, cedula: int, telefono: int, correo: str, direccion: str
+    ) -> None:
         self._nombre = nombre
         self._cedula = cedula
         self._telefono = telefono
@@ -23,7 +25,7 @@ class Persona:
 
     def getTelefono(self) -> int:
         return self._telefono
-    
+
     def setCorreo(self, correo: str) -> None:
         self._correo = correo
 
@@ -35,4 +37,3 @@ class Persona:
 
     def getDireccion(self) -> str:
         return self._direccion
-    
