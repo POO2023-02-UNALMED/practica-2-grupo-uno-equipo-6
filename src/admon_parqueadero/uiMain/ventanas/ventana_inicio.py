@@ -8,6 +8,7 @@ from typing import Any, TypeVar, TypedDict
 # from admon_parqeadero.uiMain.widgets.label_ajustable import LabelAjustable
 from ..widgets.label_ajustable import LabelAjustable
 
+
 class VentanaInicio(tk.Frame):
     def __init__(self, master: tk.Tk, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
@@ -157,11 +158,12 @@ class VentanaInicio(tk.Frame):
     def encontrar_fotos(
         self, fotos: tuple[str, str, str, str]
     ) -> tuple[Traversable, Traversable, Traversable, Traversable]:
+        d = ruta_imagenes()
         return (
-            ruta_imagen(fotos[0]),
-            ruta_imagen(fotos[1]),
-            ruta_imagen(fotos[2]),
-            ruta_imagen(fotos[3]),
+            d.joinpath(fotos[0]),
+            d.joinpath(fotos[1]),
+            d.joinpath(fotos[2]),
+            d.joinpath(fotos[3]),
         )
 
 
@@ -283,7 +285,11 @@ class GridFotos(tk.Frame):
 
 
 def ruta_imagen(imagen: str) -> Traversable:
-    return files("admon_parqueadero").joinpath("imagenes").joinpath(imagen)
+    return ruta_imagenes().joinpath(imagen)
+
+
+def ruta_imagenes() -> Traversable:
+    return files("admon_parqueadero").joinpath("imagenes")
 
 
 T = TypeVar("T")
