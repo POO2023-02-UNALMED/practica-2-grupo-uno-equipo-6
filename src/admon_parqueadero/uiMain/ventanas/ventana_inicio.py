@@ -1,7 +1,9 @@
+from importlib.abc import Traversable
+from importlib.resources import files, as_file
 from collections.abc import Callable, Iterator
 from pathlib import Path
 import tkinter as tk
-from typing import Any, Optional, TypeVar, TypedDict
+from typing import Any, TypeVar, TypedDict
 
 # from admon_parqeadero.uiMain.widgets.label_ajustable import LabelAjustable
 from ..widgets.label_ajustable import LabelAjustable
@@ -10,7 +12,6 @@ class VentanaInicio(tk.Frame):
     def __init__(self, master: tk.Tk, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
         self.master: tk.Tk = master
-        self.raiz = VentanaInicio.encontrar_raiz_proyecto()
 
         master.wm_title("Inicio")
         self.configurar_menu()
@@ -46,7 +47,7 @@ class VentanaInicio(tk.Frame):
         )
         msg_bienvenida.pack(expand=True, fill="x", padx=10, pady=10)
 
-        imagenes = Imagenes(p4, self.raiz)
+        imagenes = Imagenes(p4)
         imagenes.pack(side="top", expand=True, fill="both")
 
         btn_ingreso = tk.Button(p4, text="Ingresar", command=self.ingresar)
@@ -153,27 +154,14 @@ class VentanaInicio(tk.Frame):
         self.p5.siguiente_biografia()
         self.p6.siguiente_imagen()
 
-    @staticmethod
-    def encontrar_raiz_proyecto(desde: Optional[Path] = None, n: int = 0) -> Path:
-        if n > 10:
-            print(
-                "Advertencia: No fue encontrada la raiz del proyecto, usando la carpeta superior"
-            )
-            return Path("..")
-        if desde is None:
-            desde = Path.cwd()
-        if "pyproject.toml" in map(lambda p: p.name, desde.iterdir()):
-            return desde
-        return VentanaInicio.encontrar_raiz_proyecto(desde.parent, n + 1)
-
     def encontrar_fotos(
         self, fotos: tuple[str, str, str, str]
-    ) -> tuple[Path, Path, Path, Path]:
+    ) -> tuple[Traversable, Traversable, Traversable, Traversable]:
         return (
-            ruta_imagen(self.raiz, fotos[0]),
-            ruta_imagen(self.raiz, fotos[1]),
-            ruta_imagen(self.raiz, fotos[2]),
-            ruta_imagen(self.raiz, fotos[3]),
+            ruta_imagen(fotos[0]),
+            ruta_imagen(fotos[1]),
+            ruta_imagen(fotos[2]),
+            ruta_imagen(fotos[3]),
         )
 
 
@@ -220,9 +208,8 @@ class Biografias(tk.Frame):
 
 
 class Imagenes(tk.Frame):
-    def __init__(self, master: tk.Misc, raiz: Path, *args: Any, **kwargs: Any) -> None:
+    def __init__(self, master: tk.Misc, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
-        self.raiz = raiz
 
         self.imagen_mostrada = 0
         self.imagenes = [  # TODO: agregar las 5 imagenes
@@ -241,8 +228,9 @@ class Imagenes(tk.Frame):
 
     def configurar_archivo_imagen(self) -> None:
         imagen = self.imagenes[self.imagen_mostrada]
-        file = ruta_imagen(self.raiz, imagen)
-        self.photo_image.config(file=file)
+        ruta = ruta_imagen(imagen)
+        with as_file(ruta) as file:
+            self.photo_image.config(file=file)
 
     def cambiar_imagen(self) -> None:
         self.imagen_mostrada += 1
@@ -255,7 +243,7 @@ class GridFotos(tk.Frame):
     def __init__(
         self,
         master: tk.Misc,
-        fotos: Iterator[tuple[Path, Path, Path, Path]],
+        fotos: Iterator[tuple[Traversable, Traversable, Traversable, Traversable]],
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -282,14 +270,20 @@ class GridFotos(tk.Frame):
 
     def siguiente_imagen(self) -> None:
         actual = next(self.fotos)
-        self.photo_img0_0.config(file=actual[0])
-        self.photo_img0_1.config(file=actual[1])
-        self.photo_img1_0.config(file=actual[2])
-        self.photo_img1_1.config(file=actual[3])
+        with (
+            as_file(actual[0]) as f0,
+            as_file(actual[1]) as f1,
+            as_file(actual[2]) as f2,
+            as_file(actual[3]) as f3,
+        ):
+            self.photo_img0_0.config(file=f0)
+            self.photo_img0_1.config(file=f1)
+            self.photo_img1_0.config(file=f2)
+            self.photo_img1_1.config(file=f3)
 
 
-def ruta_imagen(raiz: Path, imagen: str) -> Path:
-    return raiz / "imagenes" / imagen
+def ruta_imagen(imagen: str) -> Traversable:
+    return files("admon_parqueadero").joinpath("imagenes").joinpath(imagen)
 
 
 T = TypeVar("T")

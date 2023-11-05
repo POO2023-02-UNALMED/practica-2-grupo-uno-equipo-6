@@ -6,7 +6,7 @@ requires-python = ">=3.9"
 [project.optional-dependencies]
 dev = ["mypy", "black"]
 
-[project.scripts]
+[project.gui-scripts]
 admon_parqueadero = "admon_parqueadero:main"
 
 [tool.mypy]
