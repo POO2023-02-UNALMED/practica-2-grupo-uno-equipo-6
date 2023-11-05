@@ -1,6 +1,7 @@
+from collections.abc import Callable, Iterator
 from pathlib import Path
 import tkinter as tk
-from typing import Any, Optional
+from typing import Any, Optional, TypeVar, TypedDict
 
 from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
 
@@ -58,11 +59,91 @@ class VentanaInicio(tk.Frame):
         p2 = tk.Frame(frame_der, highlightbackground="black", highlightthickness=2)
         p2.pack(expand=True, fill="both", padx=(5, 10), pady=10)
 
-        p5 = Biografias(p2, highlightbackground="black", highlightthickness=2)
-        p5.pack(side="top", padx=10, pady=10, fill="x")
+        class Desarrollador(TypedDict):
+            biografia: list[tuple[str, str]]
+            fotos: tuple[str, str, str, str, str]
 
-        p6 = GridFotos(p2, self.raiz, highlightbackground="black", highlightthickness=2)
-        p6.pack(side="bottom", expand=True)
+        desarrolladores: list[Desarrollador] = [
+            {
+                "biografia": [
+                    ("Nombre", "abc"),
+                    ("Fecha de nacimiento", "..."),
+                ],
+                "fotos": (
+                    "300x300_azul.png",
+                    "300x300_azul.png",
+                    "300x300_azul.png",
+                    "300x300_azul.png",
+                    "300x300_azul.png",
+                ),
+            },
+            {
+                "biografia": [
+                    ("Nombre", "def"),
+                    ("Fecha de nacimiento", "..."),
+                ],
+                "fotos": (
+                    "300x300_verde.png",
+                    "300x300_verde.png",
+                    "300x300_verde.png",
+                    "300x300_verde.png",
+                    "300x300_verde.png",
+                ),
+            },
+            {
+                "biografia": [
+                    ("Nombre", "ghi"),
+                    ("Fecha de nacimiento", "..."),
+                ],
+                "fotos": (
+                    "300x300_rojo.png",
+                    "300x300_rojo.png",
+                    "300x300_rojo.png",
+                    "300x300_rojo.png",
+                    "300x300_rojo.png",
+                ),
+            },
+            {
+                "biografia": [
+                    ("Nombre", "jkl"),
+                    ("Fecha de nacimiento", "..."),
+                ],
+                "fotos": (
+                    "300x300_naranja.png",
+                    "300x300_naranja.png",
+                    "300x300_naranja.png",
+                    "300x300_naranja.png",
+                    "300x300_naranja.png",
+                ),
+            },
+            {
+                "biografia": [
+                    ("Nombre", "mno"),
+                    ("Fecha de nacimiento", "..."),
+                ],
+                "fotos": (
+                    "300x300_gris.png",
+                    "300x300_gris.png",
+                    "300x300_gris.png",
+                    "300x300_gris.png",
+                    "300x300_gris.png",
+                ),
+            },
+        ]
+
+        biografias = map(lambda d: d["biografia"], desarrolladores)
+        self.p5 = Biografias(
+            p2, biografias, highlightbackground="black", highlightthickness=2
+        )
+        self.p5.pack(side="top", padx=10, pady=10, fill="x")
+
+        fotos = map(lambda d: self.encontrar_fotos(d["fotos"]), desarrolladores)
+        self.p6 = GridFotos(
+            p2, fotos, highlightbackground="black", highlightthickness=2
+        )
+        self.p6.pack(side="bottom", expand=True)
+
+        self.p5.bind_click(self.siguiente_desarrollador)
 
     def salir(self) -> None:
         self.master.destroy()
@@ -72,6 +153,10 @@ class VentanaInicio(tk.Frame):
 
     def ingresar(self) -> None:
         pass
+
+    def siguiente_desarrollador(self) -> None:
+        self.p5.siguiente_biografia()
+        self.p6.siguiente_imagen()
 
     @staticmethod
     def encontrar_raiz_proyecto(desde: Optional[Path] = None, n: int = 0) -> Path:
@@ -86,41 +171,36 @@ class VentanaInicio(tk.Frame):
             return desde
         return VentanaInicio.encontrar_raiz_proyecto(desde.parent, n + 1)
 
+    def encontrar_fotos(
+        self, fotos: tuple[str, str, str, str, str]
+    ) -> tuple[Path, Path, Path, Path, Path]:
+        return (
+            ruta_imagen(self.raiz, fotos[0]),
+            ruta_imagen(self.raiz, fotos[1]),
+            ruta_imagen(self.raiz, fotos[2]),
+            ruta_imagen(self.raiz, fotos[3]),
+            ruta_imagen(self.raiz, fotos[4]),
+        )
+
 
 class Biografias(tk.Frame):
-    def __init__(self, master: tk.Misc, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        master: tk.Misc,
+        biografias: Iterator[list[tuple[str, str]]],
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(master, *args, **kwargs)
-
-        self.biografia_mostrada = 0
-        self.biografias = [  # TODO: poner biografias
-            [
-                ("Nombre", "abc"),
-                ("Fecha de nacimiento", "..."),
-            ],
-            [
-                ("Nombre", "def"),
-                ("Fecha de nacimiento", "..."),
-            ],
-            [
-                ("Nombre", "ghi"),
-                ("Fecha de nacimiento", "..."),
-            ],
-            [
-                ("Nombre", "jkl"),
-                ("Fecha de nacimiento", "..."),
-            ],
-            [
-                ("Nombre", "mno"),
-                ("Fecha de nacimiento", "..."),
-            ],
-        ]
+        self.biografias = infinito(biografias)
 
         self.label_titulo = LabelAjustable(
             self, text="Breve hoja de vida de los desarrolladores", font="Arial 12 bold"
         )
         self.label_titulo.pack(pady=10, padx=10, fill="x")
 
-        self.label_biografia = LabelAjustable(self, text=self.biografia_str(0))
+        self.label_biografia = LabelAjustable(self)
+        self.siguiente_biografia()
         self.label_biografia.pack(fill="x", padx=10)
 
         self.label_nota = LabelAjustable(
@@ -131,19 +211,17 @@ class Biografias(tk.Frame):
         )
         self.label_nota.pack(fill="x", pady=10)
 
-        self.bind("<Button-1>", lambda _: self.cambiar_biografia())
-        self.label_titulo.bind("<Button-1>", lambda _: self.cambiar_biografia())
-        self.label_biografia.bind("<Button-1>", lambda _: self.cambiar_biografia())
-        self.label_nota.bind("<Button-1>", lambda _: self.cambiar_biografia())
+    def bind_click(self, func: Callable[[], None]) -> None:
+        self.bind("<Button-1>", lambda _: func())
+        self.label_titulo.bind("<Button-1>", lambda _: func())
+        self.label_biografia.bind("<Button-1>", lambda _: func())
+        self.label_nota.bind("<Button-1>", lambda _: func())
 
-    def cambiar_biografia(self) -> None:
-        self.biografia_mostrada += 1
-        if self.biografia_mostrada == len(self.biografias):
-            self.biografia_mostrada = 0
-        self.label_biografia.config(text=self.biografia_str(self.biografia_mostrada))
+    def siguiente_biografia(self) -> None:
+        actual = next(self.biografias)
+        self.label_biografia.config(text=self.biografia_str(actual))
 
-    def biografia_str(self, indice_biografia: int) -> str:
-        biografia = self.biografias[indice_biografia]
+    def biografia_str(self, biografia: list[tuple[str, str]]) -> str:
         return "\n".join(f"{k}: {v}" for k, v in biografia)
 
 
@@ -169,7 +247,7 @@ class Imagenes(tk.Frame):
 
     def configurar_archivo_imagen(self) -> None:
         imagen = self.imagenes[self.imagen_mostrada]
-        file = self.raiz / "imagenes" / imagen
+        file = ruta_imagen(self.raiz, imagen)
         self.photo_image.config(file=file)
 
     def cambiar_imagen(self) -> None:
@@ -180,14 +258,21 @@ class Imagenes(tk.Frame):
 
 
 class GridFotos(tk.Frame):
-    def __init__(self, master: tk.Misc, raiz: Path, *args: Any, **kwargs: Any) -> None:
+    def __init__(
+        self,
+        master: tk.Misc,
+        fotos: Iterator[tuple[Path, Path, Path, Path, Path]],
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().__init__(master, *args, **kwargs)
-        self.raiz = raiz
+        self.fotos = infinito(fotos)
 
-        self.photo_img0_0 = tk.PhotoImage(file=self.ruta_imagen("300x300_azul.png"))
-        self.photo_img0_1 = tk.PhotoImage(file=self.ruta_imagen("300x300_verde.png"))
-        self.photo_img1_0 = tk.PhotoImage(file=self.ruta_imagen("300x300_rojo.png"))
-        self.photo_img1_1 = tk.PhotoImage(file=self.ruta_imagen("300x300_naranja.png"))
+        self.photo_img0_0 = tk.PhotoImage()
+        self.photo_img0_1 = tk.PhotoImage()
+        self.photo_img1_0 = tk.PhotoImage()
+        self.photo_img1_1 = tk.PhotoImage()
+        self.siguiente_imagen()
 
         self.label_img0_0 = tk.Label(self, image=self.photo_img0_0)
         self.label_img0_0.grid(row=0, column=0)
@@ -201,5 +286,28 @@ class GridFotos(tk.Frame):
         self.label_img1_1 = tk.Label(self, image=self.photo_img1_1)
         self.label_img1_1.grid(row=1, column=1)
 
-    def ruta_imagen(self, img: str) -> Path:
-        return self.raiz / "imagenes" / img
+    def siguiente_imagen(self) -> None:
+        actual = next(self.fotos)
+        self.photo_img0_0.config(file=actual[0])
+        self.photo_img0_1.config(file=actual[1])
+        self.photo_img1_0.config(file=actual[2])
+        self.photo_img1_1.config(file=actual[3])
+        self.photo_img1_1.config(file=actual[4])
+
+
+def ruta_imagen(raiz: Path, imagen: str) -> Path:
+    return raiz / "imagenes" / imagen
+
+
+T = TypeVar("T")
+
+
+def infinito(iterator: Iterator[T]) -> Iterator[T]:
+    l = list(iterator)
+    i = 0
+    limite = len(l)
+    while True:
+        if i == limite:
+            i = 0
+        yield l[i]
+        i += 1
