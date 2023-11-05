@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from admon_parqueadero.uiMain.ventanas.ventana_inicio import VentanaInicio
+from .uiMain.ventanas.ventana_inicio import VentanaInicio
 
 
 def main() -> None:
