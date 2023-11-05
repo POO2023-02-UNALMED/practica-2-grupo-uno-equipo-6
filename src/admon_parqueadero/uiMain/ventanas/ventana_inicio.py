@@ -61,7 +61,7 @@ class VentanaInicio(tk.Frame):
 
         class Desarrollador(TypedDict):
             biografia: list[tuple[str, str]]
-            fotos: tuple[str, str, str, str, str]
+            fotos: tuple[str, str, str, str]
 
         desarrolladores: list[Desarrollador] = [
             {
@@ -70,7 +70,6 @@ class VentanaInicio(tk.Frame):
                     ("Fecha de nacimiento", "..."),
                 ],
                 "fotos": (
-                    "300x300_azul.png",
                     "300x300_azul.png",
                     "300x300_azul.png",
                     "300x300_azul.png",
@@ -87,7 +86,6 @@ class VentanaInicio(tk.Frame):
                     "300x300_verde.png",
                     "300x300_verde.png",
                     "300x300_verde.png",
-                    "300x300_verde.png",
                 ),
             },
             {
@@ -96,7 +94,6 @@ class VentanaInicio(tk.Frame):
                     ("Fecha de nacimiento", "..."),
                 ],
                 "fotos": (
-                    "300x300_rojo.png",
                     "300x300_rojo.png",
                     "300x300_rojo.png",
                     "300x300_rojo.png",
@@ -113,7 +110,6 @@ class VentanaInicio(tk.Frame):
                     "300x300_naranja.png",
                     "300x300_naranja.png",
                     "300x300_naranja.png",
-                    "300x300_naranja.png",
                 ),
             },
             {
@@ -122,7 +118,6 @@ class VentanaInicio(tk.Frame):
                     ("Fecha de nacimiento", "..."),
                 ],
                 "fotos": (
-                    "300x300_gris.png",
                     "300x300_gris.png",
                     "300x300_gris.png",
                     "300x300_gris.png",
@@ -172,14 +167,13 @@ class VentanaInicio(tk.Frame):
         return VentanaInicio.encontrar_raiz_proyecto(desde.parent, n + 1)
 
     def encontrar_fotos(
-        self, fotos: tuple[str, str, str, str, str]
-    ) -> tuple[Path, Path, Path, Path, Path]:
+        self, fotos: tuple[str, str, str, str]
+    ) -> tuple[Path, Path, Path, Path]:
         return (
             ruta_imagen(self.raiz, fotos[0]),
             ruta_imagen(self.raiz, fotos[1]),
             ruta_imagen(self.raiz, fotos[2]),
             ruta_imagen(self.raiz, fotos[3]),
-            ruta_imagen(self.raiz, fotos[4]),
         )
 
 
@@ -261,7 +255,7 @@ class GridFotos(tk.Frame):
     def __init__(
         self,
         master: tk.Misc,
-        fotos: Iterator[tuple[Path, Path, Path, Path, Path]],
+        fotos: Iterator[tuple[Path, Path, Path, Path]],
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -292,7 +286,6 @@ class GridFotos(tk.Frame):
         self.photo_img0_1.config(file=actual[1])
         self.photo_img1_0.config(file=actual[2])
         self.photo_img1_1.config(file=actual[3])
-        self.photo_img1_1.config(file=actual[4])
 
 
 def ruta_imagen(raiz: Path, imagen: str) -> Path:
