@@ -8,7 +8,8 @@ from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
 class VentanaInicio(tk.Frame):
     def __init__(self, master: tk.Tk, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
-        self.parent = master
+        self.master: tk.Tk = master
+        self.raiz = VentanaInicio.encontrar_raiz_proyecto()
 
         master.wm_title("Inicio")
         self.configurar_menu()
@@ -16,14 +17,14 @@ class VentanaInicio(tk.Frame):
         self.configuar_frames_der()
 
     def configurar_menu(self) -> None:
-        menu = tk.Menu(self.parent)
+        menu = tk.Menu(self.master)
         menu_inicio = tk.Menu(menu, tearoff=False)
         menu.add_cascade(label="Inicio", menu=menu_inicio)
         menu_inicio.add_command(label="Salir de la applicacion", command=self.salir)
         menu_inicio.add_command(
             label="Descripción del sistema", command=self.mostrar_descripcion
         )
-        self.parent.config(menu=menu)
+        self.master.config(menu=menu)
 
     def configurar_frames_izq(self) -> None:
         frame_izq = tk.Frame(self)
@@ -44,7 +45,7 @@ class VentanaInicio(tk.Frame):
         )
         msg_bienvenida.pack(expand=True, fill="x", padx=10, pady=10)
 
-        imagenes = Imagenes(p4)
+        imagenes = Imagenes(p4, self.raiz)
         imagenes.pack(side="top", expand=True, fill="both")
 
         btn_ingreso = tk.Button(p4, text="Ingresar", command=self.ingresar)
@@ -60,17 +61,30 @@ class VentanaInicio(tk.Frame):
         p5 = Biografias(p2, highlightbackground="black", highlightthickness=2)
         p5.pack(side="top", padx=10, pady=10, fill="x")
 
-        p6 = tk.Frame(p2, highlightbackground="black", highlightthickness=2)
-        p6.pack(side="bottom")
+        p6 = GridFotos(p2, self.raiz, highlightbackground="black", highlightthickness=2)
+        p6.pack(side="bottom", expand=True)
 
     def salir(self) -> None:
-        self.parent.destroy()
+        self.master.destroy()
 
     def mostrar_descripcion(self) -> None:
         pass
 
     def ingresar(self) -> None:
         pass
+
+    @staticmethod
+    def encontrar_raiz_proyecto(desde: Optional[Path] = None, n: int = 0) -> Path:
+        if n > 10:
+            print(
+                "Advertencia: No fue encontrada la raiz del proyecto, usando la carpeta superior"
+            )
+            return Path("..")
+        if desde is None:
+            desde = Path.cwd()
+        if "pyproject.toml" in map(lambda p: p.name, desde.iterdir()):
+            return desde
+        return VentanaInicio.encontrar_raiz_proyecto(desde.parent, n + 1)
 
 
 class Biografias(tk.Frame):
@@ -134,10 +148,10 @@ class Biografias(tk.Frame):
 
 
 class Imagenes(tk.Frame):
-    def __init__(self, *args: Any, **kwargs: Any) -> None:
-        super().__init__(*args, **kwargs)
+    def __init__(self, master: tk.Misc, raiz: Path, *args: Any, **kwargs: Any) -> None:
+        super().__init__(master, *args, **kwargs)
+        self.raiz = raiz
 
-        self.raiz = Imagenes.encontrar_raiz_proyecto()
         self.imagen_mostrada = 0
         self.imagenes = [  # TODO: agregar las 5 imagenes
             "300x300_rojo.png",
@@ -164,15 +178,28 @@ class Imagenes(tk.Frame):
             self.imagen_mostrada = 0
         self.configurar_archivo_imagen()
 
-    @staticmethod
-    def encontrar_raiz_proyecto(desde: Optional[Path] = None, n: int = 0) -> Path:
-        if n > 10:
-            print(
-                "Advertencia: No fue encontrada la raiz del proyecto, usando la carpeta superior"
-            )
-            return Path("..")
-        if desde is None:
-            desde = Path.cwd()
-        if "pyproject.toml" in map(lambda p: p.name, desde.iterdir()):
-            return desde
-        return Imagenes.encontrar_raiz_proyecto(desde.parent, n + 1)
+
+class GridFotos(tk.Frame):
+    def __init__(self, master: tk.Misc, raiz: Path, *args: Any, **kwargs: Any) -> None:
+        super().__init__(master, *args, **kwargs)
+        self.raiz = raiz
+
+        self.photo_img0_0 = tk.PhotoImage(file=self.ruta_imagen("300x300_azul.png"))
+        self.photo_img0_1 = tk.PhotoImage(file=self.ruta_imagen("300x300_verde.png"))
+        self.photo_img1_0 = tk.PhotoImage(file=self.ruta_imagen("300x300_rojo.png"))
+        self.photo_img1_1 = tk.PhotoImage(file=self.ruta_imagen("300x300_naranja.png"))
+
+        self.label_img0_0 = tk.Label(self, image=self.photo_img0_0)
+        self.label_img0_0.grid(row=0, column=0)
+
+        self.label_img0_1 = tk.Label(self, image=self.photo_img0_1)
+        self.label_img0_1.grid(row=0, column=1)
+
+        self.label_img1_0 = tk.Label(self, image=self.photo_img1_0)
+        self.label_img1_0.grid(row=1, column=0)
+
+        self.label_img1_1 = tk.Label(self, image=self.photo_img1_1)
+        self.label_img1_1.grid(row=1, column=1)
+
+    def ruta_imagen(self, img: str) -> Path:
+        return self.raiz / "imagenes" / img

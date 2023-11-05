@@ -1,4 +1,4 @@
-from datetime import _Date, _Time, datetime
+from datetime import date, time, datetime
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
@@ -25,16 +25,16 @@ class Factura:
     def setNumeroFactura(self, numeroFactura: int) -> None:
         self._numeroFactura = numeroFactura
 
-    def getFecha(self) -> _Date:
+    def getFecha(self) -> date:
         return self._fecha
 
-    def setFecha(self, fecha: _Date) -> None:
+    def setFecha(self, fecha: date) -> None:
         self._fecha = fecha
 
-    def getHoraIngreso(self) -> _Time:
+    def getHoraIngreso(self) -> time:
         return self._horaIngreso
 
-    def setHoraIngreso(self, horaIngreso: _Time) -> None:
+    def setHoraIngreso(self, horaIngreso: time) -> None:
         self._horaIngreso = horaIngreso
 
     def getPrecioTotal(self) -> float:
