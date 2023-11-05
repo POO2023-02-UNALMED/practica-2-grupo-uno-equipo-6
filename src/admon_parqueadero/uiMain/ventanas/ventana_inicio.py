@@ -5,8 +5,8 @@ from pathlib import Path
 import tkinter as tk
 from typing import Any, TypeVar, TypedDict
 
-# from admon_parqeadero.uiMain.widgets.label_ajustable import LabelAjustable
-from ..widgets.label_ajustable import LabelAjustable
+from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
+
 
 
 class VentanaInicio(tk.Frame):
