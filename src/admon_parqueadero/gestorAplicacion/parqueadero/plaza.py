@@ -1,55 +1,49 @@
-from gestorAplicacion.vehiculos import Vehiculo;
-import pickle
-plazasTotales  = []
-class Plaza (pickle):
-    numeroPlaza = 0
-    discapacitado = False #Si es una plaza para clientes discapacitados o no
-    estado = ""  #Disponible u ocupado
-    vehiculo = Vehiculo() # El vehículo que lo está ocupando
-    tipo = "" #Si es de tipo carro o moto
-    
-	# private static List<Plaza> plazasTotales = new ArrayList<Plaza>();
-	
-    def __init__(self,numeroPlaza,discapacitado,estado, vehi,  tipo):
-        self.numeroPlaza = numeroPlaza
-        self.discapacitado = discapacitado
-        self.estado = estado
-        self.vehiculo = vehi;
-        self.tipo = tipo;
-        plazasTotales.append(self);
+from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
-    def setDiscapacitado(self,disc):
-        self.discapacitado = disc
+class Plaza:
+    _plazasTotales = []
 
-    def getDiscapacitado(self):
-        return self.discapacitado
+    def __init__(
+        self,
+        numeroPlaza: int,
+        discapacitado: bool,
+        vehiculo: Vehiculo,
+        tipo: str,
+        estado: str = "Disponible"
+    ) -> None:
+        self._numeroPlaza = numeroPlaza
+        self._discapacitado = discapacitado
+        self._estado = estado
+        self._vehiculo = vehiculo
+        self._tipo = tipo
+        Plaza._plazasTotales.append(self)
 
+    def setDiscapacitado(self, discapacitado: bool) -> None:
+        self._discapacitado = discapacitado
 
-    def setNumeroPlaza(self, numeroP) :
-        self.numeroPlaza = numeroP
+    def getDiscapacitado(self) -> bool:
+        return self._discapacitado
 
-    def getNumeroPlaza(self) :
-        return self.numeroPlaza
+    def setNumeroPlaza(self, numeroPlaza) -> None:
+        self._numeroPlaza = numeroPlaza
 
+    def getNumeroPlaza(self) -> int:
+        return self._numeroPlaza
 
-    def setEstado(self,estado) :
-        self.estado = estado
+    def setEstado(self, estado: str) -> None:
+        self._estado = estado
 
-    def getEstado(self) :
-        return self.estado
+    def getEstado(self) -> str:
+        return self._estado
 
+    def setVehiculo(self, vehiculo: Vehiculo) -> None:
+        self._vehiculo = vehiculo
 
-    def setVehiculo(self,vehi) :
-        self.vehiculo = vehi
+    def getVehiculo(self) -> Vehiculo:
+        return self._vehiculo
 
-
-    def getVehiculo(self) :
-        return self.vehiculo
-
-
-    def getTipo(self) :
+    def getTipo(self):
         return self.tipo
 
-
-    def setTipo(self,tipo) :
+    def setTipo(self, tipo):
         self.tipo = tipo
