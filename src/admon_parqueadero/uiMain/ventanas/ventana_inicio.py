@@ -8,7 +8,6 @@ from typing import Any, TypeVar, TypedDict
 from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
 
 
-
 class VentanaInicio(tk.Frame):
     def __init__(self, master: tk.Tk, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)

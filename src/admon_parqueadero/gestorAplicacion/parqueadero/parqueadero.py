@@ -161,3 +161,26 @@ class Parqueadero:
             if p.getNumeroPlaza() == numeroPlaza:
                 return p
         return None
+
+    def inicializarPlacas(self, plazasTotales: int) -> None:
+        # calcular el numero de plazas para motos y para carros(por convencion el 60 % seran de carro y el 40 % de moto)
+        numPlazasCarro = int((plazasTotales * 0.6))
+        numPlazasMoto = plazasTotales - numPlazasCarro
+
+        # calcular el numero de plazas para discapacitados y altoCC (el 30 % de moto seran para altoCC y el 20 % de carro para discapacitados)
+        numPlazasDiscapacitadoCarro = int(numPlazasCarro * 0.2)
+        numPlazasMotoAltoCCMotos = int(numPlazasMoto * 0.20)
+
+        # instanciar las plazas tipo Carro
+        for i in range(1, numPlazasCarro + 1):
+            if i <= numPlazasDiscapacitadoCarro:
+                self._plazas.append(Plaza(i, True, "Carro", None))  # type: ignore
+                continue
+            self._plazas.append(Plaza(i, False, "Carro", None))  # type: ignore
+
+        # instanciar las plazas tipo Moto
+        for i in range(1, numPlazasMoto + 1):
+            if i <= numPlazasMotoAltoCCMotos:
+                self._plazas.append(Plaza(numPlazasCarro + i, False, "Moto altoCC", None))  # type: ignore
+                continue
+            self._plazas.append(Plaza(numPlazasCarro + 1, False, "Moto", None))  # type: ignore
