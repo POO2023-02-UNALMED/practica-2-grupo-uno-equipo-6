@@ -1,7 +1,6 @@
 from importlib.abc import Traversable
 from importlib.resources import files, as_file
-from collections.abc import Callable, Iterator
-from pathlib import Path
+from collections.abc import Callable, Iterable, Iterator
 import tkinter as tk
 from typing import Any, TypeVar, TypedDict
 
@@ -52,7 +51,7 @@ class VentanaInicio(tk.Frame):
 
         btn_ingreso = tk.Button(p4, text="Ingresar", command=self.ingresar)
         btn_ingreso.pack(side="bottom", padx=10, pady=10)
-        
+ 
         self.frame_izq = frame_izq
 
     def configuar_frames_der(self) -> None:
@@ -142,7 +141,7 @@ class VentanaInicio(tk.Frame):
         self.p6.pack(side="bottom", expand=True)
 
         self.p5.bind_click(self.siguiente_desarrollador)
-        
+
         self.frame_der = frame_der
 
     def salir(self) -> None:
@@ -153,16 +152,8 @@ class VentanaInicio(tk.Frame):
 
     def ingresar(self) -> None:
         from .ventana_principal_usu import ventana_principal_usu
-        self.frame_izq.destroy()
-        self.frame_der.destroy()
+        self.destroy()
         ventana_principal_usu(self.master)
-        
-
-        
-
-        
-        
-        
 
     def siguiente_desarrollador(self) -> None:
         self.p5.siguiente_biografia()
@@ -226,32 +217,25 @@ class Imagenes(tk.Frame):
     def __init__(self, master: tk.Misc, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
 
-        self.imagen_mostrada = 0
-        self.imagenes = [  # TODO: agregar las 5 imagenes
+        self.imagenes = infinito([  # TODO: agregar las 5 imagenes
             "300x300_rojo.png",
             "300x300_naranja.png",
             "300x300_gris.png",
             "300x300_verde.png",
             "300x300_azul.png",
-        ]
+        ])
 
         self.photo_image = tk.PhotoImage()
-        self.configurar_archivo_imagen()
+        self.siguiente_imagen()
         self.label = tk.Label(self, image=self.photo_image)
         self.label.pack(expand=True)
-        self.label.bind("<Enter>", lambda _: self.cambiar_imagen())
+        self.label.bind("<Enter>", lambda _: self.siguiente_imagen())
 
-    def configurar_archivo_imagen(self) -> None:
-        imagen = self.imagenes[self.imagen_mostrada]
+    def siguiente_imagen(self) -> None:
+        imagen = next(self.imagenes)
         ruta = ruta_imagen(imagen)
         with as_file(ruta) as file:
             self.photo_image.config(file=file)
-
-    def cambiar_imagen(self) -> None:
-        self.imagen_mostrada += 1
-        if self.imagen_mostrada == len(self.imagenes):
-            self.imagen_mostrada = 0
-        self.configurar_archivo_imagen()
 
 
 class GridFotos(tk.Frame):
@@ -308,7 +292,7 @@ def ruta_imagenes() -> Traversable:
 T = TypeVar("T")
 
 
-def infinito(iterator: Iterator[T]) -> Iterator[T]:
+def infinito(iterator: Iterable[T]) -> Iterator[T]:
     l = list(iterator)
     i = 0
     limite = len(l)
