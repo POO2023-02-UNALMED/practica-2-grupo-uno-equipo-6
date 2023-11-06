@@ -1,19 +1,16 @@
+from typing import Optional
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
+
 
 class Plaza:
     _plazasTotales = []
 
     def __init__(
-        self,
-        numeroPlaza: int,
-        discapacitado: bool,
-        vehiculo: Vehiculo,
-        tipo: str,
-        estado: str = "Disponible"
+        self, numeroPlaza: int, discapacitado: bool, tipo: str, vehiculo: Vehiculo
     ) -> None:
         self._numeroPlaza = numeroPlaza
         self._discapacitado = discapacitado
-        self._estado = estado
+        self._estado = "Disponible"
         self._vehiculo = vehiculo
         self._tipo = tipo
         Plaza._plazasTotales.append(self)
@@ -42,8 +39,8 @@ class Plaza:
     def getVehiculo(self) -> Vehiculo:
         return self._vehiculo
 
-    def getTipo(self):
-        return self.tipo
+    def getTipo(self) -> str:
+        return self._tipo
 
-    def setTipo(self, tipo):
-        self.tipo = tipo
+    def setTipo(self, tipo) -> None:
+        self._tipo = tipo
