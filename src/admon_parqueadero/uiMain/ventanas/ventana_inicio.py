@@ -2,6 +2,7 @@ from importlib.abc import Traversable
 from importlib.resources import files, as_file
 from collections.abc import Callable, Iterable, Iterator
 import tkinter as tk
+from tkinter import font
 from typing import Any, TypeVar, TypedDict
 
 from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
@@ -183,7 +184,7 @@ class Biografias(tk.Frame):
         self.biografias = infinito(biografias)
 
         self.label_titulo = LabelAjustable(
-            self, text="Breve hoja de vida de los desarrolladores", font="Arial 12 bold"
+            self, text="Breve hoja de vida de los desarrolladores", font=font.Font(weight=font.BOLD)
         )
         self.label_titulo.pack(pady=10, padx=10, fill="x")
 
@@ -194,7 +195,7 @@ class Biografias(tk.Frame):
         self.label_nota = LabelAjustable(
             self,
             text="Click para cambiar de desarrollador",
-            font="Arial 9 italic",
+            font=font.Font(slant=font.ITALIC, size=9),
             foreground="blue",
         )
         self.label_nota.pack(fill="x", pady=10)
