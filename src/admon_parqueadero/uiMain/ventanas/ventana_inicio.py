@@ -53,6 +53,8 @@ class VentanaInicio(tk.Frame):
 
         btn_ingreso = tk.Button(p4, text="Ingresar", command=self.ingresar)
         btn_ingreso.pack(side="bottom", padx=10, pady=10)
+        
+        self.frame_izq = frame_izq
 
     def configuar_frames_der(self) -> None:
         frame_der = tk.Frame(self)
@@ -141,6 +143,8 @@ class VentanaInicio(tk.Frame):
         self.p6.pack(side="bottom", expand=True)
 
         self.p5.bind_click(self.siguiente_desarrollador)
+        
+        self.frame_der = frame_der
 
     def salir(self) -> None:
         self.master.destroy()
@@ -149,7 +153,17 @@ class VentanaInicio(tk.Frame):
         pass
 
     def ingresar(self) -> None:
-        pass
+        from .ventana_principal_usu import ventana_principal_usu
+        self.frame_izq.destroy()
+        self.frame_der.destroy()
+        ventana_principal_usu(self.master)
+        
+
+        
+
+        
+        
+        
 
     def siguiente_desarrollador(self) -> None:
         self.p5.siguiente_biografia()
