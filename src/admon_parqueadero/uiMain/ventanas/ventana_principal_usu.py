@@ -26,7 +26,7 @@ class ventana_principal_usu :
     #     self.master.config(menu=menu)
  
     def create(self):
-       
+
         label1 = tk.Label(self.ventana, text=self.nombre_aplicacion, font=self.fuente_negrita)
         label1.pack(anchor="nw", padx=10, pady=10)
     
