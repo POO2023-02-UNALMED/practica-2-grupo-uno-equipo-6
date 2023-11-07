@@ -43,7 +43,7 @@ class VentanaInicio(tk.Frame):
 
         msg_bienvenida = LabelAjustable(  # TODO: poner el mensaje de bienvenida
             p3,
-            text="Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
+            text="Bienvenido al Parqueadero. Aquí podrá guardar su carro o moto, comprar el carro que desee, o vender un carro de su propiedad, además de acceder a la administración del parqueadero.",
         )
         msg_bienvenida.pack(expand=True, fill="x", padx=10, pady=10)
 
@@ -67,8 +67,9 @@ class VentanaInicio(tk.Frame):
         desarrolladores: list[Desarrollador] = [
             {
                 "biografia": [
-                    ("Nombre", "abc"),
-                    ("Fecha de nacimiento", "..."),
+                    ("Nombre", "Sara Isabel Suárez Londoño"),
+                    ("Fecha de nacimiento", "2004/02/20"),
+                    ("Información básica: ", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta escuchar música y programar."),
                 ],
                 "fotos": (
                     "300x300_azul.png",
@@ -79,8 +80,9 @@ class VentanaInicio(tk.Frame):
             },
             {
                 "biografia": [
-                    ("Nombre", "def"),
-                    ("Fecha de nacimiento", "..."),
+                    ("Nombre", "Juan Sebastián Pabuena Gómez"),
+                    ("Fecha de nacimiento", "2005/06/10"),
+                    ("Información básica: ", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta dormir y escuchar música."),
                 ],
                 "fotos": (
                     "300x300_verde.png",
@@ -91,8 +93,9 @@ class VentanaInicio(tk.Frame):
             },
             {
                 "biografia": [
-                    ("Nombre", "ghi"),
-                    ("Fecha de nacimiento", "..."),
+                    ("Nombre", "Sofía Giraldo López"),
+                    ("Fecha de nacimiento", "2003/05/02"),
+                    ("Información básica: ", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y aprender cosas nuevas."),
                 ],
                 "fotos": (
                     "300x300_rojo.png",
@@ -103,8 +106,9 @@ class VentanaInicio(tk.Frame):
             },
             {
                 "biografia": [
-                    ("Nombre", "jkl"),
-                    ("Fecha de nacimiento", "..."),
+                    ("Nombre", "Alejandro Arias Orozco"),
+                    ("Fecha de nacimiento", "2003/05/09"),
+                    ("Información básica: ", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta Le gusta ver series y películas."),
                 ],
                 "fotos": (
                     "300x300_naranja.png",
@@ -115,8 +119,9 @@ class VentanaInicio(tk.Frame):
             },
             {
                 "biografia": [
-                    ("Nombre", "mno"),
-                    ("Fecha de nacimiento", "..."),
+                    ("Nombre", "Katherine Del Pilar Puentes Basilio"),
+                    ("Fecha de nacimiento", "2005/01/13"),
+                    ("Información básica: ", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta jugar voleibol y el helado."),
                 ],
                 "fotos": (
                     "300x300_gris.png",
