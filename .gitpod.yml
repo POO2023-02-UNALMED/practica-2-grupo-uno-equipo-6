@@ -1,0 +1,7 @@
+image:
+  file: .gitpod.Dockerfile
+ports:
+  - port: 6080
+    protocol: "http"
+tasks:
+  - command: "cd /workspace/practica-2-grupo-uno-equipo-6/ && pip install -e ."
