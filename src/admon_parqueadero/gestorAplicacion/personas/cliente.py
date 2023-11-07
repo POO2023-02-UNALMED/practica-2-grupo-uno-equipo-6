@@ -11,7 +11,7 @@ class Cliente(Persona):
         telefono: int,
         correo: str,
         direccion: str,
-        discapacitado: bool
+        discapacitado: bool,
     ) -> None:
         super().__init__(nombre, cedula, telefono, correo, direccion)
         self._discapacitado = discapacitado

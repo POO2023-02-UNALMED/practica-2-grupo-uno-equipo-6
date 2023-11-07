@@ -149,6 +149,7 @@ class VentanaInicio(tk.Frame):
 
     def ingresar(self) -> None:
         from .ventana_principal_usu import ventana_principal_usu
+
         self.destroy()
         self.master.config(menu=tk.Menu())
         ventana_principal_usu(self.master)
@@ -181,7 +182,9 @@ class Biografias(tk.Frame):
         self.biografias = infinito(biografias)
 
         self.label_titulo = LabelAjustable(
-            self, text="Breve hoja de vida de los desarrolladores", font=font.Font(weight=font.BOLD)
+            self,
+            text="Breve hoja de vida de los desarrolladores",
+            font=font.Font(weight=font.BOLD),
         )
         self.label_titulo.pack(pady=10, padx=10, fill="x")
 
@@ -215,13 +218,15 @@ class Imagenes(tk.Frame):
     def __init__(self, master: tk.Misc, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
 
-        self.imagenes = infinito([  # TODO: agregar las 5 imagenes
-            "300x300_rojo.png",
-            "300x300_naranja.png",
-            "300x300_gris.png",
-            "300x300_verde.png",
-            "300x300_azul.png",
-        ])
+        self.imagenes = infinito(
+            [  # TODO: agregar las 5 imagenes
+                "300x300_rojo.png",
+                "300x300_naranja.png",
+                "300x300_gris.png",
+                "300x300_verde.png",
+                "300x300_azul.png",
+            ]
+        )
 
         self.photo_image = tk.PhotoImage()
         self.siguiente_imagen()

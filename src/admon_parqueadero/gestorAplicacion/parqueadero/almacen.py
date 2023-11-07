@@ -1,3 +1,4 @@
+from typing import Optional
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
 
@@ -32,16 +33,16 @@ class Almacen:
     def agregarProducto(self, producto: Producto) -> None:
         self._inventario.append(producto)
 
-    def conseguirProducto(self, tipoProducto: TipoProducto) -> Producto:
+    def conseguirProducto(self, tipoProducto: TipoProducto) -> Optional[Producto]:
         for p in self._inventario:
             if p.getTipo() == tipoProducto:
                 self._inventario.remove(p)
                 return p
-        return  # type: ignore
+        return None
 
     @classmethod
     def cotizarProducto(cls, tipoProducto: TipoProducto) -> float:
-        return Almacen._inventarioBase.get(tipoProducto)  # type: ignore
+        return Almacen._inventarioBase.get(tipoProducto, 0)
 
     def existeProducto(self, tipoProducto: TipoProducto) -> bool:
         for p in self._inventario:

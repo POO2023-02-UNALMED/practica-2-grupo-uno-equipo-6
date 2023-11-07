@@ -109,13 +109,14 @@ class Parqueadero:
         self._plazasTotales += cantidad
         ultimoNumPlaza = self._plazas[-1].getNumeroPlaza()
         for _ in range(cantidad):
-            self._plazas.append(Plaza(ultimoNumPlaza + 1, discapacitado, None, tipo))  # type: ignore
+            self._plazas.append(Plaza(ultimoNumPlaza + 1, discapacitado, tipo, None))
             ultimoNumPlaza += 1
 
     def ingresarVehiculo(self, vehiculo: Vehiculo, plaza: Plaza) -> None:
         # si esta plaza ya tiene un vehiculo, entonces desasociarlo
-        if plaza.getVehiculo() != None:
-            plaza.getVehiculo().setPlaza(None)
+        v = plaza.getVehiculo()
+        if v is not None:
+            v.setPlaza(None)
 
         plaza.setVehiculo(vehiculo)
 
@@ -129,14 +130,17 @@ class Parqueadero:
     def retirarVehiculo(self, key: Union[int, str]) -> None:
         if isinstance(key, int):
             plaza = self._plazas[key - 1]
-            plaza.getVehiculo().setPlaza(None)
-            plaza.setVehiculo(None)  # type: ignore
+            v = plaza.getVehiculo()
+            if v is not None:
+                v.setPlaza(None)
+            plaza.setVehiculo(None)
             plaza.setEstado("Disponible")
         else:
             for p in self._plazas:
-                if p.getVehiculo() != None and p.getVehiculo().getPlaca() == key:
-                    p.getVehiculo().setPlaza(None)
-                    p.setVehiculo(None)  # type: ignore
+                v = p.getVehiculo()
+                if v is not None and v.getPlaca() == key:
+                    v.setPlaza(None)
+                    p.setVehiculo(None)
                     p.setEstado("Disponible")
 
     def plazasDisponiblesPara(self, vehiculo: Vehiculo) -> list[Plaza]:
@@ -144,8 +148,8 @@ class Parqueadero:
         tipo = ""
         if isinstance(vehiculo, Carro):
             tipo = "Carro"
-        else:
-            moto: Moto = vehiculo  # type: ignore
+        elif isinstance(vehiculo, Moto):
+            moto: Moto = vehiculo
             if moto.getTipo() == "normal":
                 tipo = "Moto"
             else:
@@ -174,13 +178,15 @@ class Parqueadero:
         # instanciar las plazas tipo Carro
         for i in range(1, numPlazasCarro + 1):
             if i <= numPlazasDiscapacitadoCarro:
-                self._plazas.append(Plaza(i, True, "Carro", None))  # type: ignore
+                self._plazas.append(Plaza(i, True, "Carro", None))
                 continue
-            self._plazas.append(Plaza(i, False, "Carro", None))  # type: ignore
+            self._plazas.append(Plaza(i, False, "Carro", None))
 
         # instanciar las plazas tipo Moto
         for i in range(1, numPlazasMoto + 1):
             if i <= numPlazasMotoAltoCCMotos:
-                self._plazas.append(Plaza(numPlazasCarro + i, False, "Moto altoCC", None))  # type: ignore
+                self._plazas.append(
+                    Plaza(numPlazasCarro + i, False, "Moto altoCC", None)
+                )
                 continue
-            self._plazas.append(Plaza(numPlazasCarro + 1, False, "Moto", None))  # type: ignore
+            self._plazas.append(Plaza(numPlazasCarro + 1, False, "Moto", None))

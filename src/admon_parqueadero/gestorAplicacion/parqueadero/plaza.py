@@ -1,12 +1,18 @@
+from __future__ import annotations
+
 from typing import Optional
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
 
 class Plaza:
-    _plazasTotales = []
+    _plazasTotales: list[Plaza] = []
 
     def __init__(
-        self, numeroPlaza: int, discapacitado: bool, tipo: str, vehiculo: Vehiculo
+        self,
+        numeroPlaza: int,
+        discapacitado: bool,
+        tipo: str,
+        vehiculo: Optional[Vehiculo],
     ) -> None:
         self._numeroPlaza = numeroPlaza
         self._discapacitado = discapacitado
@@ -33,10 +39,10 @@ class Plaza:
     def getEstado(self) -> str:
         return self._estado
 
-    def setVehiculo(self, vehiculo: Vehiculo) -> None:
+    def setVehiculo(self, vehiculo: Optional[Vehiculo]) -> None:
         self._vehiculo = vehiculo
 
-    def getVehiculo(self) -> Vehiculo:
+    def getVehiculo(self) -> Optional[Vehiculo]:
         return self._vehiculo
 
     def getTipo(self) -> str:
