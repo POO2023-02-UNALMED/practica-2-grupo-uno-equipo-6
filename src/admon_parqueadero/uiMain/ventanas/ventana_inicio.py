@@ -38,8 +38,8 @@ class VentanaInicio(tk.Frame):
         p3 = tk.Frame(p1, highlightbackground="black", highlightthickness=2)
         p3.pack(side="top", padx=10, pady=10, fill="x")
 
-        p4 = tk.Frame(p1, highlightbackground="black", highlightthickness=2)
-        p4.pack(side="bottom", padx=10, pady=10, fill="both", expand=True)
+        self.p4 = tk.Frame(p1, highlightbackground="black", highlightthickness=2)
+        self.p4.pack(side="bottom", padx=10, pady=10, fill="both", expand=True)
 
         msg_bienvenida = LabelAjustable(  # TODO: poner el mensaje de bienvenida
             p3,
@@ -47,11 +47,7 @@ class VentanaInicio(tk.Frame):
         )
         msg_bienvenida.pack(expand=True, fill="x", padx=10, pady=10)
 
-        imagenes = Imagenes(p4)
-        imagenes.pack(side="top", expand=True, fill="both")
-
-        btn_ingreso = tk.Button(p4, text="Ingresar", command=self.ingresar)
-        btn_ingreso.pack(side="bottom", padx=10, pady=10)
+        self.configurar_p4()
 
     def configuar_frames_der(self) -> None:
         frame_der = tk.Frame(self)
@@ -150,7 +146,27 @@ class VentanaInicio(tk.Frame):
         self.master.destroy()
 
     def mostrar_descripcion(self) -> None:
-        pass
+        self.imagenes.destroy()
+        self.btn_ingreso.destroy()
+
+        self.f = tk.Frame(self.p4)
+        self.f.pack(expand=True, fill="both")
+
+        l = tk.Label(self.f, text="hola")
+        l.pack(expand=True, fill="both")
+
+        boton_regresar = tk.Button(self.f, text="Regresar", command=self.regresar_de_la_descripcion)
+        boton_regresar.pack()
+    
+    def regresar_de_la_descripcion(self):
+        self.f.destroy()
+        self.configurar_p4()
+
+    def configurar_p4(self):
+        self.imagenes = Imagenes(self.p4)
+        self.imagenes.pack(side="top", expand=True, fill="both")
+        self.btn_ingreso = tk.Button(self.p4, text="Ingresar", command=self.ingresar)
+        self.btn_ingreso.pack(side="bottom", padx=10, pady=10)
 
     def ingresar(self) -> None:
         from .ventana_principal_usu import ventana_principal_usu

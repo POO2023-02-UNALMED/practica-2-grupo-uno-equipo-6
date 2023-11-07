@@ -2,4 +2,3 @@
 
 cd src
 py -m admon_parqueadero
-pause
