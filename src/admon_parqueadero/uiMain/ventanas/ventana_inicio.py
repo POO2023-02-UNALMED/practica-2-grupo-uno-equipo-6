@@ -65,7 +65,7 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Sara Isabel Suárez Londoño"),
                     ("Fecha de nacimiento", "2004/02/20"),
-                    ("Información básica: ", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta escuchar música y programar."),
+                    ("Información básica", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta escuchar música y programar."),
                 ],
                 "fotos": (
                     "300x300_azul.png",
@@ -78,7 +78,7 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Juan Sebastián Pabuena Gómez"),
                     ("Fecha de nacimiento", "2005/06/10"),
-                    ("Información básica: ", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta dormir y escuchar música."),
+                    ("Información básica", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta dormir y escuchar música."),
                 ],
                 "fotos": (
                     "300x300_verde.png",
@@ -91,7 +91,7 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Sofía Giraldo López"),
                     ("Fecha de nacimiento", "2003/05/02"),
-                    ("Información básica: ", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y aprender cosas nuevas."),
+                    ("Información básica", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y aprender cosas nuevas."),
                 ],
                 "fotos": (
                     "300x300_rojo.png",
@@ -104,7 +104,7 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Alejandro Arias Orozco"),
                     ("Fecha de nacimiento", "2003/05/09"),
-                    ("Información básica: ", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta Le gusta ver series y películas."),
+                    ("Información básica", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta Le gusta ver series y películas."),
                 ],
                 "fotos": (
                     "300x300_naranja.png",
@@ -117,7 +117,7 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Katherine Del Pilar Puentes Basilio"),
                     ("Fecha de nacimiento", "2005/01/13"),
-                    ("Información básica: ", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta jugar voleibol y el helado."),
+                    ("Información básica", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta jugar voleibol y el helado."),
                 ],
                 "fotos": (
                     "300x300_gris.png",
@@ -146,6 +146,8 @@ class VentanaInicio(tk.Frame):
         self.master.destroy()
 
     def mostrar_descripcion(self) -> None:
+        if self.btn_ingreso not in [widget for widget in self.p4.winfo_children()]:
+            return
         self.imagenes.destroy()
         self.btn_ingreso.destroy()
 
@@ -156,7 +158,7 @@ class VentanaInicio(tk.Frame):
         l.pack(expand=True, fill="both")
 
         boton_regresar = tk.Button(self.f, text="Regresar", command=self.regresar_de_la_descripcion)
-        boton_regresar.pack()
+        boton_regresar.pack(side="bottom", padx=10, pady=10)
     
     def regresar_de_la_descripcion(self):
         self.f.destroy()
