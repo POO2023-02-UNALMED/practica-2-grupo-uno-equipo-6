@@ -5,6 +5,7 @@ from typing import Any, Optional
 class FieldFrame(tk.Frame):
     def __init__(
         self,
+        master: tk.Misc,
         tituloCriterios: str,
         criterios: list[str],
         tituloValores: str,
@@ -21,7 +22,7 @@ class FieldFrame(tk.Frame):
         @arg valores array con los valores iniciales; Si ‘None’, no hay valores iniciales
         @arg habilitado array con los campos no-editables por el usuario; Si ‘None’, todos son editables
         """
-        super().__init__(*args, **kwargs)
+        super().__init__(master, *args, **kwargs)
 
         tk.Label(self, text=tituloCriterios.upper()).grid(row=0, column=0)
         tk.Label(self, text=tituloValores.upper()).grid(row=0, column=1)

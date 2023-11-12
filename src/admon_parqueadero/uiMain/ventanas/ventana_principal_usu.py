@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import font
 
+from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
+
 
 class ventana_principal_usu:
     def __init__(self, ventana):
@@ -72,21 +74,17 @@ class ventana_principal_usu:
         container_form = tk.Frame(frame_3, relief="solid", borderwidth=2)
         container_form.pack(side="top", padx=100, pady=60, fill="both", expand=True)
 
-        column_input = 1
-        column_label = 0
-        list_container = ["Codigo", "Nombre", "Descripcion", "Ubicacion"]
-        for i in range(0, len(list_container)):
-            label4 = tk.Label(container_form, text=list_container[i])
-            label4.grid(row=i, column=column_label)
+        criterios = ["Codigo", "Nombre", "Descripcion", "Ubicacion"]
+        FieldFrame(container_form, "Criterio", criterios, "Valor", None, None).pack()
 
-            entrada = tk.Entry(container_form)
-            entrada.grid(row=i, column=column_input)
+        frame_botones = tk.Frame(container_form)
+        frame_botones.pack()
 
-        boton_enviar = tk.Button(container_form, text="Ingresar")
-        boton_enviar.grid(row=4, column=column_label)
+        boton_enviar = tk.Button(frame_botones, text="Ingresar")
+        boton_enviar.grid(row=0, column=0)
 
-        boton_borrar = tk.Button(container_form, text="Borrar")
-        boton_borrar.grid(row=4, column=column_input)
+        boton_borrar = tk.Button(frame_botones, text="Borrar")
+        boton_borrar.grid(row=0, column=1)
 
     def get_framepadre(self):
         return self.frame_1
