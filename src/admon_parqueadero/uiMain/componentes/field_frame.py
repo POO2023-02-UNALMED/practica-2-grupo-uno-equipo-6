@@ -26,17 +26,21 @@ class FieldFrame(tk.Frame):
 
         tk.Label(self, text=tituloCriterios.upper()).grid(row=0, column=0)
         tk.Label(self, text=tituloValores.upper()).grid(row=0, column=1)
+        self.grid_rowconfigure(0, pad=10)
 
         self.entradas: dict[str, tk.Entry] = {}
         for i, criterio in enumerate(criterios):
-            tk.Label(self, text=criterio, justify="left", anchor="w").grid(row=i+1, column=0, sticky="w")
+            tk.Label(self, text=criterio, justify="left", anchor="w").grid(
+                row=i + 1, column=0, sticky="w"
+            )
             entrada = tk.Entry(self)
-            entrada.grid(row=i+1, column=1)
+            entrada.grid(row=i + 1, column=1)
             if valores is not None and (v := valores[i]) is not None:
                 entrada.insert(0, v)
             if habilitado is not None and criterio in habilitado:
                 entrada.config(state=tk.DISABLED)
             self.entradas[criterio] = entrada
+            self.grid_rowconfigure(i + 1, pad=10)
 
     def getValue(self, criterio: str) -> str:
         """
