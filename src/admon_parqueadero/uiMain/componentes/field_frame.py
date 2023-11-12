@@ -29,12 +29,12 @@ class FieldFrame(tk.Frame):
 
         self.entradas: dict[str, tk.Entry] = {}
         for i, criterio in enumerate(criterios):
-            tk.Label(self, text=criterio).grid(row=i+1, column=0)
+            tk.Label(self, text=criterio, justify="left", anchor="w").grid(row=i+1, column=0, sticky="w")
             entrada = tk.Entry(self)
             entrada.grid(row=i+1, column=1)
             if valores is not None and (v := valores[i]) is not None:
                 entrada.insert(0, v)
-            if habilitado is not None and habilitado[i]:
+            if habilitado is not None and criterio in habilitado:
                 entrada.config(state=tk.DISABLED)
             self.entradas[criterio] = entrada
 

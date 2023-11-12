@@ -79,6 +79,7 @@ class ventana_principal_usu:
 
         frame_botones = tk.Frame(container_form)
         frame_botones.pack()
+        frame_botones.grid_columnconfigure(0, pad=20)
 
         boton_enviar = tk.Button(frame_botones, text="Ingresar")
         boton_enviar.grid(row=0, column=0)
