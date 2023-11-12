@@ -104,7 +104,7 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Alejandro Arias Orozco"),
                     ("Fecha de nacimiento", "2003/05/09"),
-                    ("Información básica", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta Le gusta ver series y películas."),
+                    ("Información básica", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y películas."),
                 ],
                 "fotos": (
                     "300x300_naranja.png",
