@@ -5,7 +5,7 @@ import tkinter as tk
 from tkinter import font
 from typing import Any, TypeVar, TypedDict
 
-from admon_parqueadero.uiMain.widgets.label_ajustable import LabelAjustable
+from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
 
 
 class VentanaInicio(tk.Frame):
