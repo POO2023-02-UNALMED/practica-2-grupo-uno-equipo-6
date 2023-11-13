@@ -9,6 +9,8 @@ class Serializador:
         pass
 
     def escribirObjeto(self, objeto: object, ruta: Path):
+        if not ruta.exists():
+            self._crearArchivo(ruta)
         try:
             with ruta.open("wb") as archivo:
                 pickle.dump(objeto, archivo)
@@ -16,3 +18,8 @@ class Serializador:
             raise BaseDatosException(
                 "Ha ocurrido un error al escribir el archivo", e
             ) from e
+
+    def _crearArchivo(self, ruta: Path) -> None:
+        ruta.mkdir(parents= True)
+        with open(ruta, "wb"):
+            pass

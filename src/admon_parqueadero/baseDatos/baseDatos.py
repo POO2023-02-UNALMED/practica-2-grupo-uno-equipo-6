@@ -19,6 +19,9 @@ class BaseDatos:
 
     @classmethod
     def leerDatos(cls) -> Optional[BaseDatos]:
+        # crear el directorio y el archivo en caso de que no exista
+        if not BaseDatos._RUTA_ARCHIVO.exists():
+            BaseDatos._crearArchivo()
         deserializador = Deserializador(BaseDatos._RUTA_ARCHIVO)
 
         existenDatos = deserializador.existenDatos()
@@ -32,6 +35,12 @@ class BaseDatos:
     def escribirDatos(self) -> None:
         serializador = Serializador()
         serializador.escribirObjeto(self, BaseDatos._RUTA_ARCHIVO)
+
+    @classmethod
+    def _crearArchivo(cls) -> None:
+        BaseDatos._RUTA_ARCHIVO.mkdir(parents=True)
+        with open(BaseDatos._RUTA_ARCHIVO, "wb"):
+            pass
 
     def buscarClienteRegistrado(self, cedula: int) -> Optional[Cliente]:
         return self._clientesResgistrados.get(cedula)
