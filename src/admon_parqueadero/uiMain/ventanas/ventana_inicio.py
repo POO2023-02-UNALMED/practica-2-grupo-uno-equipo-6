@@ -1,11 +1,12 @@
 from importlib.abc import Traversable
-from importlib.resources import files, as_file
+from importlib.resources import as_file
 from collections.abc import Callable, Iterable, Iterator
 import tkinter as tk
 from tkinter import font
 from typing import Any, TypeVar, TypedDict
 
 from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
+from admon_parqueadero.uiMain.utils import ruta_imagen, ruta_imagenes
 
 
 class VentanaInicio(tk.Frame):
@@ -325,14 +326,6 @@ class GridFotos(tk.Frame):
             self.photo_img0_1.config(file=f1)
             self.photo_img1_0.config(file=f2)
             self.photo_img1_1.config(file=f3)
-
-
-def ruta_imagen(imagen: str) -> Traversable:
-    return ruta_imagenes().joinpath(imagen)
-
-
-def ruta_imagenes() -> Traversable:
-    return files("admon_parqueadero").joinpath("imagenes")
 
 
 T = TypeVar("T")

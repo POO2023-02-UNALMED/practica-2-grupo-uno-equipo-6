@@ -13,7 +13,7 @@ class Deserializador:
             with self._ruta.open("rb") as archivo:
                 objeto = pickle.load(archivo)
                 return objeto
-        except pickle.UnpicklingError as e:
+        except (IOError, pickle.UnpicklingError) as e:
             raise BaseDatosException(
                 "Ha ocurrido un error leyendo el archivo", e
             ) from e

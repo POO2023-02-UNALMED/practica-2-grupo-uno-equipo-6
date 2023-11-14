@@ -14,7 +14,7 @@ class Serializador:
         try:
             with ruta.open("wb") as archivo:
                 pickle.dump(objeto, archivo)
-        except pickle.PicklingError as e:
+        except (IOError, pickle.PicklingError) as e:
             raise BaseDatosException(
                 "Ha ocurrido un error al escribir el archivo", e
             ) from e
