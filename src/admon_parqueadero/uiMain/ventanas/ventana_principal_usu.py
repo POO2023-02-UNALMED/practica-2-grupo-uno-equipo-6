@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import font
+from tkinter import font, messagebox
 
 from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
 
@@ -14,6 +14,7 @@ class ventana_principal_usu:
         self.nombre_aplicacion = "PARQUEADERO"
         self.nombre_proceso = "VENDER CARRO"
         self.ventana = ventana
+        self.ventana.title("Parqueadero")
         self.descripcion = "descripcion parqueadero"
 
         self.construct_ui()
@@ -29,23 +30,50 @@ class ventana_principal_usu:
     #     self.master.config(menu=menu)
 
     def create(self):
-        label1 = tk.Label(
-            self.ventana, text=self.nombre_aplicacion, font=self.fuente_negrita
-        )
-        label1.pack(anchor="nw", padx=10, pady=10)
+        #label1 = tk.Label(
+        #    self.ventana, text=self.nombre_aplicacion, font=self.fuente_negrita
+        #)
+        #label1.pack(anchor="nw", padx=10, pady=10)
 
         frame_1 = tk.Frame(self.ventana, relief="solid", borderwidth=2)
         frame_1.pack(side="top", padx=10, pady=10, fill="both", expand=True)
         self.frame_1 = frame_1
+    
+    def opcionAyuda(self):
+        messagebox.showinfo("Información de los autores", "Sara Isabel Suarez Londoño\nSofía Giraldo López\nAlejandro Arias Orozco\nJuan Sebastian Pabuena Gomez\nKatherine Del Pilar Puentes Basilio")
 
     def nav(self):
-        barra_de_botones = tk.Frame(self.frame_1)
-        barra_de_botones.pack(fill="both")
-        botones = ["Archivo", "Procesos y Consultas", "Ayuda"]
-        row = 0
-        for indice in range(0, len(botones)):
-            boton2 = tk.Button(barra_de_botones, text=botones[indice])
-            boton2.grid(row=row, column=indice)
+        #frameMenu = tk.Frame(self.ventana)
+        #frameMenu.pack(fill="both")
+        menuBar = tk.Menu(self.ventana)
+        self.ventana.config(menu = menuBar)
+
+        archivo = tk.Menu(menuBar)
+        menuBar.add_cascade(label= "Archivo", menu=archivo)
+        archivo.add_command(label="Aplicación")
+        archivo.add_command(label="Salir")
+        procycons = tk.Menu(menuBar)
+        menuBar.add_cascade(label="Procesos y Consultas", menu=procycons)
+        procycons.add_command(label="Ingresar Vehículo")
+        procycons.add_command(label="Vender Carro")
+        procycons.add_command(label="Comprar Carro")
+        procycons.add_command(label="Taller")
+        procycons.add_command(label="Manejo de parqueadero")
+        ayuda = tk.Menu(menuBar)
+        menuBar.add_cascade(label = "Ayuda", menu=ayuda)
+        ayuda.add_command(label="Acerca de", command=self.opcionAyuda)
+
+        #barra_de_botones = tk.Frame(self.frame_1)
+        #barra_de_botones.pack(fill="both")
+        #botones = ["Archivo", "Procesos y Consultas", "Ayuda"]
+        #row = 0
+        #for indice in range(0, len(botones)):
+        #    boton2 = tk.Button(barra_de_botones, text=botones[indice])
+        #    boton2.grid(row=row, column=indice)
+
+    #def menuBotones(self):
+    #    for boton in self.barra_de_botones:
+    #        if boton == "Archivo":
 
     def form(self):
         frame_3 = tk.Frame(self.frame_1)
