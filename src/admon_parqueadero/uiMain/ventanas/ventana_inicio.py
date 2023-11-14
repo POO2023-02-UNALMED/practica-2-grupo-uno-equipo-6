@@ -65,7 +65,10 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Sara Isabel Suárez Londoño"),
                     ("Fecha de nacimiento", "2004/02/20"),
-                    ("Información básica", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta escuchar música y programar."),
+                    (
+                        "Información básica",
+                        "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta escuchar música y programar.",
+                    ),
                 ],
                 "fotos": (
                     "300x300_azul.png",
@@ -78,7 +81,10 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Juan Sebastián Pabuena Gómez"),
                     ("Fecha de nacimiento", "2005/06/10"),
-                    ("Información básica", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta dormir y escuchar música."),
+                    (
+                        "Información básica",
+                        "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta dormir y escuchar música.",
+                    ),
                 ],
                 "fotos": (
                     "300x300_verde.png",
@@ -91,7 +97,10 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Sofía Giraldo López"),
                     ("Fecha de nacimiento", "2003/05/02"),
-                    ("Información básica", "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y aprender cosas nuevas."),
+                    (
+                        "Información básica",
+                        "Estudiante de tercer semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y aprender cosas nuevas.",
+                    ),
                 ],
                 "fotos": (
                     "300x300_rojo.png",
@@ -104,7 +113,10 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Alejandro Arias Orozco"),
                     ("Fecha de nacimiento", "2003/05/09"),
-                    ("Información básica", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y películas."),
+                    (
+                        "Información básica",
+                        "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta ver series y películas.",
+                    ),
                 ],
                 "fotos": (
                     "300x300_naranja.png",
@@ -117,7 +129,10 @@ class VentanaInicio(tk.Frame):
                 "biografia": [
                     ("Nombre", "Katherine Del Pilar Puentes Basilio"),
                     ("Fecha de nacimiento", "2005/01/13"),
-                    ("Información básica", "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta jugar voleibol y el helado."),
+                    (
+                        "Información básica",
+                        "Estudiante de segundo semestre de Ingeniería de Sistemas e Informática. Le gusta jugar voleibol y el helado.",
+                    ),
                 ],
                 "fotos": (
                     "300x300_gris.png",
@@ -151,17 +166,22 @@ class VentanaInicio(tk.Frame):
         self.imagenes.destroy()
         self.btn_ingreso.destroy()
 
-        self.f = tk.Frame(self.p4)
-        self.f.pack(expand=True, fill="both")
+        self.descripcion = tk.Frame(self.p4)
+        self.descripcion.pack(expand=True, fill="both", padx=10)
 
-        l = tk.Label(self.f, text="hola")
-        l.pack(expand=True, fill="both")
+        texto_descripcion = LabelAjustable(
+            self.descripcion,
+            text="Esta aplicacion permite administrar de manera conjunta varios establecimientos pertenecientes a un Parqueadero. Especificamente contiene las herramientas necesarias para administrar un parqueadero, comprar y vender vehiculos además de ofrecer servicio de taller y demás servicios similares.",
+        )
+        texto_descripcion.pack(expand=True, fill="both")
 
-        boton_regresar = tk.Button(self.f, text="Regresar", command=self.regresar_de_la_descripcion)
+        boton_regresar = tk.Button(
+            self.descripcion, text="Regresar", command=self.regresar_de_la_descripcion
+        )
         boton_regresar.pack(side="bottom", padx=10, pady=10)
-    
+
     def regresar_de_la_descripcion(self):
-        self.f.destroy()
+        self.descripcion.destroy()
         self.configurar_p4()
 
     def configurar_p4(self):
@@ -175,7 +195,7 @@ class VentanaInicio(tk.Frame):
 
         self.destroy()
         self.master.config(menu=tk.Menu())
-        ventana_principal_usu(self.master)
+        ventana_principal_usu(self.master).pack(side="top", fill="both", expand=True)
 
     def siguiente_desarrollador(self) -> None:
         self.p5.siguiente_biografia()
