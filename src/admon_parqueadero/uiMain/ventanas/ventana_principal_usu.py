@@ -42,6 +42,17 @@ class ventana_principal_usu:
     def opcionAyuda(self):
         messagebox.showinfo("Información de los autores", "Sara Isabel Suarez Londoño\nSofía Giraldo López\nAlejandro Arias Orozco\nJuan Sebastian Pabuena Gomez\nKatherine Del Pilar Puentes Basilio")
 
+    def opcionApp(self):
+        messagebox.showinfo("Información de la aplicación", "Info básica de la aplicación")
+    
+    def salir(self) -> None: #Arreglar, debe volver a la ventana de inicio
+        from .ventana_inicio import VentanaInicio
+
+        self.destroy()
+        self.master.config(menu=tk.Menu())
+        VentanaInicio(self.master) 
+
+    
     def nav(self):
         #frameMenu = tk.Frame(self.ventana)
         #frameMenu.pack(fill="both")
@@ -50,8 +61,8 @@ class ventana_principal_usu:
 
         archivo = tk.Menu(menuBar)
         menuBar.add_cascade(label= "Archivo", menu=archivo)
-        archivo.add_command(label="Aplicación")
-        archivo.add_command(label="Salir")
+        archivo.add_command(label="Aplicación", command=self.opcionApp)
+        archivo.add_command(label="Salir", command=self.salir)
         procycons = tk.Menu(menuBar)
         menuBar.add_cascade(label="Procesos y Consultas", menu=procycons)
         procycons.add_command(label="Ingresar Vehículo")
