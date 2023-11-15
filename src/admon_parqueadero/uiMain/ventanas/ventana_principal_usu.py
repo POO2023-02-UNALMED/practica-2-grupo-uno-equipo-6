@@ -96,10 +96,8 @@ class ventana_principal_usu(tk.Frame):
             self.frame_funcionalidad, text=texto, font=("Arial", 12)
         )
         texto_descripcion.pack(padx=5, pady=10, fill="x")
-    
+
     def cambiar_funcionalidad(self, clase_funcionalidad):
         self.frame_funcionalidad.destroy()
-        self.frame_funcionalidad = tk.Frame(self)
-        self.frame_funcionalidad.pack()
-        funcionalidad = clase_funcionalidad(self.frame_funcionalidad)
-        funcionalidad.pack()
+        self.frame_funcionalidad = clase_funcionalidad(self)
+        self.frame_funcionalidad.pack(expand=True, fill="both")
