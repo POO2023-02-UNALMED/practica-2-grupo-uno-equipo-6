@@ -68,25 +68,8 @@ class ventana_principal_usu(tk.Frame):
         texto_bienvenida = tk.Label(
             self.frame_funcionalidad, text="Bienvenido", font=("Arial", 20)
         )
-        texto_bienvenida.pack(anchor="n", padx=5, pady=5)
+        texto_bienvenida.pack(side="top",padx=5, pady=5)
         
-
-        # tratar de poner gif
-        frames_num = 80
-        archivo_ruta = ruta_imagen("guido-pitstop.gif")
-        with as_file(archivo_ruta) as archivo:
-            frames = [tk.PhotoImage(file=archivo, format='gif -index %i' %(i)) for i in range(frames_num)]
-            def update(ind: int) -> None:
-                """ Actualiza la imagen gif """
-                frame = frames[ind]
-                ind += 1
-                if ind == frames_num:
-                    ind = 0
-                canvas.create_image(0, 0, image=frame, anchor="nw")
-                self.frame_funcionalidad.after(80, update, ind) # Numero que regula la velocidad del gif
-            canvas = tk.Canvas(self.frame_funcionalidad, width=498, height=202)
-            canvas.pack(side="bottom", fill="x")
-            self.frame_funcionalidad.after(0, update, 0)
 
         texto = "Para empezar a usar la aplicación seleccione una de las opciones listadas en procesos y consultas, recomendamos empezar\
  ingresando un vehiculo que no se encuentre en el parqueadero. Esta aplicación le permitira administrar y realizar servicios\
@@ -100,5 +83,5 @@ class ventana_principal_usu(tk.Frame):
 
     def cambiar_funcionalidad(self, clase_funcionalidad: Type[BaseFuncionalidad]) -> None:
         self.frame_funcionalidad.destroy()
-        self.frame_funcionalidad = clase_funcionalidad(self)
-        self.frame_funcionalidad.pack(expand=True, fill="both")
+        self.frame_funcionalidad = clase_funcionalidad(self, highlightbackground="black", highlightthickness=2)
+        self.frame_funcionalidad.pack(side="top", fill="both", expand=True, padx=10, pady=10)

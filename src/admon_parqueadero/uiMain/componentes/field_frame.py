@@ -26,12 +26,12 @@ class FieldFrame(tk.Frame):
 
         tk.Label(self, text=tituloCriterios.upper()).grid(row=0, column=0)
         tk.Label(self, text=tituloValores.upper()).grid(row=0, column=1)
-        self.grid_rowconfigure(0, pad=20)
+        self.columnconfigure(0, pad=20)
 
         self.entradas: dict[str, tk.Entry] = {}
         for i, criterio in enumerate(criterios):
             tk.Label(self, text=criterio, justify="left", anchor="w").grid(
-                row=i + 1, column=0, sticky="w", padx=20
+                row=i + 1, column=0, sticky="w"
             )
             entrada = tk.Entry(self)
             entrada.grid(row=i + 1, column=1)
