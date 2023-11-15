@@ -1,4 +1,3 @@
-from importlib.resources import as_file
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Type
@@ -27,7 +26,7 @@ class ventana_principal_usu(tk.Frame):
             baseDatos.setParqueadero(parqueadero)
         self._baseDatos = baseDatos
 
-        def cerrar():
+        def cerrar() -> None:
             self.master.destroy()
             self._baseDatos.escribirDatos()
 
@@ -104,3 +103,4 @@ class ventana_principal_usu(tk.Frame):
         self.frame_funcionalidad = funcionalidad
         self.frame_funcionalidad.pack(side="top", fill="both", expand=True, padx=10, pady=10)
         funcionalidad.setBaseDatos(self._baseDatos)
+

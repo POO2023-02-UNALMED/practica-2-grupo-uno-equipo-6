@@ -36,6 +36,7 @@ class FieldFrame(tk.Frame):
             tk.Label(self, text=criterio, justify="left", anchor="w").grid(
                 row=i + 1, column=0, sticky="w"
                 )
+            entrada: tk.Misc
             if (opciones := combobox.get(criterio)) is not None:
                 valor = tk.StringVar(value='i')
                 cb = ttk.Combobox(self, values=opciones, textvariable=valor)

@@ -1,12 +1,12 @@
-from typing import Any
-#import admon_parqueadero.gestorAplicacion.vehiculos.vehiculo
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from admon_parqueadero.gestorAplicacion.parqueadero.factura import Factura
 from admon_parqueadero.gestorAplicacion.personas.persona import Persona
 
+if TYPE_CHECKING:
+    from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
-#Vehiculo = admon_parqueadero.gestorAplicacion.vehiculos.vehiculo.Vehiculo
-
-Vehiculo = Any
 
 class Cliente(Persona):
     def __init__(

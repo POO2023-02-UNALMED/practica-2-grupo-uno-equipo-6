@@ -1,11 +1,9 @@
 from admon_parqueadero.gestorAplicacion.personas.persona import Persona
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
-from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
 from admon_parqueadero.gestorAplicacion.vehiculos.moto import Moto
-from admon_parqueadero.gestorAplicacion.parqueadero.almacen import Almacen
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
 

@@ -1,11 +1,10 @@
-from typing import Optional
+from __future__ import annotations
 
-import admon_parqueadero.gestorAplicacion.personas.cliente
-import admon_parqueadero.gestorAplicacion.parqueadero.plaza
+from typing import TYPE_CHECKING, Optional
 
-
-Cliente = admon_parqueadero.gestorAplicacion.personas.cliente.Cliente
-Plaza = admon_parqueadero.gestorAplicacion.parqueadero.plaza.Plaza
+if TYPE_CHECKING:
+    from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
+    from admon_parqueadero.gestorAplicacion.parqueadero.plaza import Plaza
 
 
 class Vehiculo:

@@ -1,10 +1,11 @@
 import tkinter as tk
+from typing import Any
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 
 from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
 
 class FormularioCliente(tk.Frame):
-    def __init__(self, master, baseDatos: BaseDatos, *args, **kwargs):
+    def __init__(self, master: tk.Misc, baseDatos: BaseDatos, *args: Any, **kwargs: Any) -> None:
         super().__init__(master, *args, **kwargs)
 
         self._baseDatos = baseDatos
@@ -23,7 +24,7 @@ class FormularioCliente(tk.Frame):
         btn_borrar = tk.Button(botones, text="Borrar")
         btn_borrar.grid(row=0, column=1)
 
-    def manejar_entrar(self):
+    def manejar_entrar(self) -> None:
         cedula = int(self.field_frame.getValue("Cédula"))  # TODO: manejar errores si eso no es un numero
         cliente = self._baseDatos.buscarClienteRegistrado(cedula)
         if cliente is None:

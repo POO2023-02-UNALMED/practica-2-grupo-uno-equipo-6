@@ -1,11 +1,12 @@
+from __future__ import annotations
+
 from datetime import date, time, datetime
-from typing import Any
+from typing import TYPE_CHECKING
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
-# import admon_parqueadero.gestorAplicacion.personas.cliente
 
+if TYPE_CHECKING:
+    from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 
-# Cliente = admon_parqueadero.gestorAplicacion.personas.cliente.Cliente
-Cliente = Any
 
 class Factura:
     _facturasCreadas = 0
