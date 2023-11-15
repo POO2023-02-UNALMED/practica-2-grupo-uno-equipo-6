@@ -1,9 +1,10 @@
 from importlib.resources import as_file
 import tkinter as tk
 from tkinter import messagebox
-from typing import Any
+from typing import Any, Type
 
 from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
+from admon_parqueadero.uiMain.funcionalidades.base_funcionalidad import BaseFuncionalidad
 from admon_parqueadero.uiMain.funcionalidades.ingresar_vehiculo import IngresarVehiculo
 from admon_parqueadero.uiMain.utils import ruta_imagen
 
@@ -75,7 +76,7 @@ class ventana_principal_usu(tk.Frame):
         archivo_ruta = ruta_imagen("guido-pitstop.gif")
         with as_file(archivo_ruta) as archivo:
             frames = [tk.PhotoImage(file=archivo, format='gif -index %i' %(i)) for i in range(frames_num)]
-            def update(ind):
+            def update(ind: int) -> None:
                 """ Actualiza la imagen gif """
                 frame = frames[ind]
                 ind += 1
@@ -97,7 +98,7 @@ class ventana_principal_usu(tk.Frame):
         )
         texto_descripcion.pack(padx=5, pady=10, fill="x")
 
-    def cambiar_funcionalidad(self, clase_funcionalidad):
+    def cambiar_funcionalidad(self, clase_funcionalidad: Type[BaseFuncionalidad]) -> None:
         self.frame_funcionalidad.destroy()
         self.frame_funcionalidad = clase_funcionalidad(self)
         self.frame_funcionalidad.pack(expand=True, fill="both")

@@ -181,11 +181,11 @@ class VentanaInicio(tk.Frame):
         )
         boton_regresar.pack(side="bottom", padx=10, pady=10)
 
-    def regresar_de_la_descripcion(self):
+    def regresar_de_la_descripcion(self) -> None:
         self.descripcion.destroy()
         self.configurar_p4()
 
-    def configurar_p4(self):
+    def configurar_p4(self) -> None:
         self.imagenes = Imagenes(self.p4)
         self.imagenes.pack(side="top", expand=True, fill="both")
         self.btn_ingreso = tk.Button(self.p4, text="Ingresar", command=self.ingresar)

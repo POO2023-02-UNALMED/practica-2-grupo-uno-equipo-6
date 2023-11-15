@@ -8,7 +8,7 @@ class Serializador:
     def __init__(self) -> None:
         pass
 
-    def escribirObjeto(self, objeto: object, ruta: Path):
+    def escribirObjeto(self, objeto: object, ruta: Path) -> None:
         if not ruta.exists():
             self._crearArchivo(ruta)
         try:

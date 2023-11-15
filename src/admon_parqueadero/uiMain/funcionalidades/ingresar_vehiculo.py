@@ -6,7 +6,10 @@ from admon_parqueadero.uiMain.funcionalidades.base_funcionalidad import BaseFunc
 
 class IngresarVehiculo(BaseFuncionalidad):
     def __init__(self, master: tk.Frame):
-        super().__init__(master, titulo="Ingresar Vehiculo", descripcion="descripcion")
+        super().__init__(master)
+
+        self.setTitulo("Ingresar Vehiculo")
+        self.setDescripcion("descripcion")
 
         contenido = tk.Frame(self.frame_contenido)
         self.packContenido(contenido)
