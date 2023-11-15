@@ -1,8 +1,11 @@
 from __future__ import annotations
 
-from typing import Optional
-from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
+from typing import Any, Optional
+# import admon_parqueadero.gestorAplicacion.vehiculos.vehiculo
 
+# Vehiculo = admon_parqueadero.gestorAplicacion.vehiculos.vehiculo.Vehiculo
+
+Vehiculo = Any
 
 class Plaza:
     _plazasTotales: list[Plaza] = []

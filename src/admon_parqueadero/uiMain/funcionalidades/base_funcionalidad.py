@@ -1,11 +1,15 @@
 import tkinter as tk
 from tkinter import font
-from typing import Any
+from typing import Any, Optional
+
+from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 
 
 class BaseFuncionalidad(tk.Frame):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
+
+        self._baseDatos: Optional[BaseDatos] = None
 
         frame_titulo = tk.Frame(self, highlightbackground="cornflowerblue", highlightthickness=2)
         frame_titulo.pack(pady=10)
@@ -28,3 +32,6 @@ class BaseFuncionalidad(tk.Frame):
 
     def packContenido(self, contenido: tk.Frame) -> None:
         contenido.pack(padx=20, pady=20)
+    
+    def setBaseDatos(self, baseDatos: BaseDatos) -> None:
+        self._baseDatos = baseDatos

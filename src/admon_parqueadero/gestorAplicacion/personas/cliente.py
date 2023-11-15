@@ -1,7 +1,12 @@
-from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
+from typing import Any
+#import admon_parqueadero.gestorAplicacion.vehiculos.vehiculo
 from admon_parqueadero.gestorAplicacion.parqueadero.factura import Factura
 from admon_parqueadero.gestorAplicacion.personas.persona import Persona
 
+
+#Vehiculo = admon_parqueadero.gestorAplicacion.vehiculos.vehiculo.Vehiculo
+
+Vehiculo = Any
 
 class Cliente(Persona):
     def __init__(

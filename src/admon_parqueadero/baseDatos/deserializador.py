@@ -9,6 +9,9 @@ class Deserializador:
         self._ruta = ruta
 
     def leerObjeto(self) -> object:
+        if not self._ruta.exists():
+            return None
+
         try:
             with self._ruta.open("rb") as archivo:
                 objeto = pickle.load(archivo)
@@ -19,7 +22,4 @@ class Deserializador:
             ) from e
 
     def existenDatos(self) -> bool:
-        try:
-            return self._ruta.stat().st_size == 0
-        except FileNotFoundError:
-            return True
+        return self._ruta.exists()

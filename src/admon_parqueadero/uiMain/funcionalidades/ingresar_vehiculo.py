@@ -15,7 +15,7 @@ class IngresarVehiculo(BaseFuncionalidad):
         contenido = tk.Frame(self.frame_contenido)
         self.packContenido(contenido)
 
-        field_frame = FieldFrame(contenido, "Hola", ["Codigo", "Nombre", "Descripcion", "Ubicacion"], "Adios", None, None)
+        field_frame = FieldFrame(contenido, "Hola", ["Codigo", "Nombre", "Descripcion", "Ubicacion"], "Adios", None, None, {"Nombre": ["A", "B"]})
         field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
         frame_botones = tk.Frame(contenido)

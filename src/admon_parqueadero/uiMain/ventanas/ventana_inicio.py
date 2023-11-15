@@ -6,7 +6,7 @@ from tkinter import font
 from typing import Any, TypeVar, TypedDict
 
 from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
-from admon_parqueadero.uiMain.utils import ruta_imagen, ruta_imagenes
+from admon_parqueadero.utils import ruta_imagen, ruta_imagenes
 
 
 class VentanaInicio(tk.Frame):

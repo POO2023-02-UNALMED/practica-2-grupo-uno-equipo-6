@@ -7,4 +7,8 @@ def ruta_imagen(imagen: str) -> Traversable:
 
 
 def ruta_imagenes() -> Traversable:
-    return files("admon_parqueadero").joinpath("imagenes")
+    return ruta_archivos_programa().joinpath("imagenes")
+
+
+def ruta_archivos_programa() -> Traversable:
+    return files("admon_parqueadero")

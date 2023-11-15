@@ -1,7 +1,11 @@
 from typing import Optional
 
-from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
-from admon_parqueadero.gestorAplicacion.parqueadero.plaza import Plaza
+import admon_parqueadero.gestorAplicacion.personas.cliente
+import admon_parqueadero.gestorAplicacion.parqueadero.plaza
+
+
+Cliente = admon_parqueadero.gestorAplicacion.personas.cliente.Cliente
+Plaza = admon_parqueadero.gestorAplicacion.parqueadero.plaza.Plaza
 
 
 class Vehiculo:

@@ -2,11 +2,13 @@ from importlib.resources import as_file
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Type
+from admon_parqueadero.baseDatos.baseDatos import BaseDatos
+from admon_parqueadero.gestorAplicacion.parqueadero.almacen import Almacen
+from admon_parqueadero.gestorAplicacion.parqueadero.parqueadero import Parqueadero
 
 from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
 from admon_parqueadero.uiMain.funcionalidades.base_funcionalidad import BaseFuncionalidad
 from admon_parqueadero.uiMain.funcionalidades.ingresar_vehiculo import IngresarVehiculo
-from admon_parqueadero.uiMain.utils import ruta_imagen
 
 
 class ventana_principal_usu(tk.Frame):
@@ -17,6 +19,19 @@ class ventana_principal_usu(tk.Frame):
         self.pack()
         self.configurar_menu()
         self.interfaz_inicio()
+        baseDatos = BaseDatos.leerDatos() # TODO: manejar errores de esto
+        if baseDatos is None:
+            # crear base de datos inicial
+            baseDatos = BaseDatos()
+            parqueadero = Parqueadero(plazasTotales=200, tarifaCarro=4000, tarifaMoto=1000, almacen=Almacen(200))
+            baseDatos.setParqueadero(parqueadero)
+        self._baseDatos = baseDatos
+
+        def cerrar():
+            self.master.destroy()
+            self._baseDatos.escribirDatos()
+
+        self.master.protocol("WM_DELETE_WINDOW", cerrar)
 
     def configurar_menu(self) -> None:
         menu_bar = tk.Menu(self.master)
@@ -53,6 +68,8 @@ class ventana_principal_usu(tk.Frame):
         self.master.config(menu=tk.Menu())
         VentanaInicio(self.master).pack(side="top", fill="both", expand=True)
 
+        self._baseDatos.escribirDatos()
+
     def acerca_de(self) -> None:
         messagebox.showinfo(
             title="Hola!!",
@@ -83,5 +100,7 @@ class ventana_principal_usu(tk.Frame):
 
     def cambiar_funcionalidad(self, clase_funcionalidad: Type[BaseFuncionalidad]) -> None:
         self.frame_funcionalidad.destroy()
-        self.frame_funcionalidad = clase_funcionalidad(self, highlightbackground="black", highlightthickness=2)
+        funcionalidad = clase_funcionalidad(self, highlightbackground="black", highlightthickness=2)
+        self.frame_funcionalidad = funcionalidad
         self.frame_funcionalidad.pack(side="top", fill="both", expand=True, padx=10, pady=10)
+        funcionalidad.setBaseDatos(self._baseDatos)
