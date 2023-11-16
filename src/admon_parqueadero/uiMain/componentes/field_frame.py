@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from typing import Any, Optional
+from typing import Any, Optional, Union
 
 
 class FieldFrame(tk.Frame):
@@ -10,7 +10,7 @@ class FieldFrame(tk.Frame):
         tituloCriterios: str,
         criterios: list[str],
         tituloValores: str,
-        valores: Optional[list[str]],
+        valores: Optional[list[Optional[str]]],
         habilitado: Optional[list[str]],
         combobox: dict[str, list[str]] = {},
         *args: Any,
@@ -31,32 +31,36 @@ class FieldFrame(tk.Frame):
         tk.Label(self, text=tituloValores.upper()).grid(row=0, column=1)
         self.columnconfigure(0, pad=20)
 
-        self.entradas: dict[str, tk.Entry] = {}
+        self.entradas: dict[str, Union[tk.Entry, ttk.Combobox]] = {}
         for i, criterio in enumerate(criterios):
             tk.Label(self, text=criterio, justify="left", anchor="w").grid(
                 row=i + 1, column=0, sticky="w"
-                )
-            entrada: tk.Misc
+            )
+
+            entrada: Union[tk.Entry, ttk.Combobox]
             if (opciones := combobox.get(criterio)) is not None:
-                valor = tk.StringVar(value='i')
-                cb = ttk.Combobox(self, values=opciones, textvariable=valor)
-                cb.grid(row=i + 1, column=1)
-                
+                self.textvariable_combobox = tk.StringVar(value="Seleccione una opción")
+                entrada = ttk.Combobox(
+                    self,
+                    values=opciones,
+                    textvariable=self.textvariable_combobox,
+                    state="readonly",
+                )
+                entrada.grid(row=i + 1, column=1)
+
                 if valores is not None and (v := valores[i]) is not None:
-                    cb.set(v)
-                entrada=cb
+                    entrada.set(v)
             else:
                 entrada = tk.Entry(self)
                 entrada.grid(row=i + 1, column=1)
+
                 if valores is not None and (v := valores[i]) is not None:
                     entrada.insert(0, v)
 
-            
             if habilitado is not None and criterio in habilitado:
                 entrada.config(state=tk.DISABLED)
             self.entradas[criterio] = entrada
             self.grid_rowconfigure(i + 1, pad=20)
-
 
     def getValue(self, criterio: str) -> str:
         """
@@ -65,3 +69,10 @@ class FieldFrame(tk.Frame):
         """
         entrada = self.entradas[criterio]
         return entrada.get()
+
+    def borrar(self) -> None:
+        for entrada in self.entradas.values():
+            if isinstance(entrada, ttk.Combobox):
+                entrada.set("")
+            else:
+                entrada.delete(0, tk.END)

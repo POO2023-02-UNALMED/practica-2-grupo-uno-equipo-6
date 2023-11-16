@@ -99,8 +99,7 @@ class ventana_principal_usu(tk.Frame):
 
     def cambiar_funcionalidad(self, clase_funcionalidad: Type[BaseFuncionalidad]) -> None:
         self.frame_funcionalidad.destroy()
-        funcionalidad = clase_funcionalidad(self, highlightbackground="black", highlightthickness=2)
+        funcionalidad = clase_funcionalidad(self, baseDatos=self._baseDatos, highlightbackground="black", highlightthickness=2)
         self.frame_funcionalidad = funcionalidad
         self.frame_funcionalidad.pack(side="top", fill="both", expand=True, padx=10, pady=10)
-        funcionalidad.setBaseDatos(self._baseDatos)
 

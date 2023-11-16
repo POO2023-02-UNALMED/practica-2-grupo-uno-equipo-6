@@ -15,21 +15,21 @@ class VentanaInicio(tk.Frame):
         self.master: tk.Tk = master
 
         master.wm_title("Inicio")
-        self.configurar_menu()
-        self.configurar_frames_izq()
-        self.configuar_frames_der()
+        self._configurar_menu()
+        self._configurar_frames_izq()
+        self._configuar_frames_der()
 
-    def configurar_menu(self) -> None:
+    def _configurar_menu(self) -> None:
         menu = tk.Menu(self.master)
         menu_inicio = tk.Menu(menu, tearoff=False)
         menu.add_cascade(label="Inicio", menu=menu_inicio)
-        menu_inicio.add_command(label="Salir de la applicacion", command=self.salir)
+        menu_inicio.add_command(label="Salir de la applicacion", command=self._salir)
         menu_inicio.add_command(
-            label="Descripción del sistema", command=self.mostrar_descripcion
+            label="Descripción del sistema", command=self._mostrar_descripcion
         )
         self.master.config(menu=menu)
 
-    def configurar_frames_izq(self) -> None:
+    def _configurar_frames_izq(self) -> None:
         frame_izq = tk.Frame(self)
         frame_izq.place(relwidth=0.5, relheight=1)
 
@@ -48,9 +48,9 @@ class VentanaInicio(tk.Frame):
         )
         msg_bienvenida.pack(expand=True, fill="x", padx=10, pady=10)
 
-        self.configurar_p4()
+        self._configurar_p4()
 
-    def configuar_frames_der(self) -> None:
+    def _configuar_frames_der(self) -> None:
         frame_der = tk.Frame(self)
         frame_der.place(relx=0.5, relwidth=0.5, relheight=1)
 
@@ -150,18 +150,18 @@ class VentanaInicio(tk.Frame):
         )
         self.p5.pack(side="top", padx=10, pady=10, fill="x")
 
-        fotos = map(lambda d: self.encontrar_fotos(d["fotos"]), desarrolladores)
+        fotos = map(lambda d: self._encontrar_fotos(d["fotos"]), desarrolladores)
         self.p6 = GridFotos(
             p2, fotos, highlightbackground="black", highlightthickness=2
         )
         self.p6.pack(side="bottom", expand=True)
 
-        self.p5.bind_click(self.siguiente_desarrollador)
+        self.p5.bind_click(self._siguiente_desarrollador)
 
-    def salir(self) -> None:
+    def _salir(self) -> None:
         self.master.destroy()
 
-    def mostrar_descripcion(self) -> None:
+    def _mostrar_descripcion(self) -> None:
         if self.btn_ingreso not in [widget for widget in self.p4.winfo_children()]:
             return
         self.imagenes.destroy()
@@ -177,32 +177,32 @@ class VentanaInicio(tk.Frame):
         texto_descripcion.pack(expand=True, fill="both")
 
         boton_regresar = tk.Button(
-            self.descripcion, text="Regresar", command=self.regresar_de_la_descripcion
+            self.descripcion, text="Regresar", command=self._regresar_de_la_descripcion
         )
         boton_regresar.pack(side="bottom", padx=10, pady=10)
 
-    def regresar_de_la_descripcion(self) -> None:
+    def _regresar_de_la_descripcion(self) -> None:
         self.descripcion.destroy()
-        self.configurar_p4()
+        self._configurar_p4()
 
-    def configurar_p4(self) -> None:
+    def _configurar_p4(self) -> None:
         self.imagenes = Imagenes(self.p4)
         self.imagenes.pack(side="top", expand=True, fill="both")
-        self.btn_ingreso = tk.Button(self.p4, text="Ingresar", command=self.ingresar)
+        self.btn_ingreso = tk.Button(self.p4, text="Ingresar", command=self._ingresar)
         self.btn_ingreso.pack(side="bottom", padx=10, pady=10)
 
-    def ingresar(self) -> None:
+    def _ingresar(self) -> None:
         from .ventana_principal_usu import ventana_principal_usu
 
         self.destroy()
         self.master.config(menu=tk.Menu())
         ventana_principal_usu(self.master).pack(side="top", fill="both", expand=True)
 
-    def siguiente_desarrollador(self) -> None:
+    def _siguiente_desarrollador(self) -> None:
         self.p5.siguiente_biografia()
         self.p6.siguiente_imagen()
 
-    def encontrar_fotos(
+    def _encontrar_fotos(
         self, fotos: tuple[str, str, str, str]
     ) -> tuple[Traversable, Traversable, Traversable, Traversable]:
         d = ruta_imagenes()
@@ -252,9 +252,9 @@ class Biografias(tk.Frame):
 
     def siguiente_biografia(self) -> None:
         actual = next(self.biografias)
-        self.label_biografia.config(text=self.biografia_str(actual))
+        self.label_biografia.config(text=self._biografia_str(actual))
 
-    def biografia_str(self, biografia: list[tuple[str, str]]) -> str:
+    def _biografia_str(self, biografia: list[tuple[str, str]]) -> str:
         return "\n".join(f"{k}: {v}" for k, v in biografia)
 
 
