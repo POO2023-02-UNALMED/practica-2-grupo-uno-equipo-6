@@ -4,6 +4,8 @@ from typing import Any, Optional, Union
 
 
 class FieldFrame(tk.Frame):
+    _COMBOBOX_TEXTO = "Seleccione una opción"
+
     def __init__(
         self,
         master: tk.Misc,
@@ -25,6 +27,10 @@ class FieldFrame(tk.Frame):
         @arg habilitado array con los campos no-editables por el usuario; Si ‘None’, todos son editables
         @arg valores combobox {clave: Nombre critero  , valor: [valor1, valor2, ...]}
         """
+
+        if valores is not None:
+            assert len(criterios) == len(valores), "hay criterios sin valores por defecto"
+
         super().__init__(master, *args, **kwargs)
 
         tk.Label(self, text=tituloCriterios.upper()).grid(row=0, column=0)
@@ -32,6 +38,7 @@ class FieldFrame(tk.Frame):
         self.columnconfigure(0, pad=20)
 
         self.entradas: dict[str, Union[tk.Entry, ttk.Combobox]] = {}
+        self.combobox_textvariables: dict[str, tk.StringVar] = {}
         for i, criterio in enumerate(criterios):
             tk.Label(self, text=criterio, justify="left", anchor="w").grid(
                 row=i + 1, column=0, sticky="w"
@@ -39,11 +46,11 @@ class FieldFrame(tk.Frame):
 
             entrada: Union[tk.Entry, ttk.Combobox]
             if (opciones := combobox.get(criterio)) is not None:
-                self.textvariable_combobox = tk.StringVar(value="Seleccione una opción")
+                self.combobox_textvariables[criterio] = tk.StringVar(value=FieldFrame._COMBOBOX_TEXTO)
                 entrada = ttk.Combobox(
                     self,
                     values=opciones,
-                    textvariable=self.textvariable_combobox,
+                    textvariable=self.combobox_textvariables[criterio],
                     state="readonly",
                 )
                 entrada.grid(row=i + 1, column=1)
@@ -71,8 +78,9 @@ class FieldFrame(tk.Frame):
         return entrada.get()
 
     def borrar(self) -> None:
-        for entrada in self.entradas.values():
+        for criterio, entrada in self.entradas.items():
             if isinstance(entrada, ttk.Combobox):
                 entrada.set("")
+                self.combobox_textvariables[criterio].set(FieldFrame._COMBOBOX_TEXTO)
             else:
                 entrada.delete(0, tk.END)
