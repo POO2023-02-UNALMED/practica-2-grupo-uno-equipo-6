@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+from tkinter import font
 from typing import Any, Optional, Union
 
 
@@ -15,6 +16,7 @@ class FieldFrame(tk.Frame):
         valores: Optional[list[Optional[str]]],
         habilitado: Optional[list[str]],
         combobox: dict[str, list[str]] = {},
+        titulo: Optional[str] = None,
         *args: Any,
         **kwargs: Any,
     ):
@@ -33,22 +35,30 @@ class FieldFrame(tk.Frame):
 
         super().__init__(master, *args, **kwargs)
 
-        tk.Label(self, text=tituloCriterios.upper()).grid(row=0, column=0)
-        tk.Label(self, text=tituloValores.upper()).grid(row=0, column=1)
-        self.columnconfigure(0, pad=20)
+        if titulo is not None:
+            tk.Label(self, text=titulo, font=font.Font(weight="bold", size=9)).pack(pady=(0, 15))
+
+        frame_formulario = tk.Frame(self)
+        frame_formulario.pack()
+        frame_formulario.grid_columnconfigure(0, pad=20)
+
+        tk.Label(frame_formulario, text=tituloCriterios.upper()).grid(row=0, column=0)
+        tk.Label(frame_formulario, text=tituloValores.upper()).grid(row=0, column=1)
 
         self._entradas: dict[str, Union[tk.Entry, ttk.Combobox]] = {}
         self._combobox_textvariables: dict[str, tk.StringVar] = {}
         for i, criterio in enumerate(criterios):
-            tk.Label(self, text=criterio, justify="left", anchor="w").grid(
+            tk.Label(frame_formulario, text=criterio, justify="left", anchor="w").grid(
                 row=i + 1, column=0, sticky="w"
             )
 
             entrada: Union[tk.Entry, ttk.Combobox]
             if (opciones := combobox.get(criterio)) is not None:
-                self._combobox_textvariables[criterio] = tk.StringVar(value=FieldFrame._COMBOBOX_TEXTO)
+                self._combobox_textvariables[criterio] = tk.StringVar(
+                    value=FieldFrame._COMBOBOX_TEXTO
+                )
                 entrada = ttk.Combobox(
-                    self,
+                    frame_formulario,
                     values=opciones,
                     textvariable=self._combobox_textvariables[criterio],
                     state="readonly",
@@ -58,7 +68,7 @@ class FieldFrame(tk.Frame):
                 if valores is not None and (v := valores[i]) is not None:
                     entrada.set(v)
             else:
-                entrada = tk.Entry(self)
+                entrada = tk.Entry(frame_formulario)
                 entrada.grid(row=i + 1, column=1)
 
                 if valores is not None and (v := valores[i]) is not None:
@@ -67,7 +77,7 @@ class FieldFrame(tk.Frame):
             if habilitado is not None and criterio in habilitado:
                 entrada.config(state=tk.DISABLED)
             self._entradas[criterio] = entrada
-            self.grid_rowconfigure(i + 1, pad=20)
+            frame_formulario.grid_rowconfigure(i + 1, pad=20)
 
     def getValue(self, criterio: str) -> str:
         """

@@ -1,5 +1,5 @@
 import tkinter as tk
-from typing import Any
+from typing import Any, Callable
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
@@ -14,7 +14,9 @@ class IngresarVehiculo(BaseFuncionalidad):
     ):
         super().__init__(master, baseDatos, *args, **kwargs)
 
-        self.setTitulo("Ingresar Vehiculo")
+        self.frame_botones: tk.Frame
+
+        self.setTitulo("Ingresar Vehículo")
         self.setDescripcion("descripcion ams asfñasjf asfas fñajs")
 
         self.contenido = tk.Frame(self.frame_contenido)
@@ -25,24 +27,79 @@ class IngresarVehiculo(BaseFuncionalidad):
         )
         formulario.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
-        # field_frame = FieldFrame(contenido, "Hola", ["Codigo", "Nombre", "Descripcion", "Ubicacion"], "Adios", None, None, {"Nombre": ["A", "B"]})
-        # field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
-
     def _configurar_ui(self, cliente: Cliente) -> None:
-        field_frame = FieldFrame(
+        placas_vehiculos = map(lambda v: v.getPlaca(), cliente.getVehiculos())
+
+        self.field_frame = FieldFrame(
             self.contenido,
             "Criterio",
-            ["Cédula"],
+            ["Cédula", "Vehículo a ingresar"],
             "Valor",
-            [str(cliente.getCedula())],
+            [str(cliente.getCedula()), None],
             ["Cédula"],
+            combobox={
+                "Vehículo a ingresar": [*placas_vehiculos, "Registrar un vehículo"]
+            },
         )
-        field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
+        self.field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
+        self._generar_botones("Continuar", lambda: self._continuar_inicio(cliente))
 
-        frame_botones = tk.Frame(self.contenido)
-        frame_botones.pack(side="bottom", fill="both", expand=True)
+    def _continuar_inicio(self, cliente: Cliente) -> None:
+        eleccion_vehiculo = self.field_frame.getValue("Vehículo a ingresar")
+        if eleccion_vehiculo == "Registrar un vehículo":
+            self._registro_vehiculo(cliente)
+        else:
+            pass
 
-        btn1 = tk.Button(frame_botones, text="Aceptar")
-        btn1.pack(side="left", fill="both", expand=True, padx=15)
-        btn2 = tk.Button(frame_botones, text="Borrar")
-        btn2.pack(side="right", fill="both", expand=True, padx=15)
+    def _registro_vehiculo(self, cliente: Cliente) -> None:
+        self.field_frame.destroy()
+        self.frame_botones.destroy()
+
+        tiposVehiculo = ["Carro"]
+        if not cliente.isDiscapacitado():
+            tiposVehiculo.append("Moto")
+
+        coloresVehiculo = [
+            "Rojo",
+            "Azul",
+            "Verde",
+            "Morado",
+            "Naranja",
+            "Gris",
+            "Negro",
+            "Blanco",
+            "Rosado",
+            "Amarillo",
+        ]
+
+        self.field_frame = FieldFrame(
+            self.contenido,
+            "Criterio",
+            ["Cédula", "Placa", "Tipo", "Color", "Modelo"],
+            "Valores",
+            [str(cliente.getCedula()), None, None, None, None],
+            ["Cédula"],
+            combobox={"Tipo": tiposVehiculo, "Color": coloresVehiculo},
+            titulo="Registro de vehiculo",
+        )
+        self.field_frame.pack()
+
+        self._generar_botones("Continuar", lambda: self._continuar_registro())
+
+    def _continuar_registro(self) -> None:
+        pass
+
+    def _generar_botones(
+        self,
+        text_principal: str,
+        f_principal: Callable[[], None],
+    ) -> None:
+        self.frame_botones = tk.Frame(self.contenido)
+        self.frame_botones.pack(side="bottom", fill="both", expand=True)
+
+        tk.Button(self.frame_botones, text=text_principal, command=f_principal).pack(
+            side="left", fill="both", expand=True, padx=15
+        )
+        tk.Button(
+            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+        ).pack(side="right", fill="both", expand=True, padx=15)

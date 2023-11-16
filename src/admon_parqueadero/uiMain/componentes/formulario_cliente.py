@@ -42,7 +42,6 @@ class FormularioCliente(tk.Frame):
         self.field_frame.destroy()
         self.botones.destroy()
         if cliente is None:
-            tk.Label(self, text="Registro de usuario").pack()
             self.field_frame = FieldFrame(
                 self,
                 "Criterio",
@@ -58,6 +57,7 @@ class FormularioCliente(tk.Frame):
                 [str(cedula), None, None, None, None, None],
                 ["Cédula"],
                 combobox={"En condición de discapacidad": ["Sí", "No"]},
+                titulo="Registro de usuario"
             )
             self.field_frame.pack()
 
