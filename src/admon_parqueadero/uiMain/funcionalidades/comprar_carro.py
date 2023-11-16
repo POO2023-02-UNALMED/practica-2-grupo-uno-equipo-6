@@ -11,4 +11,6 @@ class ComprarCarro(BaseFuncionalidad):
         super().__init__(master, baseDatos, *args, **kwargs)
 
         self.setTitulo("Comprar Carro")
-        self.setDescripcion("descripcion")
+        self.setDescripcion("Bienvenido, aquí podrá comprar un carro según sus preferencias.\
+                    Para comenzar, ingrese su documento, en caso de no estar registrado, \
+                    ingrese sus datos.")

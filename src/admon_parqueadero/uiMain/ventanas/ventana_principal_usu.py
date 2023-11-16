@@ -101,8 +101,8 @@ class ventana_principal_usu(tk.Frame):
 
     def aplicacion(self) -> None:
         messagebox.showinfo(
-            title="Hola!!",
-            message="Esta aplicación permite administrar un parqueadero ...",
+            title="Información sobre la aplicación.",
+            message="Esta aplicación permite al usuario acceder a diferentes servicios prestados por el parqueadero, y facilita el manejo de asuntos relacionados a la gerencia, por parte del administrador. Se puede acceder a estos mediante la pestaña de usuario, en el menú Procesos y Consultas.",
         )  # TODO: poner mensaje
 
     def salir(self) -> None:
@@ -116,8 +116,8 @@ class ventana_principal_usu(tk.Frame):
 
     def acerca_de(self) -> None:
         messagebox.showinfo(
-            title="Hola!!",
-            message="Los autores de esta maravillosa aplicacion somos:\n-Alejandro(power ranger azul)\n-Sofia(power ranger rosada)\n-Katherine(power ranger amarilla)\n-Sara(power ranger blanca)\n-Sebastian(power ranger rojo)",
+            title="Información sobre los autores.",
+            message="Los autores de esta maravillosa aplicacion son:\n- Alejandro (Power ranger azul)\n- Sofía (Power ranger rosada)\n- Katherine (Power ranger amarilla)\n- Sara (Power ranger blanca)\n- Sebastián (Power ranger rojo)",
         )
 
     def interfaz_inicio(self) -> None:

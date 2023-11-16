@@ -17,7 +17,10 @@ class IngresarVehiculo(BaseFuncionalidad):
         self.frame_botones: tk.Frame
 
         self.setTitulo("Ingresar Vehículo")
-        self.setDescripcion("descripcion ams asfñasjf asfas fñajs")
+        self.setDescripcion("Bienvenido, aquí podrá ingresar vehículos al parqueadero.\
+                    Para comenzar, escriba su documento de identidad.\
+                    En caso de no estar registrado, ingrese los datos personales y del vehículo que se solicitan.\
+                     Al finalizar, se generará automaticamente la factura con hora de ingreso.")
 
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)

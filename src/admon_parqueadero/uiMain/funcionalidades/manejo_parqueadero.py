@@ -11,4 +11,4 @@ class ManejoParqueadero(BaseFuncionalidad):
         super().__init__(master, baseDatos, *args, **kwargs)
 
         self.setTitulo("Manejo Parqueadero")
-        self.setDescripcion("descripcion")
+        self.setDescripcion("Bienvenido. Para acceder al manejo del parqueadero, debe ingresar la cédula del administrador. Aquí podrá contratar y despedir empleados, manejar productos, generar bonificaciones, entre otras funciones de la administración del parqueadero.")

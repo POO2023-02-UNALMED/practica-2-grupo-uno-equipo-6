@@ -11,4 +11,7 @@ class Taller(BaseFuncionalidad):
         super().__init__(master, baseDatos, *args, **kwargs)
 
         self.setTitulo("Taller")
-        self.setDescripcion("descripcion")
+
+        self.setDescripcion("Bienvenido al taller, será atendido por el mecánico de su preferencia. \
+                    Para hacer uso de los servicios del taller, su vehículo debe encontrarse en el \
+                    parqueadero. Para comenzar, ingrese sus datos y los de su vehículo.")

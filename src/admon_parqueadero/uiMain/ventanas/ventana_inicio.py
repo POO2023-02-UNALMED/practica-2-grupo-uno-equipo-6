@@ -172,7 +172,7 @@ class VentanaInicio(tk.Frame):
 
         texto_descripcion = LabelAjustable(
             self.descripcion,
-            text="Esta aplicacion permite administrar de manera conjunta varios establecimientos pertenecientes a un Parqueadero. Especificamente contiene las herramientas necesarias para administrar un parqueadero, comprar y vender vehiculos además de ofrecer servicio de taller y demás servicios similares.",
+            text="Esta aplicación permite administrar de manera conjunta varios establecimientos pertenecientes a un Parqueadero. Especificamente contiene las herramientas necesarias para administrar un parqueadero, comprar y vender vehiculos además de ofrecer servicio de taller y demás servicios similares.",
         )
         texto_descripcion.pack(expand=True, fill="both")
 
