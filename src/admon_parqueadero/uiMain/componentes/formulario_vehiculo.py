@@ -29,7 +29,7 @@ class FormularioVehiculo(tk.Frame):
         self._cliente = cliente
         self._f_final = f_final
 
-        self._configuracion_registro()
+        self._configuracion_inicial()
 
     def _configuracion_inicial(self):
         placas_vehiculos = map(lambda v: v.getPlaca(), self._cliente.getVehiculos())
