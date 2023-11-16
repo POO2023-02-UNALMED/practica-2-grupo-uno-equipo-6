@@ -1,4 +1,3 @@
-from importlib.resources import as_file
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Type
