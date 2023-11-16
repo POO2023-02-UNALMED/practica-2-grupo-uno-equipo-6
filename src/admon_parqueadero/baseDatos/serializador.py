@@ -11,7 +11,7 @@ class Serializador:
     def escribirObjeto(self, objeto: object, ruta: Path) -> None:
         if not ruta.exists():
             self._crearArchivo(ruta)
-        
+
         try:
             with ruta.open("wb") as archivo:
                 pickle.dump(objeto, archivo)

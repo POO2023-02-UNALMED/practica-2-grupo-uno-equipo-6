@@ -8,7 +8,12 @@ from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
 
 class FormularioCliente(tk.Frame):
     def __init__(
-            self, master: tk.Misc, baseDatos: BaseDatos, f_final: Callable[[Cliente], None], *args: Any, **kwargs: Any
+        self,
+        master: tk.Misc,
+        baseDatos: BaseDatos,
+        f_final: Callable[[Cliente], None],
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         super().__init__(master, *args, **kwargs)
 
@@ -41,11 +46,18 @@ class FormularioCliente(tk.Frame):
             self.field_frame = FieldFrame(
                 self,
                 "Criterio",
-                ["Cédula", "Nombre", "Teléfono", "Correo", "Dirección", "En condición de discapacidad"],
+                [
+                    "Cédula",
+                    "Nombre",
+                    "Teléfono",
+                    "Correo",
+                    "Dirección",
+                    "En condición de discapacidad",
+                ],
                 "Valor",
                 [str(cedula), None, None, None, None, None],
                 ["Cédula"],
-                combobox={"En condición de discapacidad": ["Sí", "No"]}
+                combobox={"En condición de discapacidad": ["Sí", "No"]},
             )
             self.field_frame.pack()
 
