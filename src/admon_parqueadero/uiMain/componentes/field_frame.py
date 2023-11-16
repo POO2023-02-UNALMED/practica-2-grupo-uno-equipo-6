@@ -37,8 +37,8 @@ class FieldFrame(tk.Frame):
         tk.Label(self, text=tituloValores.upper()).grid(row=0, column=1)
         self.columnconfigure(0, pad=20)
 
-        self.entradas: dict[str, Union[tk.Entry, ttk.Combobox]] = {}
-        self.combobox_textvariables: dict[str, tk.StringVar] = {}
+        self._entradas: dict[str, Union[tk.Entry, ttk.Combobox]] = {}
+        self._combobox_textvariables: dict[str, tk.StringVar] = {}
         for i, criterio in enumerate(criterios):
             tk.Label(self, text=criterio, justify="left", anchor="w").grid(
                 row=i + 1, column=0, sticky="w"
@@ -46,11 +46,11 @@ class FieldFrame(tk.Frame):
 
             entrada: Union[tk.Entry, ttk.Combobox]
             if (opciones := combobox.get(criterio)) is not None:
-                self.combobox_textvariables[criterio] = tk.StringVar(value=FieldFrame._COMBOBOX_TEXTO)
+                self._combobox_textvariables[criterio] = tk.StringVar(value=FieldFrame._COMBOBOX_TEXTO)
                 entrada = ttk.Combobox(
                     self,
                     values=opciones,
-                    textvariable=self.combobox_textvariables[criterio],
+                    textvariable=self._combobox_textvariables[criterio],
                     state="readonly",
                 )
                 entrada.grid(row=i + 1, column=1)
@@ -66,7 +66,7 @@ class FieldFrame(tk.Frame):
 
             if habilitado is not None and criterio in habilitado:
                 entrada.config(state=tk.DISABLED)
-            self.entradas[criterio] = entrada
+            self._entradas[criterio] = entrada
             self.grid_rowconfigure(i + 1, pad=20)
 
     def getValue(self, criterio: str) -> str:
@@ -74,13 +74,13 @@ class FieldFrame(tk.Frame):
         @arg criterio el criterio cuyo valor se quiere obtener
         @return el valor del criterio cuyo nombre es 'criterio'
         """
-        entrada = self.entradas[criterio]
+        entrada = self._entradas[criterio]
         return entrada.get()
 
     def borrar(self) -> None:
-        for criterio, entrada in self.entradas.items():
+        for criterio, entrada in self._entradas.items():
             if isinstance(entrada, ttk.Combobox):
                 entrada.set("")
-                self.combobox_textvariables[criterio].set(FieldFrame._COMBOBOX_TEXTO)
+                self._combobox_textvariables[criterio].set(FieldFrame._COMBOBOX_TEXTO)
             else:
                 entrada.delete(0, tk.END)
