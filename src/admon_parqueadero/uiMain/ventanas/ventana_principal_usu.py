@@ -117,7 +117,7 @@ class ventana_principal_usu(tk.Frame):
     def acerca_de(self) -> None:
         messagebox.showinfo(
             title="Información sobre los autores.",
-            message="Los autores de esta maravillosa aplicacion son:\n- Alejandro (Power ranger azul)\n- Sofía (Power ranger rosada)\n- Katherine (Power ranger amarilla)\n- Sara (Power ranger blanca)\n- Sebastián (Power ranger rojo)",
+            message="Los autores de esta maravillosa aplicacion son:\n- Alejandro (Power ranger rojo)\n- Sofía (Power ranger rosada)\n- Katherine (Power ranger amarilla)\n- Sara (Power ranger blanca)\n- Sebastián (Power ranger azul)",
         )
 
     def interfaz_inicio(self) -> None:

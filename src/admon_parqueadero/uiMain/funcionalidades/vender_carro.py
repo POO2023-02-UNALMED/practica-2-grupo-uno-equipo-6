@@ -14,9 +14,9 @@ class VenderCarro(BaseFuncionalidad):
 
         self.setTitulo("Vender Carro")
         self.setDescripcion("Bienvenido, aquí podrá vender un carro, o intercambiarlo por uno de los que\
-                    se encuentran disponibles en el parqueadero. Para comenzar, ingrese su cédula,\
-                    en caso de no estar registrado se solicita rellenar sus datos y generar el ingreso \
-                    al parqueadero del vehículo que desea vender.")
+ se encuentran disponibles en el parqueadero. Para comenzar, ingrese su cédula,\
+ en caso de no estar registrado se solicita rellenar sus datos y generar el ingreso \
+ al parqueadero del vehículo que desea vender.")
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
 

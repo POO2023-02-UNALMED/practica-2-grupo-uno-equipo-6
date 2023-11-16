@@ -3,6 +3,7 @@ from tkinter import font
 from typing import Any
 
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
+from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
 
 
 class BaseFuncionalidad(tk.Frame):
@@ -26,10 +27,10 @@ class BaseFuncionalidad(tk.Frame):
             self, highlightbackground="cornflowerblue", highlightthickness=2
         )
         frame_descripcion.pack(pady=10)
-        self.label_descripcion = tk.Label(
+        self.label_descripcion = LabelAjustable(
             frame_descripcion, font=font.Font(weight="bold", size=12)
         )
-        self.label_descripcion.pack(fill="both", expand=True)
+        self.label_descripcion.pack(fill="both", expand=True, padx=20)
 
         self.frame_contenido = tk.Frame(
             self, highlightbackground="black", highlightthickness=2
