@@ -6,10 +6,19 @@ from admon_parqueadero.gestorAplicacion.parqueadero.almacen import Almacen
 from admon_parqueadero.gestorAplicacion.parqueadero.parqueadero import Parqueadero
 
 from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
-from admon_parqueadero.uiMain.funcionalidades.base_funcionalidad import (
-    BaseFuncionalidad,
+from admon_parqueadero.uiMain.funcionalidades.base import BaseFuncionalidad
+from admon_parqueadero.uiMain.funcionalidades.taller import Taller
+from admon_parqueadero.uiMain.funcionalidades.vender_carro import VenderCarro
+from admon_parqueadero.uiMain.funcionalidades.comprar_carro import ComprarCarro
+from admon_parqueadero.uiMain.funcionalidades.manejo_parqueadero import (
+    ManejoParqueadero,
 )
+from admon_parqueadero.uiMain.funcionalidades.generar_datos import GenerarDatos
 from admon_parqueadero.uiMain.funcionalidades.ingresar_vehiculo import IngresarVehiculo
+from admon_parqueadero.uiMain.funcionalidades.registrar_cliente import RegistrarCliente
+from admon_parqueadero.uiMain.funcionalidades.registrar_vehiculo import (
+    RegistrarVehiculo,
+)
 
 
 class ventana_principal_usu(tk.Frame):
@@ -44,6 +53,7 @@ class ventana_principal_usu(tk.Frame):
         menu_archivo = tk.Menu(menu_bar, tearoff=False)
         menu_procesos_consultas = tk.Menu(menu_bar, tearoff=False)
         menu_ayuda = tk.Menu(menu_bar, tearoff=False)
+        menu_funcionalidades_extra = tk.Menu(menu_procesos_consultas, tearoff=False)
 
         menu_bar.add_cascade(label="Archivo", menu=menu_archivo)
         menu_bar.add_cascade(label="Procesos y consultas", menu=menu_procesos_consultas)
@@ -56,23 +66,34 @@ class ventana_principal_usu(tk.Frame):
             command=lambda: self.cambiar_funcionalidad(IngresarVehiculo),
         )
         menu_procesos_consultas.add_command(
-            label="Taller", command=lambda: self.cambiar_funcionalidad(IngresarVehiculo)
+            label="Taller", command=lambda: self.cambiar_funcionalidad(Taller)
         )
         menu_procesos_consultas.add_command(
             label="Vender Carro",
-            command=lambda: self.cambiar_funcionalidad(IngresarVehiculo),
+            command=lambda: self.cambiar_funcionalidad(VenderCarro),
         )
         menu_procesos_consultas.add_command(
             label="Comprar Carro",
-            command=lambda: self.cambiar_funcionalidad(IngresarVehiculo),
+            command=lambda: self.cambiar_funcionalidad(ComprarCarro),
         )
         menu_procesos_consultas.add_command(
             label="Manejo Parqueadero",
-            command=lambda: self.cambiar_funcionalidad(IngresarVehiculo),
+            command=lambda: self.cambiar_funcionalidad(ManejoParqueadero),
         )
-        menu_procesos_consultas.add_command(
-            label="Funcionalidades extras",
-            command=lambda: self.cambiar_funcionalidad(IngresarVehiculo),
+        menu_procesos_consultas.add_cascade(
+            label="Funcionalidades extras", menu=menu_funcionalidades_extra
+        )
+        menu_funcionalidades_extra.add_command(
+            label="Registrar Cliente",
+            command=lambda: self.cambiar_funcionalidad(RegistrarCliente),
+        )
+        menu_funcionalidades_extra.add_command(
+            label="Registrar Vehículo",
+            command=lambda: self.cambiar_funcionalidad(RegistrarVehiculo),
+        )
+        menu_funcionalidades_extra.add_command(
+            label="Generar Datos de Prueba",
+            command=lambda: self.cambiar_funcionalidad(GenerarDatos),
         )
         menu_ayuda.add_command(label="Acerca de", command=self.acerca_de)
 

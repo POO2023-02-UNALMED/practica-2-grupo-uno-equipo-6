@@ -5,9 +5,7 @@ from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
 from admon_parqueadero.uiMain.componentes.formulario_cliente import FormularioCliente
 
-from admon_parqueadero.uiMain.funcionalidades.base_funcionalidad import (
-    BaseFuncionalidad,
-)
+from admon_parqueadero.uiMain.funcionalidades.base import BaseFuncionalidad
 
 
 class IngresarVehiculo(BaseFuncionalidad):
