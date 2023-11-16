@@ -20,19 +20,22 @@ class FormularioCliente(tk.Frame):
         self._baseDatos = baseDatos
         self._f_final = f_final
 
-        self.field_frame = FieldFrame(self, "Criterio", ["Cédula"], "Valor", None, None)
+        self.field_frame_container = tk.Frame(self)
+        self.field_frame_container.pack()
+
+        self.field_frame = FieldFrame(self.field_frame_container, "Criterio", ["Cédula"], "Valor", None, None)
         self.field_frame.pack()
 
         self.botones = tk.Frame(self)
         self.botones.pack()
 
-        btn_entrar = tk.Button(self.botones, text="Entrar", command=self.manejar_entrar)
-        btn_entrar.grid(row=0, column=0)
+        self.btn_principal = tk.Button(self.botones, text="Entrar", command=self.manejar_entrar)
+        self.btn_principal.grid(row=0, column=0)
 
-        btn_borrar = tk.Button(
+        self.btn_borrar = tk.Button(
             self.botones, text="Borrar", command=self.field_frame.borrar
         )
-        btn_borrar.grid(row=0, column=1)
+        self.btn_borrar.grid(row=0, column=1)
 
     def manejar_entrar(self) -> None:
         cedula = int(
@@ -40,10 +43,9 @@ class FormularioCliente(tk.Frame):
         )  # TODO: manejar errores si eso no es un numero
         cliente = self._baseDatos.buscarClienteRegistrado(cedula)
         self.field_frame.destroy()
-        self.botones.destroy()
         if cliente is None:
             self.field_frame = FieldFrame(
-                self,
+                self.field_frame_container,
                 "Criterio",
                 [
                     "Cédula",
@@ -61,18 +63,8 @@ class FormularioCliente(tk.Frame):
             )
             self.field_frame.pack()
 
-            self.botones = tk.Frame(self)
-            self.botones.pack()
-
-            btn_registrar = tk.Button(
-                self.botones, text="Registrarse", command=self._registrar_usuario
-            )
-            btn_registrar.grid(row=0, column=0)
-
-            btn_borrar = tk.Button(
-                self.botones, text="Borrar", command=self.field_frame.borrar
-            )
-            btn_borrar.grid(row=0, column=1)
+            self.btn_principal.config(text="Registrarse")
+            self.btn_principal.config(command=self._registrar_usuario)
         else:
             self.destroy()
             self._f_final(cliente)
