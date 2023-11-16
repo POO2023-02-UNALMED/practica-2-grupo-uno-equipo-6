@@ -4,6 +4,7 @@ from admon_parqueadero.gestorAplicacion.parqueadero.plaza import Plaza
 from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
 from admon_parqueadero.gestorAplicacion.vehiculos.moto import Moto
+from admon_parqueadero.gestorAplicacion.vehiculos.tipo_vehiculo import TipoVehiculo
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
 
@@ -150,7 +151,7 @@ class Parqueadero:
             tipo = "Carro"
         elif isinstance(vehiculo, Moto):
             moto: Moto = vehiculo
-            if moto.getTipo() == "normal":
+            if moto.getTipo() == TipoVehiculo.NORMAL:
                 tipo = "Moto"
             else:
                 tipo = "Moto altoCC"

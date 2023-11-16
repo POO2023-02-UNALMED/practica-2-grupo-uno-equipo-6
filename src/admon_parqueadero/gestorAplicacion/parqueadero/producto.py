@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
-from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
 
 
 class Producto:

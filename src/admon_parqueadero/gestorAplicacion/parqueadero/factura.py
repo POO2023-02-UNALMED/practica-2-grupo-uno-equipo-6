@@ -1,8 +1,11 @@
+from __future__ import annotations
+
 from datetime import date, time, datetime
+from typing import TYPE_CHECKING
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
-from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
-from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
-from admon_parqueadero.gestorAplicacion.personas.persona import Persona
+
+if TYPE_CHECKING:
+    from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 
 
 class Factura:

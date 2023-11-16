@@ -1,16 +1,18 @@
 from __future__ import annotations
 from pathlib import Path
 from typing import Optional, cast
+from importlib.resources import as_file
 
 from admon_parqueadero.baseDatos.deserializador import Deserializador
 from admon_parqueadero.baseDatos.serializador import Serializador
 from admon_parqueadero.gestorAplicacion.parqueadero.parqueadero import Parqueadero
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
+from admon_parqueadero.utils import ruta_archivos_programa
 
 
 class BaseDatos:
-    _RUTA_ARCHIVO = Path("src/admon_parqueadero/baseDatos/temp/BaseDatos/datos.pkl")
+    _RUTA_ARCHIVO = ruta_archivos_programa().joinpath("baseDatos/temp/datos.pkl")
 
     def __init__(self) -> None:
         self._parqueadero: Optional[Parqueadero] = None
@@ -20,9 +22,8 @@ class BaseDatos:
     @classmethod
     def leerDatos(cls) -> Optional[BaseDatos]:
         # crear el directorio y el archivo en caso de que no exista
-        if not BaseDatos._RUTA_ARCHIVO.exists():
-            BaseDatos._crearArchivo()
-        deserializador = Deserializador(BaseDatos._RUTA_ARCHIVO)
+        with as_file(BaseDatos._RUTA_ARCHIVO) as archivo:
+            deserializador = Deserializador(archivo)
 
         existenDatos = deserializador.existenDatos()
 
@@ -34,13 +35,8 @@ class BaseDatos:
 
     def escribirDatos(self) -> None:
         serializador = Serializador()
-        serializador.escribirObjeto(self, BaseDatos._RUTA_ARCHIVO)
-
-    @classmethod
-    def _crearArchivo(cls) -> None:
-        BaseDatos._RUTA_ARCHIVO.mkdir(parents=True)
-        with open(BaseDatos._RUTA_ARCHIVO, "wb"):
-            pass
+        with as_file(BaseDatos._RUTA_ARCHIVO) as archivo:
+            serializador.escribirObjeto(self, archivo)
 
     def buscarClienteRegistrado(self, cedula: int) -> Optional[Cliente]:
         return self._clientesResgistrados.get(cedula)

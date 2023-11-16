@@ -8,9 +8,10 @@ class Serializador:
     def __init__(self) -> None:
         pass
 
-    def escribirObjeto(self, objeto: object, ruta: Path):
+    def escribirObjeto(self, objeto: object, ruta: Path) -> None:
         if not ruta.exists():
             self._crearArchivo(ruta)
+
         try:
             with ruta.open("wb") as archivo:
                 pickle.dump(objeto, archivo)
@@ -20,6 +21,7 @@ class Serializador:
             ) from e
 
     def _crearArchivo(self, ruta: Path) -> None:
-        ruta.mkdir(parents= True)
+        if not ruta.parent.exists():
+            ruta.parent.mkdir(parents=True)
         with open(ruta, "wb"):
             pass

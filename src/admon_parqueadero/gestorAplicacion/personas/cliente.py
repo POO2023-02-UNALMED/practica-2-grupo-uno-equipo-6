@@ -1,6 +1,11 @@
-from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
 from admon_parqueadero.gestorAplicacion.parqueadero.factura import Factura
 from admon_parqueadero.gestorAplicacion.personas.persona import Persona
+
+if TYPE_CHECKING:
+    from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
 
 class Cliente(Persona):

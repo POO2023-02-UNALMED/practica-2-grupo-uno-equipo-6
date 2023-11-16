@@ -27,7 +27,7 @@ class Plaza:
     def getDiscapacitado(self) -> bool:
         return self._discapacitado
 
-    def setNumeroPlaza(self, numeroPlaza) -> None:
+    def setNumeroPlaza(self, numeroPlaza: int) -> None:
         self._numeroPlaza = numeroPlaza
 
     def getNumeroPlaza(self) -> int:
@@ -48,5 +48,5 @@ class Plaza:
     def getTipo(self) -> str:
         return self._tipo
 
-    def setTipo(self, tipo) -> None:
+    def setTipo(self, tipo: str) -> None:
         self._tipo = tipo
