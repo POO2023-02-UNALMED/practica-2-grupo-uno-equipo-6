@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import font
-from typing import Any
+from typing import Any, cast
 
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
+from admon_parqueadero.gestorAplicacion.parqueadero.parqueadero import Parqueadero
 from admon_parqueadero.uiMain.componentes.label_ajustable import LabelAjustable
 
 
@@ -13,6 +14,7 @@ class BaseFuncionalidad(tk.Frame):
         super().__init__(master, *args, **kwargs)
 
         self._baseDatos = baseDatos
+        self._parqueadero = cast(Parqueadero, baseDatos.getParqueadero())
 
         frame_titulo = tk.Frame(
             self, highlightbackground="cornflowerblue", highlightthickness=2
@@ -48,3 +50,6 @@ class BaseFuncionalidad(tk.Frame):
 
     def getBaseDatos(self) -> BaseDatos:
         return self._baseDatos
+
+    def getParqueadero(self) -> Parqueadero:
+        return self._parqueadero
