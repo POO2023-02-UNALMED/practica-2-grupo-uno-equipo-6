@@ -91,7 +91,7 @@ class FieldFrame(tk.Frame):
         entrada = self._entradas[criterio]
         return entrada.get().strip()
 
-    def getValueTipo(self, criterio: str, tipo: Callable[[str], T]) -> T:
+    def getValueNumero(self, criterio: str, tipo: Callable[[str], T]) -> T:
         v = self.getValue(criterio)
         try:
             return tipo(v)
