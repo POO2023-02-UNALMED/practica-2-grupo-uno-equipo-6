@@ -34,7 +34,7 @@ class ventana_principal_usu(tk.Frame):
             # crear base de datos inicial
             baseDatos = BaseDatos()
             parqueadero = Parqueadero(
-                plazasTotales=200,
+                plazasTotales=50,
                 tarifaCarro=4000,
                 tarifaMoto=1000,
                 almacen=Almacen(200),
