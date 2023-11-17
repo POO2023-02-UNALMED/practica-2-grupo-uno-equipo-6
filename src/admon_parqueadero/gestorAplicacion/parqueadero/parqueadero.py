@@ -25,6 +25,7 @@ class Parqueadero:
         self._almacen = almacen
         self._administrador: Optional[Empleado] = None
         self._vehiculosVenta: list[Carro] = []
+        self.inicializarPlazas(plazasTotales)
 
     def getVehiculosVenta(self) -> list[Carro]:
         return self._vehiculosVenta
@@ -167,7 +168,7 @@ class Parqueadero:
                 return p
         return None
 
-    def inicializarPlacas(self, plazasTotales: int) -> None:
+    def inicializarPlazas(self, plazasTotales: int) -> None:
         # calcular el numero de plazas para motos y para carros(por convencion el 60 % seran de carro y el 40 % de moto)
         numPlazasCarro = int((plazasTotales * 0.6))
         numPlazasMoto = plazasTotales - numPlazasCarro
