@@ -1,7 +1,11 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font
-from typing import Any, Optional, Union
+from typing import Any, Callable, Optional, TypeVar, Union
+from admon_parqueadero.errores import ErrorNumeroEsperado
+
+
+T = TypeVar("T")
 
 
 class FieldFrame(tk.Frame):
@@ -85,7 +89,14 @@ class FieldFrame(tk.Frame):
         @return el valor del criterio cuyo nombre es 'criterio'
         """
         entrada = self._entradas[criterio]
-        return entrada.get()
+        return entrada.get().strip()
+
+    def getValueTipo(self, criterio: str, tipo: Callable[[str], T]) -> T:
+        v = self.getValue(criterio)
+        try:
+            return tipo(v)
+        except ValueError:
+            raise ErrorNumeroEsperado(criterio)
 
     def borrar(self) -> None:
         for criterio, entrada in self._entradas.items():

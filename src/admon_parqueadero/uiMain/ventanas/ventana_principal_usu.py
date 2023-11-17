@@ -20,6 +20,8 @@ from admon_parqueadero.uiMain.funcionalidades.registrar_vehiculo import (
     RegistrarVehiculo,
 )
 
+from admon_parqueadero.errores import ErrorNumeroEsperado
+
 
 class ventana_principal_usu(tk.Frame):
     def __init__(self, master: tk.Tk, *args: Any, **kwargs: Any) -> None:
@@ -47,6 +49,8 @@ class ventana_principal_usu(tk.Frame):
             self._baseDatos.escribirDatos()
 
         self.master.protocol("WM_DELETE_WINDOW", cerrar)
+
+        tk.Tk.report_callback_exception = self.mostrar_error
 
     def configurar_menu(self) -> None:
         menu_bar = tk.Menu(self.master)
@@ -147,13 +151,19 @@ class ventana_principal_usu(tk.Frame):
         self, clase_funcionalidad: Type[BaseFuncionalidad]
     ) -> None:
         self.frame_funcionalidad.destroy()
-        funcionalidad = clase_funcionalidad(
+        self.funcionalidad = clase_funcionalidad(
             self,
             baseDatos=self._baseDatos,
             highlightbackground="black",
             highlightthickness=2,
         )
-        self.frame_funcionalidad = funcionalidad
+        self.frame_funcionalidad = self.funcionalidad
         self.frame_funcionalidad.pack(
             side="top", fill="both", expand=True, padx=10, pady=10
         )
+
+    def mostrar_error(self, exc, error, tb):
+        if isinstance(error, ErrorNumeroEsperado):
+            self.funcionalidad.imprimir(str(error))
+        else:
+            messagebox.showerror(title="Ha ocurrido un error", message=str(error))

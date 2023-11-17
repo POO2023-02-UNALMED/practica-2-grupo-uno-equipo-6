@@ -38,12 +38,10 @@ class FormularioCliente(tk.Frame):
         self.btn_borrar.grid(row=0, column=1)
 
     def manejar_entrar(self) -> None:
-        cedula = int(
-            self.field_frame.getValue("Cédula")
-        )  # TODO: manejar errores si eso no es un numero
+        cedula = self.field_frame.getValueTipo("Cédula", int)
         cliente = self._baseDatos.buscarClienteRegistrado(cedula)
-        self.field_frame.destroy()
         if cliente is None:
+            self.field_frame.destroy()
             self.field_frame = FieldFrame(
                 self.field_frame_container,
                 "Criterio",
@@ -72,9 +70,9 @@ class FormularioCliente(tk.Frame):
     def _registrar_usuario(self) -> None:
         # TODO: verificar que los numeros sí sean números
         # TODO: verificar que todos las entradas sí tienen valores (que no esten vacías)
-        cedula = int(self.field_frame.getValue("Cédula"))
+        cedula = self.field_frame.getValueTipo("Cédula", int)
         nombre = self.field_frame.getValue("Nombre")
-        telefono = int(self.field_frame.getValue("Teléfono"))
+        telefono = self.field_frame.getValueTipo("Teléfono", int)
         correo = self.field_frame.getValue("Correo")
         direccion = self.field_frame.getValue("Dirección")
         discapacitado_str = self.field_frame.getValue("En condición de discapacidad")
