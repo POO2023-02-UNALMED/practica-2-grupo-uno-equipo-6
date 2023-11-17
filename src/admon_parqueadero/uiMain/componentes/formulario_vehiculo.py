@@ -190,6 +190,7 @@ class FormularioVehiculo(tk.Frame):
             )
 
         self._baseDatos.registrarVehiculo(vehiculo)
+        self._cliente.agregarVehiculo(vehiculo)
 
         self.destroy()
         self._f_final(vehiculo)
