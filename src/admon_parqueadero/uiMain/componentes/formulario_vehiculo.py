@@ -37,12 +37,12 @@ class FormularioVehiculo(tk.Frame):
         self.field_frame = FieldFrame(
             self,
             "Criterio",
-            ["Cédula", "Placa del vehículo"],
+            ["Cédula", "Placa"],
             "Valor",
             [str(self._cliente.getCedula()), None],
             ["Cédula"],
             combobox={
-                "Vehículo a ingresar": [*placas_vehiculos, "Registrar un vehículo"]
+                "Placa": [*placas_vehiculos, "Registrar un vehículo"]
             },
         )
         self.field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
@@ -61,7 +61,7 @@ class FormularioVehiculo(tk.Frame):
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 
     def _continuar_inicio(self) -> None:
-        eleccion_vehiculo = self.field_frame.getValue("Placa del vehículo")
+        eleccion_vehiculo = self.field_frame.getValue("Placa")
         if eleccion_vehiculo == "Registrar un vehículo":
             self._configuracion_registro()
         else:
@@ -100,6 +100,8 @@ class FormularioVehiculo(tk.Frame):
             titulo="Registro de vehiculo",
         )
         self.field_frame.pack()
+
+        self.btn_principal.config(command=self._continuar_registro)
 
     def _continuar_registro(self) -> None:
         placa = self.field_frame.getValue("Placa")
