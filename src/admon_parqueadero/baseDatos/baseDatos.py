@@ -48,6 +48,7 @@ class BaseDatos:
         return True
 
     def buscarVehiculoRegistrado(self, placa: str) -> Optional[Vehiculo]:
+        placa = placa.upper()
         return self._vehiculosRegistrados.get(placa)
 
     def registrarVehiculo(self, vehiculo: Vehiculo) -> bool:

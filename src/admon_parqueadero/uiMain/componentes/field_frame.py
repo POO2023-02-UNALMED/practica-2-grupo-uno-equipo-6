@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import font
 from typing import Any, Callable, Optional, TypeVar, Union
-from admon_parqueadero.errores import ErrorNumeroEsperado
+from admon_parqueadero.errores import ErrorNumeroEsperado, ErrorValorEsperado
 
 
 T = TypeVar("T")
@@ -89,7 +89,10 @@ class FieldFrame(tk.Frame):
         @return el valor del criterio cuyo nombre es 'criterio'
         """
         entrada = self._entradas[criterio]
-        return entrada.get().strip()
+        v = entrada.get().strip()
+        if len(v) == 0 or (isinstance(entrada, ttk.Combobox) and v == FieldFrame._COMBOBOX_TEXTO):
+            raise ErrorValorEsperado(criterio)
+        return v
 
     def getValueNumero(self, criterio: str, tipo: Callable[[str], T]) -> T:
         v = self.getValue(criterio)

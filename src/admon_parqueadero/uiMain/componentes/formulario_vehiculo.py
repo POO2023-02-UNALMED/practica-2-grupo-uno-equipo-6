@@ -1,8 +1,8 @@
-import logging
 import tkinter as tk
 from typing import Any, Callable, cast
 
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
+from admon_parqueadero.errores import ErrorUsuario
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasMoto import MarcasMoto
 from admon_parqueadero.gestorAplicacion.vehiculos.moto import Moto
@@ -110,10 +110,8 @@ class FormularioVehiculo(tk.Frame):
         modelo = self.field_frame.getValue("Modelo")
 
         if self._baseDatos.buscarVehiculoRegistrado(placa) is not None:
-            # TODO: Mostrar este error: vehiculo ya registrado
             # TODO: Considerar mover esto a baseDatos.registrarVehiculo o al contructor de Vehiculo
-            logging.info(f"Vehiculo con placa {placa} ya registrado")
-            return
+            raise ErrorUsuario(f"Vehiculo con placa {placa} ya registrado")
 
         self.field_frame.destroy()
 

@@ -5,9 +5,14 @@ class ErrorAplicacion(Exception):
 
 class ErrorUsuario(ErrorAplicacion):
     def __init__(self, msg: str) -> None:
-        super().__init__(f"Error de tipo: {msg}")
+        super().__init__(f"error de usuario: {msg}")
 
 
 class ErrorNumeroEsperado(ErrorUsuario):
     def __init__(self, msg: str) -> None:
         super().__init__(f"se esperaba un número para el valor de: {msg}")
+
+
+class ErrorValorEsperado(ErrorUsuario):
+    def __init__(self, msg: str) -> None:
+        super().__init__(f"el valor para {msg} no puede estar vacío")

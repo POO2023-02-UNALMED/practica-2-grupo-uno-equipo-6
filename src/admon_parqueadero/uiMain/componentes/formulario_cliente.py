@@ -68,8 +68,6 @@ class FormularioCliente(tk.Frame):
             self._f_final(cliente)
 
     def _registrar_usuario(self) -> None:
-        # TODO: verificar que los numeros sí sean números
-        # TODO: verificar que todos las entradas sí tienen valores (que no esten vacías)
         cedula = self.field_frame.getValueNumero("Cédula", int)
         nombre = self.field_frame.getValue("Nombre")
         telefono = self.field_frame.getValueNumero("Teléfono", int)

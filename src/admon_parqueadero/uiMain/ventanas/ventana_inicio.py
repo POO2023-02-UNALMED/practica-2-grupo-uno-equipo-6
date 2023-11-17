@@ -42,7 +42,7 @@ class VentanaInicio(tk.Frame):
         self.p4 = tk.Frame(p1, highlightbackground="black", highlightthickness=2)
         self.p4.pack(side="bottom", padx=10, pady=10, fill="both", expand=True)
 
-        msg_bienvenida = LabelAjustable(  # TODO: poner el mensaje de bienvenida
+        msg_bienvenida = LabelAjustable(
             p3,
             text="Bienvenido al Parqueadero. Aquí podrá guardar su carro o moto, comprar el carro que desee, o vender un carro de su propiedad, además de acceder a la administración del parqueadero.",
         )

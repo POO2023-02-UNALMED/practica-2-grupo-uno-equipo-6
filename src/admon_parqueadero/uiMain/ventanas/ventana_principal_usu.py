@@ -20,7 +20,7 @@ from admon_parqueadero.uiMain.funcionalidades.registrar_vehiculo import (
     RegistrarVehiculo,
 )
 
-from admon_parqueadero.errores import ErrorNumeroEsperado
+from admon_parqueadero.errores import ErrorUsuario
 
 
 class ventana_principal_usu(tk.Frame):
@@ -107,7 +107,7 @@ class ventana_principal_usu(tk.Frame):
         messagebox.showinfo(
             title="Información sobre la aplicación.",
             message="Esta aplicación permite al usuario acceder a diferentes servicios prestados por el parqueadero, y facilita el manejo de asuntos relacionados a la gerencia, por parte del administrador. Se puede acceder a estos mediante la pestaña de usuario, en el menú Procesos y Consultas.",
-        )  # TODO: poner mensaje
+        )
 
     def salir(self) -> None:
         from .ventana_inicio import VentanaInicio
@@ -163,7 +163,7 @@ class ventana_principal_usu(tk.Frame):
         )
 
     def mostrar_error(self, exc, error, tb):
-        if isinstance(error, ErrorNumeroEsperado):
+        if isinstance(error, ErrorUsuario):
             self.funcionalidad.imprimir(str(error))
         else:
             messagebox.showerror(title="Ha ocurrido un error", message=str(error))
