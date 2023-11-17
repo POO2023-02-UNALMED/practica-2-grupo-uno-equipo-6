@@ -49,9 +49,8 @@ class IngresarVehiculo(BaseFuncionalidad):
 
     def _configurar_ingreso(self, vehiculo: Vehiculo):
         if vehiculo.estaParqueado():
-            tk.Label(self.contenido, text="Ese vehículo ya se encuentra ingresado en el parqueadero").pack()
-            tk.Button(self.contenido, text="Regresar", command=lambda: self._configurar_ui(vehiculo.getDueno())).pack()
-            return
+            self.imprimir("Ese vehículo ya se encuentra ingresado en el parqueadero")
+            return self._configurar_ui(vehiculo.getDueno())
 
         plazas_disponibles = map(
             lambda p: str(p.getNumeroPlaza()),
@@ -90,8 +89,6 @@ class IngresarVehiculo(BaseFuncionalidad):
 
         # TODO: Generar factura
 
-        self.field_frame.destroy()
-        self.frame_botones.destroy()
-
-        tk.Label(self.contenido, text="Vehículo ingresado").pack()
+        self.imprimir("Vehículo ingresado")
+        self._configurar_ui(vehiculo.getDueno())
 

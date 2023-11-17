@@ -39,6 +39,9 @@ class BaseFuncionalidad(tk.Frame):
         )
         self.frame_contenido.pack(padx=20, pady=(10, 20))
 
+        self.listbox = tk.Listbox(self)
+        self.listbox.pack(side="bottom", expand=True, fill="both")
+
     def setTitulo(self, titulo: str) -> None:
         self.label_titulo.config(text=titulo)
 
@@ -53,3 +56,6 @@ class BaseFuncionalidad(tk.Frame):
 
     def getParqueadero(self) -> Parqueadero:
         return self._parqueadero
+
+    def imprimir(self, s: str) -> None:
+        self.listbox.insert(tk.END, s)
