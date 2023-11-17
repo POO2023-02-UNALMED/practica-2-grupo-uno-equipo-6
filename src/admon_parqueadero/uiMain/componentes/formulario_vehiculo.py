@@ -1,6 +1,6 @@
 import logging
 import tkinter as tk
-from typing import Any, Callable
+from typing import Any, Callable, cast
 
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
@@ -65,7 +65,7 @@ class FormularioVehiculo(tk.Frame):
         if eleccion_vehiculo == "Registrar un vehículo":
             self._configuracion_registro()
         else:
-            vehiculo = self._baseDatos.buscarVehiculoRegistrado(eleccion_vehiculo)
+            vehiculo = cast(Vehiculo, self._baseDatos.buscarVehiculoRegistrado(eleccion_vehiculo))
             self.destroy()
             self._f_final(vehiculo)
 
