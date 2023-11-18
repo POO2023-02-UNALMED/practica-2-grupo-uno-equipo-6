@@ -57,7 +57,7 @@ class Taller(BaseFuncionalidad):
                 "El vehiculo no se encuentra en el parqueadero, debe ingresarlo\
  en el apartado Ingresar vehiculo del menu procesos y consultas",
             )
-            self._configurar_ui(vehiculo.getDueno())
+            return self._configurar_ui(vehiculo.getDueno())
 
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
