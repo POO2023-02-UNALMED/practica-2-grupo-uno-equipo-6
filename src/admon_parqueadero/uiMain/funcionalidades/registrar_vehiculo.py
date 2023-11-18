@@ -23,9 +23,12 @@ class RegistrarVehiculo(BaseFuncionalidad):
         self.setDescripcion("Bienvenido, aqui podra registrar un vehiculo, para empezar ingrese el número de cédula del dueño del vehiculo")
 
         #aca solo deberia acceder el administrador?
+
+        self._inicio()
+
+    def _inicio(self) -> None:
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
-
         formulario = FormularioCliente(self.contenido, self.getBaseDatos(), f_final=self._inicio_registro)
         formulario.btn_principal.config(text="Continuar")
         formulario.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
@@ -166,4 +169,5 @@ class RegistrarVehiculo(BaseFuncionalidad):
         self._baseDatos.registrarVehiculo(vehiculo)
         cliente.agregarVehiculo(vehiculo)
         messagebox.showinfo("Registro exitoso", "El vehiculo ha sido registrado exitosamente")
-        return self._inicio_registro(cliente)
+        self.contenido.destroy()
+        return self._inicio()
