@@ -8,6 +8,7 @@ from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
 from admon_parqueadero.uiMain.componentes.formulario_carro import FormularioCarro
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 from admon_parqueadero.gestorAplicacion.parqueadero.plaza import Plaza
+from admon_parqueadero.gestorAplicacion.parqueadero.parqueadero import Parqueadero
 
 
 
@@ -85,4 +86,27 @@ class VenderCarro(BaseFuncionalidad):
 
         self.imprimir("Vehículo ingresado")
         self._configurar_ui(vehiculo.getDueno())
+    
+    #Mostrar lista de vendedores disponibles
+    def escoger_vendedor(self):
+        self.contenido.destroy()
+        self.contenido = tk.Frame(self.frame_contenido)
+        self.packContenido(self.contenido)
+
+        vendedores = []
+        for empleado in Parqueadero.getEmpleados():
+            if empleado.getCargo() == "vendedor":
+                vendedores.append(empleado)
+        
+        self.field_frame = FieldFrame(
+            self,
+            "Criterio",
+            ["Escoja al vendedor de su preferencia"],
+            "Valor",
+            combobox={
+                "Escoja al vendedor de su preferencia": vendedores
+            },
+        )
+
+
 
