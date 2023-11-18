@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-from typing import Any, Callable, Optional, Union, cast
+from typing import Any, Optional, cast
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
@@ -185,12 +185,10 @@ class Taller(BaseFuncionalidad):
         self, vehiculo: Vehiculo, mecanico: Empleado
     ) -> None:  # es mejor que esto retorne la funcion o la ejecute?
         opcion = self.field_frame.getValue("Escoja una opcion")
-        self.imprimir(opcion)
         if opcion == "Revisión general":
             self._revision_general(vehiculo, mecanico)
         else:
-            nombre_producto = opcion.split(" ")[-1].upper()
-            print(nombre_producto)
+            nombre_producto = opcion.split(" ")[-1]
             self._cambio_de(nombre_producto, vehiculo, mecanico)
 
     def _revision_general(self, vehiculo: Vehiculo, mecanico: Empleado) -> None:
@@ -204,7 +202,6 @@ class Taller(BaseFuncionalidad):
                 vehiculo, componentes_dañados
             )
 
-            print(nuevos_componentes)
             if nuevos_componentes is not None:
                 messagebox.showinfo(
                     "Los siguientes componentes se arreglaran",
@@ -231,21 +228,22 @@ class Taller(BaseFuncionalidad):
         self, nombre_producto: str, vehiculo: Vehiculo, mecanico: Empleado
     ) -> None:
         almacen = self._parqueadero.getAlmacen()
-        tipo_producto = TipoProducto[nombre_producto]
 
-        if nombre_producto in ["llantas", "rines"]:
+        if nombre_producto == "llantas":
             # verificar para carro
             if isinstance(vehiculo, Carro):
                 posiciones = [
                     "Delantera izq",
-                    "Delantera der, Trasera izq, Trasera der",
+                    "Delantera der", 
+                    "Trasera izq",
+                    "Trasera der"
                 ]
                 llanta_elegida = posiciones.index(
-                    self.field_frame.getValue("Ecoja el producto a arreglar")
+                    self.field_frame.getValue("Escoja el producto a arreglar")
                 )
                 llanta_v = cast(Carro, vehiculo).getLlantas()[llanta_elegida]
-                if almacen.existeProducto(tipo_producto):
-                    llanta_n = almacen.conseguirProducto(tipo_producto)
+                if almacen.existeProducto(TipoProducto.LLANTA):
+                    llanta_n = almacen.conseguirProducto(TipoProducto.LLANTA)
                     if llanta_n is not None:
                         vehiculo.getDueno().getFactura().agregarProducto(
                             llanta_n, 1
@@ -273,8 +271,8 @@ class Taller(BaseFuncionalidad):
                     self.field_frame.getValue("Escoja el producto a arreglar")
                 )
                 llanta_v = cast(Moto, vehiculo).getLlantas()[llanta_elegida]
-                if almacen.existeProducto(tipo_producto):
-                    llanta_n = almacen.conseguirProducto(tipo_producto)
+                if almacen.existeProducto(TipoProducto.LLANTA):
+                    llanta_n = almacen.conseguirProducto(TipoProducto.LLANTA)
                     if llanta_n is not None:
                         vehiculo.getDueno().getFactura().agregarProducto(llanta_n, 1)
                         vehiculo.getDueno().getFactura().agregarServicio(
@@ -293,17 +291,80 @@ class Taller(BaseFuncionalidad):
                         "No contamos con los recursos suficientes para realizar el servicio :(",
                     )
                     return self._taller(vehiculo)
+                
+        if nombre_producto == "rines":
+            # verificar para carro
+            if isinstance(vehiculo, Carro):
+                posiciones = [
+                    "Delantera izq",
+                    "Delantera der",
+                    "Trasera izq",
+                    "Trasera der"
+                ]
+                rin_elegido = posiciones.index(
+                    self.field_frame.getValue("Escoja el producto a arreglar")
+                )
+                rin_v = cast(Carro, vehiculo).getLlantas()[rin_elegido]
+                if almacen.existeProducto(TipoProducto.RIN):
+                    rin_n = almacen.conseguirProducto(TipoProducto.RIN)
+                    if rin_n is not None:
+                        vehiculo.getDueno().getFactura().agregarProducto(
+                            rin_n, 1
+                        )  # por ahora se agrega el numero de veces del servicio o producto
+                        vehiculo.getDueno().getFactura().agregarServicio(
+                            "Cambio de rines", 1
+                        )  # sera mejor agregar el valor ¿?
+                        mecanico.cambiar(rin_v, rin_n, vehiculo)
+                        mecanico.setServiciosRealizados(
+                            mecanico.getServiciosRealizados() + 1
+                        )
+                        messagebox.showinfo(
+                            "*Sonidos de mecanico*", "Listo, como nuevo :)"
+                        )
+                else:
+                    messagebox.showwarning(
+                        "No podemos",
+                        "No contamos con los recursos suficientes para realizar el servicio :(",
+                    )
+                    return self._taller(vehiculo)
+            else:
+                # para moto
+                posiciones = ["Delantera", "Trasera"]
+                rin_elegido = posiciones.index(
+                    self.field_frame.getValue("Escoja el producto a arreglar")
+                )
+                rin_v = cast(Moto, vehiculo).getLlantas()[rin_elegido]
+                if almacen.existeProducto(TipoProducto.RIN):
+                    rin_n = almacen.conseguirProducto(TipoProducto.RIN)
+                    if rin_n is not None:
+                        vehiculo.getDueno().getFactura().agregarProducto(rin_n, 1)
+                        vehiculo.getDueno().getFactura().agregarServicio(
+                            "Cambio de rines", 1
+                        )
+                        mecanico.cambiar(rin_v, rin_n, vehiculo)
+                        mecanico.setServiciosRealizados(
+                            mecanico.getServiciosRealizados() + 1
+                        )
+                        messagebox.showinfo(
+                            "*Sonidos de mecanico*", "Listo, como nuevo :)"
+                        )
+                else:
+                    messagebox.showwarning(
+                        "No podemos",
+                        "No contamos con los recursos suficientes para realizar el servicio :(",
+                    )
+                    return self._taller(vehiculo)
 
         if nombre_producto == "amortiguadores":
-            posiciones = ["Delantera izq", "Delantera der, Trasera izq, Trasera der"]
+            posiciones = ["Delantera izq", "Delantera der", "Trasera izq", "Trasera der"]
             amortiguador_elegido = posiciones.index(
                 self.field_frame.getValue("Escoja el producto a arreglar")
             )
             amortiguador_v = cast(Carro, vehiculo).getAmortiguadores()[
                 amortiguador_elegido
             ]
-            if almacen.existeProducto(tipo_producto):
-                amortiguador_n = almacen.conseguirProducto(tipo_producto)
+            if almacen.existeProducto(TipoProducto.AMORTIGUADOR):
+                amortiguador_n = almacen.conseguirProducto(TipoProducto.AMORTIGUADOR)
                 if amortiguador_n is not None:
                     vehiculo.getDueno().getFactura().agregarProducto(amortiguador_n, 1)
                     vehiculo.getDueno().getFactura().agregarServicio(
@@ -322,6 +383,7 @@ class Taller(BaseFuncionalidad):
                 return self._taller(vehiculo)
 
         # para el resto de productos
+        tipo_producto = TipoProducto[nombre_producto.upper()]
         if almacen.existeProducto(tipo_producto):
             productos = [tipo for tipo in TipoProducto.__members__.values()]
             producto_v = self._conseguir(productos.index(tipo_producto), vehiculo)

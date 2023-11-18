@@ -14,7 +14,7 @@ class RegistrarCliente(BaseFuncionalidad):
         super().__init__(master, baseDatos, *args, **kwargs)
 
         self.setTitulo("Registrar Cliente")
-        self.setDescripcion("Bienvenido, aqui podra registrar un cliente, para empezar ingrese la cedula del cliente a resgistrar")
+        self.setDescripcion("Bienvenido, aqui podra registrar un cliente, para empezar ingrese el número de cédula del cliente a resgistrar")
 
         #aca solo deberia acceder el administrador?
         self.contenido = tk.Frame(self.frame_contenido)
