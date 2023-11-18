@@ -77,9 +77,15 @@ class Factura:
     def agregarProducto(self, producto: Producto, cantidad: float) -> None:
         key = f"Compra de {producto.getTipo().name.capitalize()}s"
         if key in self._valorServicios:
-            self._valorServicios[key] += cantidad
+            self._servicios[key] += cantidad
         else:
-            self._valorServicios[key] = cantidad
+            self._servicios[key] = cantidad
+
+    def agregarServicio(self, servicio: str, cantidad: float) -> None:
+        if servicio in self._valorServicios:
+            self._servicios[servicio] += cantidad
+        else:
+            self._servicios[servicio] = cantidad
 
     def __str__(self) -> str:
         s = ""

@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font
-from typing import Any, Callable, Optional, TypeVar, Union
+from typing import Any, Callable, Literal, Optional, TypeVar, Union
 from admon_parqueadero.errores import ErrorNumeroEsperado, ErrorValorEsperado
 
 
@@ -108,3 +108,11 @@ class FieldFrame(tk.Frame):
                 self._combobox_textvariables[criterio].set(FieldFrame._COMBOBOX_TEXTO)
             else:
                 entrada.delete(0, tk.END)
+
+    #metodo para cambiar el estado de una entrada segun su criterio
+    def cambiar_estado(self, criterio: str, opcion: Literal['normal', 'readonly', 'disabled']) -> None:
+        #ver que hacer con el argumento opcion
+        entrada = self._entradas[criterio]
+        entrada.config(state=opcion)
+        
+        

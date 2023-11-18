@@ -88,7 +88,7 @@ class Parqueadero:
             if empleado.getCargo() == "Mecanico"
         ]
 
-    def setVendedores(self) -> list[Empleado]:
+    def getVendedores(self) -> list[Empleado]:
         return [
             vendedor
             for vendedor in self._empleados
@@ -168,7 +168,7 @@ class Parqueadero:
                 return p
         return None
 
-    def inicializarPlazas(self, plazasTotales: int) -> None:
+    def inicializarPlazas(self, plazasTotales: int) -> None: #TODO: bug al instanciar las plazas de moto
         # calcular el numero de plazas para motos y para carros(por convencion el 60 % seran de carro y el 40 % de moto)
         numPlazasCarro = int((plazasTotales * 0.6))
         numPlazasMoto = plazasTotales - numPlazasCarro
