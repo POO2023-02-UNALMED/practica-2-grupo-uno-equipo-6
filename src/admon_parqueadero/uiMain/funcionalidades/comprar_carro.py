@@ -26,27 +26,19 @@ class ComprarCarro(BaseFuncionalidad):
         formulario = FormularioCliente(
             self.contenido, self.getBaseDatos(), f_final=self._configurar_ui
         )
-        formulario.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)    
+        formulario.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
-
-        
-        # self.all_vehiculo = []
-        # self.all_empleados = []
-        # for parqueadero in parqueaderos:
-        #     empleados = parqueadero.getEmpleados()
-        #     vehiculosVentaParqueadero = parqueadero.getVehiculosVenta()
-        #     self.all_vehiculo.extend(vehiculosVentaParqueadero)
-        #     self.all_empleados.extend(empleados)
-    
     def filtrar (self):
+        #! TODO : falta calcular los datos None en caso de no querer llenar un campo pueda obtener igual la lista de datos  Undefined 
         self.listaCarros = []
-        seleccion = self.seleccion.get()
-        if seleccion == 1:
+        
+        if self.DiscapacidadA == 'Si':
             lista_aux = [vehiculo for vehiculo in self.all_vehiculo if vehiculo.isDiscapacitado() is True ]    
-        elif seleccion == 2:
+        elif self.DiscapacidadA == 'No':
             lista_aux = [vehiculo for vehiculo in self.all_vehiculo if vehiculo.isDiscapacitado() is False ]
         else :
             lista_aux = [] 
+        
         for vehiculo in lista_aux:
             color = vehiculo.getColor()
             marca = vehiculo.getMarca()
@@ -54,31 +46,24 @@ class ComprarCarro(BaseFuncionalidad):
             
             self.colorSelected = self.field_frame.getValue('Color')
             self.MarcaSelected = self.field_frame.getValue('Marca')
-            self.precioMaximoInput = self.field_frame.getValueNumero('Precio maximo')
+            self.precioMaximoInput = self.field_frame.getValueNumero('Precio maximo','int')
+            
             if (valorVehiculo < self.precioMaximoInput 
                 and color == self.colorSelected 
                     and marca == self.MarcaSelected) :
                 option=vehiculo.getPlaca() 
                 self.listaCarros.append(option)
         self.listaCarros.append('No se encontraron registros') if len(self.listaCarros) == 0 else self.listaCarros
-       
-                            
 
-            
-        
-    def feedback():
-        pass
-        # 
+
+
     def _configurar_ui(self, cliente: Cliente) -> None:
-       
-        # mensaje de bienvenida
-        nombre = cliente.getNombre()
-        mensajeBienvenida = f"""Bienvenido de nuevo, {nombre}"""
-        
+        self.nombreCliente = cliente.getNombre()
         self._vendedores_nombre = list(
             map(lambda x: x.getNombre().title(), self._parqueadero.getVendedores())
         )
-
+        
+       
         self.all_vehiculo = [vehiculo for vehiculo in self._parqueadero.getVehiculosVenta() ]
         
         self._vehiculos_color = list(
@@ -89,44 +74,98 @@ class ComprarCarro(BaseFuncionalidad):
             map(lambda x: x.getMarca().title(), self.all_vehiculo)
         )
         
+        self.EscogerVendedor()
+    def EscogerVendedor (self):
+        self.contenido.destroy()
+        self.contenido = tk.Frame(self.frame_contenido)
+        self.packContenido(self.contenido)
         
+        # mensaje de bienvenida
+        
+        mensajeBienvenida = f"""Bienvenido de nuevo, {self.nombreCliente}
+        Seleccione al vendedor de su preferencia"""
         self.field_frame = FieldFrame(
             self.contenido,
-            "Criterios",
-            ["Vendedor", "Color","Marca", "Precio maximo"],
+            "Criterio",
+            ["Vendedor"],
             "Valores",
-            [None,None, None, None],
             None,
-            combobox={"Vendedor": list(self._vendedores_nombre),
-                      
-                    "Color": list(self._vehiculos_color),
-                    "Marca":list(self._vehiculos_marca)
-                    }
-            ,titulo=mensajeBienvenida
+            None,
+            {"Vendedor": self._vendedores_nombre},
+            mensajeBienvenida
         )
         self.field_frame.pack()
         
-       
         
-        etiqueta_personalizada = tk.Label(self.contenido, text="Desea un vehiculo adaptado para condicion de discapacidad")
-        etiqueta_personalizada.pack()
-        self.seleccion = tk.IntVar()  # Variable para almacenar la opción seleccionada
+        
+        self.frame_botones = tk.Frame(self.contenido)
+        self.frame_botones.pack(side="bottom", fill="both", expand=True)
+        
+        self.btn_principal = tk.Button(
+            self.frame_botones, text="Continuar", command=lambda: self.EscogerVehiculo()
+        )
+        self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
-        radio_btn1 = tk.Radiobutton(self.contenido, text="Si", variable=self.seleccion, value=1)
-        radio_btn1.pack()
+        self.btn_borrar = tk.Button(
+            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+        )
+        self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
+        
+        try:
+            self.vendedorSelected = self.field_frame.getValue('Vendedor')
+        except Exception as e :
+            self.vendedorSelected = 'Undefined' 
+    def EscogerVehiculo (self):
 
-        radio_btn2 = tk.Radiobutton(self.contenido, text="No", variable=self.seleccion, value=2)
-        radio_btn2.pack()
+        self.contenido.destroy()
+        self.contenido = tk.Frame(self.frame_contenido)
+        self.packContenido(self.contenido)
+        mensajeVendedor = f"""Hola, te habla {self.vendedorSelected}
+        """
+        self.field_frame = FieldFrame(
+        self.contenido,
+        "Criterios",
+        [ "Color","Marca", "Precio maximo","Adecuado Discapacidad"],
+        "Valores",
+        [None, None, None,None],
+        None,
+        combobox={
+            "Color": list(self._vehiculos_color),
+            "Marca":list(self._vehiculos_marca),
+            "Adecuado Discapacidad": ['Si','No']
+            }
+        ,titulo=mensajeVendedor
+        )
+        self.field_frame.pack()
         
-        # self.precioMaximoInput=entrada.get()
-        # --discapacidad
-        # Boton Consultar 
+        self.frame_botones = tk.Frame(self.contenido)
+        self.frame_botones.pack(side="bottom", fill="both", expand=True)
         
-    
-        BotonConsultar = tk.Button(self.contenido, text='Consultar',command=self.filtrar())
-        BotonConsultar.pack()
+        self.btn_principal = tk.Button(
+            self.frame_botones, text="Continuar", command=lambda: self.ListaVehiculo()
+        )
+        self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
+
+        self.btn_borrar = tk.Button(
+            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+        )
+        self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
         
         
+        try : self.colorSelected = self.field_frame.getValue('Color') 
+        except Exception as e : self.colorSelected = 'Undefined'
+        try : self.precioMaximoInput = self.field_frame.getValue('Marca') 
+        except Exception as e : self.precioMaximoInput = 'Undefined'
+        try : self.MarcaSelected = self.field_frame.getValue('Precio maximo') 
+        except Exception as e : self.MarcaSelected = 'Undefined'
+        try : self.DiscapacidadA = self.field_frame.getValue('Adecuado Discapacidad') 
+        except Exception as e : self.DiscapacidadA = 'Undefined'
+        
+    def ListaVehiculo (self):
+        self.contenido.destroy()
+        self.contenido = tk.Frame(self.frame_contenido)
+        self.packContenido(self.contenido)
+        self.filtrar()
         self.field_frame = FieldFrame(
             self.contenido,
             "",
@@ -138,9 +177,47 @@ class ComprarCarro(BaseFuncionalidad):
             titulo='Lista de carros disponibles'
         )
         self.field_frame.pack()
+        self.frame_botones = tk.Frame(self.contenido)
+        self.frame_botones.pack(side="bottom", fill="both", expand=True)
+        self.btn_principal = tk.Button(
+            self.frame_botones, text="Seleccionar Vehiculo", command=lambda: self.facturacion()
+        )
+        self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
+        self.btn_borrar = tk.Button(
+            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+        )
+        self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 
+        self.VehiculoSelected = self.field_frame.getValue('lista')
+    
+    def facturacion (self):
         
-
-
-
-
+        
+        for vehicule in self.all_vehiculo:
+            if self.VehiculoSelected == vehicule.getPlaca():
+                vehiculo = vehicule
+        try :
+            self.vendedorSelected
+            informacionVehiculo = [
+                
+            str(vehiculo.getMarca()),
+            str(vehiculo.getModelo()),
+            str(vehiculo.getPlaca()),
+            str(vehiculo.getColor()),
+            str(vehiculo.getPrecioVenta())]
+            
+            
+            # TODO: generar id de factura 
+            self.informacion_vehiculo.destroy()
+            self.informacion_vehiculo = FieldFrame(
+                self.contenido,
+                "Campo",
+                ["Vendedor","Marca","Modelo","placa","Color","precio"],
+                "Informacion",
+                valores=informacionVehiculo,
+                habilitado=["Vendedor","Marca","Modelo","placa","Color","precio"],
+                titulo='Informacion de modelo'
+            )
+            self.informacion_vehiculo.pack()
+        except Exception as e :
+            pass    
