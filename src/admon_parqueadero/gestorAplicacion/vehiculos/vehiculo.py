@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class Vehiculo:
     def __init__(
-        self, placa: str, dueno: Cliente, marca: str, color: str, modelo: str
+        self, placa: str, dueno: Optional[Cliente], marca: str, color: str, modelo: str
     ) -> None:
         self._placa = Vehiculo.normalizarPlaca(placa)
         self._dueno = dueno
@@ -24,7 +24,7 @@ class Vehiculo:
     def setPlaca(self, placa: str) -> None:
         self._placa = Vehiculo.normalizarPlaca(placa)
 
-    def getDueno(self) -> Cliente:
+    def getDueno(self) -> Optional[Cliente]:
         return self._dueno
 
     def setDueno(self, dueno: Cliente) -> None:
@@ -65,7 +65,9 @@ class Vehiculo:
         """
         Retorna true si el vehículo fue registrado por el cliente pasado como parámetro.
         """
-        return self._dueno.getCedula() == cliente.getCedula()
+        if self._dueno is not None:
+            return self._dueno.getCedula() == cliente.getCedula()
+        return False
 
     @staticmethod
     def normalizarPlaca(placa: str) -> str:

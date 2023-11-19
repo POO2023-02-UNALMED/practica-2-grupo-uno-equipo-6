@@ -57,7 +57,9 @@ class Taller(BaseFuncionalidad):
                 "El vehiculo no se encuentra en el parqueadero, debe ingresarlo\
  en el apartado Ingresar vehiculo del menu procesos y consultas",
             )
-            return self._configurar_ui(vehiculo.getDueno())
+            dueno = vehiculo.getDueno()
+            if dueno is not None:
+                return self._configurar_ui(dueno)
 
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
@@ -228,6 +230,7 @@ class Taller(BaseFuncionalidad):
         self, nombre_producto: str, vehiculo: Vehiculo, mecanico: Empleado
     ) -> None:
         almacen = self._parqueadero.getAlmacen()
+        dueno = vehiculo.getDueno()
 
         if nombre_producto == "llantas":
             # verificar para carro
@@ -244,20 +247,22 @@ class Taller(BaseFuncionalidad):
                 llanta_v = cast(Carro, vehiculo).getLlantas()[llanta_elegida]
                 if almacen.existeProducto(TipoProducto.LLANTA):
                     llanta_n = almacen.conseguirProducto(TipoProducto.LLANTA)
-                    if llanta_n is not None:
-                        vehiculo.getDueno().getFactura().agregarProducto(
-                            llanta_n, 1
-                        )  # por ahora se agrega el numero de veces del servicio o producto
-                        vehiculo.getDueno().getFactura().agregarServicio(
-                            "Cambio de llantas", 1
-                        )  # sera mejor agregar el valor ¿?
-                        mecanico.cambiar(llanta_v, llanta_n, vehiculo)
-                        mecanico.setServiciosRealizados(
-                            mecanico.getServiciosRealizados() + 1
-                        )
-                        messagebox.showinfo(
-                            "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                        )
+                    if llanta_n is not None and dueno is not None:
+                        factura = dueno.getFactura()
+                        if factura is not None:
+                            factura.agregarProducto(
+                                llanta_n, 1
+                            )  # por ahora se agrega el numero de veces del servicio o producto
+                            factura.agregarServicio(
+                                "Cambio de llantas", 1
+                            )  # sera mejor agregar el valor ¿?
+                            mecanico.cambiar(llanta_v, llanta_n, vehiculo)
+                            mecanico.setServiciosRealizados(
+                                mecanico.getServiciosRealizados() + 1
+                            )
+                            messagebox.showinfo(
+                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
+                            )
                 else:
                     messagebox.showwarning(
                         "No podemos",
@@ -273,18 +278,20 @@ class Taller(BaseFuncionalidad):
                 llanta_v = cast(Moto, vehiculo).getLlantas()[llanta_elegida]
                 if almacen.existeProducto(TipoProducto.LLANTA):
                     llanta_n = almacen.conseguirProducto(TipoProducto.LLANTA)
-                    if llanta_n is not None:
-                        vehiculo.getDueno().getFactura().agregarProducto(llanta_n, 1)
-                        vehiculo.getDueno().getFactura().agregarServicio(
-                            "Cambio de llantas", 1
-                        )
-                        mecanico.cambiar(llanta_v, llanta_n, vehiculo)
-                        mecanico.setServiciosRealizados(
-                            mecanico.getServiciosRealizados() + 1
-                        )
-                        messagebox.showinfo(
-                            "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                        )
+                    if llanta_n is not None and dueno is not None:
+                        factura = dueno.getFactura()
+                        if factura is not None:
+                            factura.agregarProducto(llanta_n, 1)
+                            factura.agregarServicio(
+                                "Cambio de llantas", 1
+                            )
+                            mecanico.cambiar(llanta_v, llanta_n, vehiculo)
+                            mecanico.setServiciosRealizados(
+                                mecanico.getServiciosRealizados() + 1
+                            )
+                            messagebox.showinfo(
+                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
+                            )
                 else:
                     messagebox.showwarning(
                         "No podemos",
@@ -307,20 +314,22 @@ class Taller(BaseFuncionalidad):
                 rin_v = cast(Carro, vehiculo).getLlantas()[rin_elegido]
                 if almacen.existeProducto(TipoProducto.RIN):
                     rin_n = almacen.conseguirProducto(TipoProducto.RIN)
-                    if rin_n is not None:
-                        vehiculo.getDueno().getFactura().agregarProducto(
-                            rin_n, 1
-                        )  # por ahora se agrega el numero de veces del servicio o producto
-                        vehiculo.getDueno().getFactura().agregarServicio(
-                            "Cambio de rines", 1
-                        )  # sera mejor agregar el valor ¿?
-                        mecanico.cambiar(rin_v, rin_n, vehiculo)
-                        mecanico.setServiciosRealizados(
+                    if rin_n is not None and dueno is not None:
+                        factura = dueno.getFactura()
+                        if factura is not None:
+                            factura.agregarProducto(
+                                rin_n, 1
+                            )  # por ahora se agrega el numero de veces del servicio o producto
+                            factura.agregarServicio(
+                                "Cambio de rines", 1
+                            )  # sera mejor agregar el valor ¿?
+                            mecanico.cambiar(rin_v, rin_n, vehiculo)
+                            mecanico.setServiciosRealizados(
                             mecanico.getServiciosRealizados() + 1
-                        )
-                        messagebox.showinfo(
-                            "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                        )
+                            )
+                            messagebox.showinfo(
+                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
+                            )
                 else:
                     messagebox.showwarning(
                         "No podemos",
@@ -336,18 +345,20 @@ class Taller(BaseFuncionalidad):
                 rin_v = cast(Moto, vehiculo).getLlantas()[rin_elegido]
                 if almacen.existeProducto(TipoProducto.RIN):
                     rin_n = almacen.conseguirProducto(TipoProducto.RIN)
-                    if rin_n is not None:
-                        vehiculo.getDueno().getFactura().agregarProducto(rin_n, 1)
-                        vehiculo.getDueno().getFactura().agregarServicio(
-                            "Cambio de rines", 1
-                        )
-                        mecanico.cambiar(rin_v, rin_n, vehiculo)
-                        mecanico.setServiciosRealizados(
-                            mecanico.getServiciosRealizados() + 1
-                        )
-                        messagebox.showinfo(
-                            "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                        )
+                    if rin_n is not None and dueno is not None:
+                        factura = dueno.getFactura()
+                        if factura is not None:
+                            factura.agregarProducto(rin_n, 1)
+                            factura.agregarServicio(
+                                "Cambio de rines", 1
+                            )
+                            mecanico.cambiar(rin_v, rin_n, vehiculo)
+                            mecanico.setServiciosRealizados(
+                                mecanico.getServiciosRealizados() + 1
+                            )
+                            messagebox.showinfo(
+                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
+                            )
                 else:
                     messagebox.showwarning(
                         "No podemos",
@@ -365,16 +376,18 @@ class Taller(BaseFuncionalidad):
             ]
             if almacen.existeProducto(TipoProducto.AMORTIGUADOR):
                 amortiguador_n = almacen.conseguirProducto(TipoProducto.AMORTIGUADOR)
-                if amortiguador_n is not None:
-                    vehiculo.getDueno().getFactura().agregarProducto(amortiguador_n, 1)
-                    vehiculo.getDueno().getFactura().agregarServicio(
-                        "Cambio de amortiguadores", 1
-                    )
-                    mecanico.cambiar(amortiguador_v, amortiguador_n, vehiculo)
-                    mecanico.setServiciosRealizados(
-                        mecanico.getServiciosRealizados() + 1
-                    )
-                    messagebox.showinfo("*Sonidos de mecanico*", "Listo, como nuevo :)")
+                if amortiguador_n is not None and dueno is not None:
+                    factura = dueno.getFactura()
+                    if factura is not None:
+                        factura.agregarProducto(amortiguador_n, 1)
+                        factura.agregarServicio(
+                            "Cambio de amortiguadores", 1
+                        )
+                        mecanico.cambiar(amortiguador_v, amortiguador_n, vehiculo)
+                        mecanico.setServiciosRealizados(
+                            mecanico.getServiciosRealizados() + 1
+                        )
+                        messagebox.showinfo("*Sonidos de mecanico*", "Listo, como nuevo :)")
             else:
                 messagebox.showwarning(
                     "No podemos",
@@ -388,14 +401,16 @@ class Taller(BaseFuncionalidad):
             productos = [tipo for tipo in TipoProducto.__members__.values()]
             producto_v = self._conseguir(productos.index(tipo_producto), vehiculo)
             producto_n = almacen.conseguirProducto(tipo_producto)
-            if producto_n is not None and producto_v is not None:
-                vehiculo.getDueno().getFactura().agregarProducto(producto_n, 1)
-                vehiculo.getDueno().getFactura().agregarServicio(
-                    f"Cambio de {tipo_producto.name.title()}s", 1
-                )
-                mecanico.cambiar(producto_v, producto_n, vehiculo)
-                mecanico.setServiciosRealizados(mecanico.getServiciosRealizados() + 1)
-                messagebox.showinfo("*Sonido de mecanico*", "Listo como nuevo :)")
+            if producto_n is not None and producto_v is not None and dueno is not None:
+                factura = dueno.getFactura()
+                if factura is not None:
+                    factura.agregarProducto(producto_n, 1)
+                    factura.agregarServicio(
+                        f"Cambio de {tipo_producto.name.title()}s", 1
+                    )
+                    mecanico.cambiar(producto_v, producto_n, vehiculo)
+                    mecanico.setServiciosRealizados(mecanico.getServiciosRealizados() + 1)
+                    messagebox.showinfo("*Sonido de mecanico*", "Listo como nuevo :)")
         else:
             messagebox.showwarning(
                 "No podemos",
@@ -408,15 +423,18 @@ class Taller(BaseFuncionalidad):
     ) -> Optional[list[Producto]]:
         almacen = self._parqueadero.getAlmacen()
         productos_vendidos: list[Producto] = []
+        dueno = vehiculo.getDueno()
 
         for p in productos:
             if almacen.existeProducto(p.getTipo()):
                 n_producto = almacen.conseguirProducto(p.getTipo())
-                if n_producto is not None:
-                    n_producto.setMarca(vehiculo.getMarca())
-                    n_producto.setPrecio(0)
-                    productos_vendidos.append(n_producto)
-                vehiculo.getDueno().getFactura().agregarProducto(p, 1)
+                if n_producto is not None and dueno is not None:
+                    factura = dueno.getFactura()
+                    if factura is not None:
+                        n_producto.setMarca(vehiculo.getMarca())
+                        n_producto.setPrecio(0)
+                        productos_vendidos.append(n_producto)
+                        factura.agregarProducto(p, 1)
             else:
                 return None
         return productos_vendidos

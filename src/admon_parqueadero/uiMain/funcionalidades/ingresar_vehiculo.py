@@ -48,37 +48,39 @@ class IngresarVehiculo(BaseFuncionalidad):
         formulario.pack()
 
     def _configurar_ingreso(self, vehiculo: Vehiculo):
-        if vehiculo.estaParqueado():
-            self.imprimir("Ese vehículo ya se encuentra ingresado en el parqueadero")
-            return self._configurar_ui(vehiculo.getDueno())
+        dueno = vehiculo.getDueno()
+        if dueno is not None:
+            if vehiculo.estaParqueado():
+                self.imprimir("Ese vehículo ya se encuentra ingresado en el parqueadero")
+                return self._configurar_ui(dueno)
 
-        plazas_disponibles = map(
-            lambda p: str(p.getNumeroPlaza()),
-            self.getParqueadero().plazasDisponiblesPara(vehiculo),
-        )
-        self.field_frame = FieldFrame(
-            self.contenido,
-            "Criterios",
-            ["Cédula", "Placa", "Plaza"],
-            "Valores",
-            [str(vehiculo.getDueno().getCedula()), vehiculo.getPlaca(), None],
-            ["Cédula", "Placa"],
-            combobox={"Plaza": list(plazas_disponibles)},
-        )
-        self.field_frame.pack()
+            plazas_disponibles = map(
+                lambda p: str(p.getNumeroPlaza()),
+                self.getParqueadero().plazasDisponiblesPara(vehiculo),
+            )
+            self.field_frame = FieldFrame(
+                self.contenido,
+                "Criterios",
+                ["Cédula", "Placa", "Plaza"],
+                "Valores",
+                [str(dueno.getCedula()), vehiculo.getPlaca(), None],
+                ["Cédula", "Placa"],
+                combobox={"Plaza": list(plazas_disponibles)},
+            )
+            self.field_frame.pack()
 
-        self.frame_botones = tk.Frame(self.contenido)
-        self.frame_botones.pack(side="bottom", fill="both", expand=True)
+            self.frame_botones = tk.Frame(self.contenido)
+            self.frame_botones.pack(side="bottom", fill="both", expand=True)
 
-        self.btn_principal = tk.Button(
-            self.frame_botones, text="Ingresar", command=self._terminar_ingreso
-        )
-        self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
+            self.btn_principal = tk.Button(
+                self.frame_botones, text="Ingresar", command=self._terminar_ingreso
+            )
+            self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
-        self.btn_borrar = tk.Button(
-            self.frame_botones, text="Borrar", command=self.field_frame.borrar
-        )
-        self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
+            self.btn_borrar = tk.Button(
+                self.frame_botones, text="Borrar", command=self.field_frame.borrar
+            )
+            self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 
     def _terminar_ingreso(self):
         placa = self.field_frame.getValue("Placa")
@@ -86,9 +88,12 @@ class IngresarVehiculo(BaseFuncionalidad):
         vehiculo = cast(Vehiculo, self.getBaseDatos().buscarVehiculoRegistrado(placa))
         plaza = cast(Plaza, self.getParqueadero().buscarPlaza(plaza_num))
         self.getParqueadero().ingresarVehiculo(vehiculo, plaza)
+        dueno = vehiculo.getDueno()
 
         # TODO: Generar factura
 
         self.imprimir("Vehículo ingresado")
-        self._configurar_ui(vehiculo.getDueno())
+        
+        if dueno is not None:
+            self._configurar_ui(dueno)
 

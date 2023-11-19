@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 from admon_parqueadero.gestorAplicacion.parqueadero.factura import Factura
 from admon_parqueadero.gestorAplicacion.personas.persona import Persona
 
@@ -32,10 +32,10 @@ class Cliente(Persona):
     def isDiscapacitado(self) -> bool:
         return self._discapacitado
 
-    def setFactura(self, factura: Factura) -> None:
+    def setFactura(self, factura: Optional[Factura]) -> None:
         self._factura = factura
 
-    def getFactura(self) -> Factura:
+    def getFactura(self) -> Optional[Factura]:
         return self._factura
 
     def setVehiculos(self, vehiculos: list[Vehiculo]) -> None:

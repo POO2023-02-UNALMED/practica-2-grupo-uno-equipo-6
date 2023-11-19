@@ -1,11 +1,12 @@
 from __future__ import annotations
+from typing import Optional
 
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
 
 
 class Producto:
-    def __init__(self, tipo: TipoProducto, estado: TipoEstado, marca: str = "") -> None:
+    def __init__(self, tipo: TipoProducto, estado: TipoEstado, marca: Optional[str] = None) -> None:
         self._tipo = tipo
         self._marca = marca
         self._estado = estado
@@ -26,7 +27,7 @@ class Producto:
     def setMarca(self, marca: str) -> None:
         self._marca = marca
 
-    def getMarca(self) -> str:
+    def getMarca(self) -> Optional[str]:
         return self._marca
 
     def setEstado(self, estado: TipoEstado) -> None:

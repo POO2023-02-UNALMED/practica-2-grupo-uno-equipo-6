@@ -83,9 +83,9 @@ class Factura:
 
     def agregarServicio(self, servicio: str, cantidad: float) -> None:
         if servicio in self._valorServicios:
-            self._servicios[servicio] += cantidad
+            self._servicios[servicio] += cantidad * Factura._valorServicios[servicio]
         else:
-            self._servicios[servicio] = cantidad
+            self._servicios[servicio] = cantidad * Factura._valorServicios[servicio]
 
     def __str__(self) -> str:
         s = ""

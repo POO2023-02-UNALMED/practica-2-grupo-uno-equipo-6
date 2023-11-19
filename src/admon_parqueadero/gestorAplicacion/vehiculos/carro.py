@@ -13,7 +13,7 @@ class Carro(Vehiculo):
     def __init__(
         self,
         placa: str,
-        dueno: Cliente,
+        dueno: Optional[Cliente],
         marca: str,
         color: str,
         modelo: str,
