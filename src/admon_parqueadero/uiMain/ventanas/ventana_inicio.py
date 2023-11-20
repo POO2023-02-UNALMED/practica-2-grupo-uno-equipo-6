@@ -73,10 +73,10 @@ class VentanaInicio(tk.Frame):
                 ],
                 "fotos": (
                     "powerRanger1.png",
-                    "300x300_azul.png",
+                    "powerRanger2.png",
                     "300x300_azul.png",
                     # "300x300_azul.png",
-                    "powerRanger2.png"
+                    "carnet1.png"
                    
                 ),
             },
