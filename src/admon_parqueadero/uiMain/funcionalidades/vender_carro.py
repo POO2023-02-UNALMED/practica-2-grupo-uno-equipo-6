@@ -150,7 +150,7 @@ class VenderCarro(BaseFuncionalidad):
                 self.field_frame.getValue("Vendedor")
             )
             self._vendedor = self._parqueadero.getVendedores()[eleccion_vendedor]
-        mensaje = f"Hola, mi nombre es {self._vendedor.getNombre().title()} y voy a atenderlo el día de hoy."
+            self.imprimir(f"Hola, mi nombre es {self._vendedor.getNombre().title()} y voy a atenderlo el día de hoy.")
 
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
@@ -158,11 +158,11 @@ class VenderCarro(BaseFuncionalidad):
         self.field_frame = FieldFrame(
             self.contenido,
             "Criterio",
-            ["Ingrese el precio por el que desea vender su carro"],
+            ["Precio: "],
             "Valores",
             None,
             None,
-            titulo=mensaje,
+            titulo="Ingrese el precio por el que desea vender su carro al parqueadero",
         )
         self.field_frame.pack()
         self.frame_botones = tk.Frame(self.contenido)
@@ -244,7 +244,7 @@ class VenderCarro(BaseFuncionalidad):
         self.imprimir(f"Hola, mi nombre es {self._mecanico.getNombre().title()} y voy a atenderlo el día de hoy.")
         
         #return self.terminar_venta(vehiculo)
-        messagebox.showinfo("Oferta de venta", f"El parqueadero ha realizado la revisión del vehículo, y le presenta la siguiente oferta: Puede vender su vehículo por {self._precio_final} o puede cambiar su vehículo por uno disponible en el rango de precio.")
+        self.imprimir(f"El parqueadero ha realizado la revisión del vehículo, y le presenta la siguiente oferta:\nPuede vender su vehículo por {self._precio_final} o puede cambiar su vehículo por uno disponible en el rango de precio.")
         opciones = [
             f"Aceptar la oferta de {self._precio_final}",
             "Cambiar por otro carro"
