@@ -546,7 +546,8 @@ class ManejoParqueadero(BaseFuncionalidad):
 
     def _retirar_vehiculo(self, funcion_manejo: Callable[[], None]) -> None:
         self.field_frame.destroy()
-        placas = map(lambda e: e[1].getPlaca(), self.getBaseDatos().getVehiculosRegistrados().items())
+        vehiculos = filter(lambda e: e[1].estaParqueado(), self.getBaseDatos().getVehiculosRegistrados().items())
+        placas = map(lambda e: e[1].getPlaca(), vehiculos)
         self.field_frame = FieldFrame(
             self.contenido,
             "Criterio",
