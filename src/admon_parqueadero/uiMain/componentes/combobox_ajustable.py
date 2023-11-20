@@ -18,4 +18,4 @@ class ComboboxAjustable(ttk.Combobox):
         valor_largo = max(valores, key=len)
         if self._valor_inicial is not None and len(self._valor_inicial) > len(valor_largo):
             valor_largo = self._valor_inicial
-        self.config(width=round(len(valor_largo) * 1.1))
+        self.config(width=len(valor_largo))
