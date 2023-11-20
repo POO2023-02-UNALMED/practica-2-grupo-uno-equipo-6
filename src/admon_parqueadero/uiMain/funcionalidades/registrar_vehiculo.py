@@ -4,6 +4,7 @@ from typing import Any
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
+from admon_parqueadero.gestorAplicacion.vehiculos.coloresVehiculo import ColoresVehiculo
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasMoto import MarcasMoto
 from admon_parqueadero.gestorAplicacion.vehiculos.moto import Moto
@@ -38,19 +39,7 @@ class RegistrarVehiculo(BaseFuncionalidad):
         if not cliente.isDiscapacitado():
             tipos_vehiculo.append("Moto")
 
-        coloresVehiculo = [
-            "Rojo",
-            "Azul",
-            "Verde",
-            "Morado",
-            "Naranja",
-            "Gris",
-            "Negro",
-            "Blanco",
-            "Rosado",
-            "Amarillo",
-        ]
-
+        coloresVehiculo = ColoresVehiculo.lista()
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)

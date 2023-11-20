@@ -8,6 +8,7 @@ from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstad
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
 from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
+from admon_parqueadero.gestorAplicacion.vehiculos.coloresVehiculo import ColoresVehiculo
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
 from admon_parqueadero.gestorAplicacion.vehiculos.tipo_vehiculo import TipoVehiculo
 from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
@@ -428,6 +429,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             {
                 "Marca": [m.name.title() for m in MarcasCarro],
                 "Tipo": ["Mecanico", "Automatico"],
+                "Color": ColoresVehiculo.lista()
             },
             titulo="Ingrese los datos del carro",
         )

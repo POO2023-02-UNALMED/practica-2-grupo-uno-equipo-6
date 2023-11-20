@@ -318,7 +318,6 @@ class GridFotos(tk.Frame):
 
     def siguiente_imagen(self) -> None:
         actual = next(self.fotos)
-        print(actual[0])
         with (
             as_file(actual[0]) as f0,
             as_file(actual[1]) as f1,

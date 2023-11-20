@@ -4,6 +4,7 @@ from typing import Any, Callable, cast
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.errores import ErrorUsuario
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
+from admon_parqueadero.gestorAplicacion.vehiculos.coloresVehiculo import ColoresVehiculo
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasMoto import MarcasMoto
 from admon_parqueadero.gestorAplicacion.vehiculos.moto import Moto
 from admon_parqueadero.gestorAplicacion.vehiculos.tipo_vehiculo import TipoVehiculo
@@ -79,19 +80,7 @@ class FormularioVehiculo(tk.Frame):
         if not self._cliente.isDiscapacitado():
             tiposVehiculo.append("Moto")
 
-        coloresVehiculo = [
-            "Rojo",
-            "Azul",
-            "Verde",
-            "Morado",
-            "Naranja",
-            "Gris",
-            "Negro",
-            "Blanco",
-            "Rosado",
-            "Amarillo",
-        ]
-
+        coloresVehiculo = ColoresVehiculo.lista()
         self.field_frame = FieldFrame(
             self,
             "Criterio",
