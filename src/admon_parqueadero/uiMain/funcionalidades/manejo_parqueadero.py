@@ -143,7 +143,7 @@ class ManejoParqueadero(BaseFuncionalidad):
                     "Ver información de un cliente",
                 ]
             },
-            titulo="Parqueadero",
+            titulo="Parqueadero"
         )
         self.field_frame.pack()
         self.btn_principal.config(
