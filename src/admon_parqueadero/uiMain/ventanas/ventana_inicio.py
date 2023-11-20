@@ -265,7 +265,7 @@ class Imagenes(tk.Frame):
         super().__init__(master, *args, **kwargs)
 
         self.imagenes = infinito(
-            [  # TODO: agregar las 5 imagenes
+            [
                 "mecanico.png",
                 "Carro1.png",
                 "cars1.png",

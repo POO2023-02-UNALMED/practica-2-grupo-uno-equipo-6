@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from typing import Any, Callable
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
@@ -23,7 +24,7 @@ class FormularioCliente(tk.Frame):
         self.field_frame_container = tk.Frame(self)
         self.field_frame_container.pack()
 
-        self.field_frame = FieldFrame(self.field_frame_container, "Criterio", ["Cédula"], "Valor", None, None)
+        self.field_frame = FieldFrame(self.field_frame_container, "Criterio", ["Cédula"], "Valor", None, None, titulo="Ingrese su número de cédula")
         self.field_frame.pack()
 
         self.botones = tk.Frame(self)
@@ -82,6 +83,8 @@ class FormularioCliente(tk.Frame):
 
         cliente = Cliente(nombre, cedula, telefono, correo, direccion, discapacitado)
         self._baseDatos.registrarCliente(cliente)
+
+        messagebox.showinfo("Cliente registrado", "Cliente registrado exitosamente")
 
         self.destroy()
         self._f_final(cliente)

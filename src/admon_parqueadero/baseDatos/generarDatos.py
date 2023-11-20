@@ -284,7 +284,7 @@ class GenerarDatos:
                 dueno = vehiculo.getDueno()
                 if dueno is not None:
                     dueno.agregarVehiculo(vehiculo)
-                    if vehiculo.getPlaca() in ["LCX368", "ISZ049", "TAU635", "RSF358", "BTV358"]:
+                    if vehiculo.getPlaca() in ["LCX368", "ISZ049", "TAU635", "RSF358", "VUJ819"]:
                         if dueno.isDiscapacitado():
                             for p in parqueadero.getPlazas():
                                 if p.isDiscapacitado() and p.getEstado() == "Disponible" and p.getTipo() == "Carro":
@@ -293,13 +293,14 @@ class GenerarDatos:
                                     if factura is not None:
                                         factura.agregarServicio("Parqueadero", 1)
                                         break
-                        for p in parqueadero.getPlazas():
-                            if p.getEstado() == "Disponible" and p.getTipo() == "Carro" and not p.isDiscapacitado():
-                                parqueadero.ingresarVehiculo(vehiculo, p)
-                                factura = dueno.getFactura()
-                                if factura is not None:
-                                    factura.agregarServicio("Parqueadero", 1)
-                                    break
+                        else:
+                            for p in parqueadero.getPlazas():
+                                if p.getEstado() == "Disponible" and p.getTipo() == "Carro" and not p.isDiscapacitado():
+                                    parqueadero.ingresarVehiculo(vehiculo, p)
+                                    factura = dueno.getFactura()
+                                    if factura is not None:
+                                        factura.agregarServicio("Parqueadero", 1)
+                                        break
                     
                     else:
                         if vehiculo.getPlaca() in ["LOR31V", "TZL87N", "VLC37F"]:
