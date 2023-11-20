@@ -13,6 +13,7 @@ class FormularioCliente(tk.Frame):
         master: tk.Misc,
         baseDatos: BaseDatos,
         f_final: Callable[[Cliente], None],
+        imprimir: Callable[..., None],
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -20,6 +21,7 @@ class FormularioCliente(tk.Frame):
 
         self._baseDatos = baseDatos
         self._f_final = f_final
+        self._imprimir = imprimir
 
         self.field_frame_container = tk.Frame(self)
         self.field_frame_container.pack()
@@ -84,7 +86,7 @@ class FormularioCliente(tk.Frame):
         cliente = Cliente(nombre, cedula, telefono, correo, direccion, discapacitado)
         self._baseDatos.registrarCliente(cliente)
 
-        messagebox.showinfo("Cliente registrado", "Cliente registrado exitosamente")
+        self._imprimir("Cliente registrado", "Cliente registrado exitosamente")
 
         self.destroy()
         self._f_final(cliente)

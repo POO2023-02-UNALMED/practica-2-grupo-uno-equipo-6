@@ -30,7 +30,7 @@ class IngresarVehiculo(BaseFuncionalidad):
         self.packContenido(self.contenido)
 
         formulario = FormularioCliente(
-            self.contenido, self.getBaseDatos(), f_final=self._configurar_ui
+            self.contenido, self.getBaseDatos(), f_final=self._configurar_ui, imprimir=self.imprimir
         )
         formulario.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
@@ -44,6 +44,7 @@ class IngresarVehiculo(BaseFuncionalidad):
             self.getBaseDatos(),
             cliente,
             f_final=self._configurar_ingreso,
+            imprimir=self.imprimir
         )
         formulario.pack()
 

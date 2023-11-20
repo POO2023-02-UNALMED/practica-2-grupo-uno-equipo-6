@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import messagebox
 from typing import Any, Callable, cast
 
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
@@ -21,6 +20,7 @@ class FormularioVehiculo(tk.Frame):
         baseDatos: BaseDatos,
         cliente: Cliente,
         f_final: Callable[[Vehiculo], None],
+        imprimir: Callable[..., None],
         *args: Any,
         **kwargs: Any,
     ) -> None:
@@ -29,6 +29,7 @@ class FormularioVehiculo(tk.Frame):
         self._baseDatos = baseDatos
         self._cliente = cliente
         self._f_final = f_final
+        self._imprimir = imprimir
 
         self._configuracion_inicial()
 
@@ -192,7 +193,7 @@ class FormularioVehiculo(tk.Frame):
         self._baseDatos.registrarVehiculo(vehiculo)
         self._cliente.agregarVehiculo(vehiculo)
 
-        messagebox.showinfo("Vehículo registrado", "Vehículo registrado exitosamente")
+        self._imprimir("Vehículo registrado exitosamente")
 
         self.destroy()
         self._f_final(vehiculo)

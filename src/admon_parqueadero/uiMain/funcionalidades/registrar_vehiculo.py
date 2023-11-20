@@ -29,7 +29,7 @@ class RegistrarVehiculo(BaseFuncionalidad):
     def _inicio(self) -> None:
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
-        formulario = FormularioCliente(self.contenido, self.getBaseDatos(), f_final=self._inicio_registro)
+        formulario = FormularioCliente(self.contenido, self.getBaseDatos(), f_final=self._inicio_registro, imprimir=self.imprimir)
         formulario.btn_principal.config(text="Continuar")
         formulario.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
