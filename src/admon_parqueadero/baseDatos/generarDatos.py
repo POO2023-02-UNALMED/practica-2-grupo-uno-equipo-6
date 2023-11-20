@@ -1,3 +1,4 @@
+from typing import cast
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.parqueadero.producto  import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
@@ -283,6 +284,42 @@ class GenerarDatos:
                 dueno = vehiculo.getDueno()
                 if dueno is not None:
                     dueno.agregarVehiculo(vehiculo)
+                    if vehiculo.getPlaca() in ["LCX368", "ISZ049", "TAU635", "RSF358", "BTV358"]:
+                        if dueno.isDiscapacitado():
+                            for p in parqueadero.getPlazas():
+                                if p.isDiscapacitado() and p.getEstado() == "Disponible" and p.getTipo() == "Carro":
+                                    parqueadero.ingresarVehiculo(vehiculo, p)
+                                    factura = dueno.getFactura()
+                                    if factura is not None:
+                                        factura.agregarServicio("Parqueadero", 1)
+                                        break
+                        for p in parqueadero.getPlazas():
+                            if p.getEstado() == "Disponible" and p.getTipo() == "Carro" and not p.isDiscapacitado():
+                                parqueadero.ingresarVehiculo(vehiculo, p)
+                                factura = dueno.getFactura()
+                                if factura is not None:
+                                    factura.agregarServicio("Parqueadero", 1)
+                                    break
+                    
+                    else:
+                        if vehiculo.getPlaca() in ["LOR31V", "TZL87N", "VLC37F"]:
+                            if cast(Moto, vehiculo).getTipo() == TipoVehiculo.ALTOCC:
+                                for p in parqueadero.getPlazas():
+                                    if p.getTipo() == "Moto altoCC" and p.getEstado() == "Disponible":
+                                        parqueadero.ingresarVehiculo(vehiculo, p)
+                                        factura = dueno.getFactura()
+                                        if factura is not None:
+                                            factura.agregarServicio("Parqueadero", 1)
+                                            break
+                            else:
+                                for p in parqueadero.getPlazas():
+                                    if p.getTipo() == "Moto" and p.getEstado() == "Disponible":
+                                        parqueadero.ingresarVehiculo(vehiculo, p)
+                                        factura = dueno.getFactura()
+                                        if factura is not None:
+                                            factura.agregarServicio("Parqueadero", 1)
+                                            break
+                      
         admin = Empleado("Guzman", 123, 310111111, "guzman@unal.edu.co", "P.O. Box 837, 1931 Faucibus Road", "Administrador", 3000000)
         if parqueadero is not None:
             parqueadero.setAdministrador(admin)

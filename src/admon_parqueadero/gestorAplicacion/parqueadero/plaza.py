@@ -5,8 +5,6 @@ from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
 
 class Plaza:
-    _plazasTotales: list[Plaza] = []
-
     def __init__(
         self,
         numeroPlaza: int,
@@ -19,12 +17,11 @@ class Plaza:
         self._estado = "Disponible"
         self._vehiculo = vehiculo
         self._tipo = tipo
-        Plaza._plazasTotales.append(self)
 
     def setDiscapacitado(self, discapacitado: bool) -> None:
         self._discapacitado = discapacitado
 
-    def getDiscapacitado(self) -> bool:
+    def isDiscapacitado(self) -> bool:
         return self._discapacitado
 
     def setNumeroPlaza(self, numeroPlaza: int) -> None:

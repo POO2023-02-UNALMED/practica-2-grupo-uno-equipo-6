@@ -10,7 +10,6 @@ if TYPE_CHECKING:
 
 class Factura:
     _facturasCreadas = 0
-    _valorServicios: dict[str, float] = {}
 
     def __init__(self, cliente: Cliente) -> None:
         Factura._facturasCreadas += 1
@@ -21,6 +20,7 @@ class Factura:
         cliente.setFactura(self)
         self._precioTotal = 0
         self._servicios: dict[str, float] = {}
+        self._valorServicios: dict[str, float] = {"Revision general": 100000, "Cambio": 50000, "Parqueadero": 1}
 
     def getNumeroFactura(self) -> int:
         return self._numeroFactura
@@ -82,10 +82,10 @@ class Factura:
             self._servicios[key] = cantidad
 
     def agregarServicio(self, servicio: str, cantidad: float) -> None:
-        if servicio in self._valorServicios:
-            self._servicios[servicio] += cantidad * Factura._valorServicios[servicio]
+        if servicio in self._servicios:
+            self._servicios[servicio] += cantidad * self._valorServicios[servicio]
         else:
-            self._servicios[servicio] = cantidad * Factura._valorServicios[servicio]
+            self._servicios[servicio] = cantidad * self._valorServicios[servicio]
 
     def __str__(self) -> str:
         s = ""
