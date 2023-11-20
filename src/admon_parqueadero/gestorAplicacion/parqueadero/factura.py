@@ -88,7 +88,10 @@ class Factura:
             self._servicios[servicio] = cantidad * self._valorServicios[servicio]
 
     def __str__(self) -> str:
-        s = ""
+        servicios = ""
         for key in self._servicios:
-            s += f"{key}: {self._servicios.get(key)}\n"
-        return f"Factura N°{self._numeroFactura}        {self._fecha.strftime('%Y/%m/%d')}\nCliente: {self._cliente.getNombre()}\nServicios: \n{s}"
+            servicios += f"{key}: {self._servicios.get(key)}\n"
+        s = f"Factura N°{self._numeroFactura}        {self._fecha.strftime('%Y/%m/%d')}\nCliente: {self._cliente.getNombre()}\n"
+        if len(servicios) > 0:
+            s += f"Servicios:\n{servicios}"
+        return s

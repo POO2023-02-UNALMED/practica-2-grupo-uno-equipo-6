@@ -409,11 +409,19 @@ class ManejoParqueadero(BaseFuncionalidad):
             else:
                 r += "En condición de discapacidad: no\n"
             if cliente.getFactura() is not None:
-                r += f"Se ha generado la siguiente factura para este cliente:\n{cliente.getFactura()}"  # TODO: a donde ¿?¿?¿?¿?¿?
-            messagebox.showinfo("Cliente", r)
+                r += f"Se ha generado la siguiente factura para este cliente:\n{cliente.getFactura()}\n"  # TODO: a donde ¿?¿?¿?¿?¿?
+            vehiculos = cliente.getVehiculos()
+            if len(vehiculos) > 0:
+                r += "Vehiculos del cliente:\n"
+                for vehiculo in cliente.getVehiculos():
+                    r += f"\t- {vehiculo.getPlaca()}"
+                    if vehiculo.estaParqueado():
+                        r += " (ingresado)"
+                    r += "\n"
+            self.imprimir("Cliente:\n" + r)
             return funcion_manejo()
         else:
-            messagebox.showerror("Error", "El cliente no se encuentra registrado")
+            self.imprimir("Error: El cliente no se encuentra registrado")
             return funcion_manejo()
 
     # funcionalidades internas
