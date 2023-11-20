@@ -134,8 +134,8 @@ class ventana_principal_usu(tk.Frame):
         )
         texto_bienvenida.pack(side="top", padx=5, pady=5)
 
-        texto = "Para empezar a usar la aplicación seleccione una de las opciones listadas en procesos y consultas, recomendamos empezar\
- ingresando un vehiculo que no se encuentre en el parqueadero. Esta aplicación le permitira administrar y realizar servicios\
+        texto = "Para empezar a usar la aplicación y que se obtengan resultados satisfactorios seleccione una de las opciones listadas en el apartado Procesos y consultas, recomendamos empezar\
+ ingresando un vehiculo que no se encuentre en el parqueadero. Esta aplicación le permitirá administrar y realizar servicios\
  varios asociados a un parqueadero con mayor comodidad puesto que solo debera precuparse por introducir los valores correctamente\
  ya que el programa se encargara del resto ;)"
 

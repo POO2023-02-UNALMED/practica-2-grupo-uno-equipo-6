@@ -97,7 +97,7 @@ class VenderCarro(BaseFuncionalidad):
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
-
+        self._vendedor = None
         self._vendedores_nombre = list(
             map(lambda x: x.getNombre().title(), self._parqueadero.getVendedores())
         )
@@ -143,10 +143,12 @@ class VenderCarro(BaseFuncionalidad):
     
 
     def continuarVenta(self, vehiculo: Vehiculo) -> None:
-        eleccion_vendedor = self._vendedores_nombre.index(
-            self.field_frame.getValue("Vendedor")
-        )
-        self._vendedor = self._parqueadero.getVendedores()[eleccion_vendedor]
+        if self._vendedor==None:
+    
+            eleccion_vendedor = self._vendedores_nombre.index(
+                self.field_frame.getValue("Vendedor")
+            )
+            self._vendedor = self._parqueadero.getVendedores()[eleccion_vendedor]
         mensaje = f"Hola, mi nombre es {self._vendedor.getNombre().title()} y voy a atenderlo el día de hoy."
 
         self.contenido.destroy()
@@ -180,6 +182,12 @@ class VenderCarro(BaseFuncionalidad):
 
     def escogerMecanico(self, vehiculo: Vehiculo):
         self._precio_cliente = self.field_frame.getValueNumero("Ingrese el precio por el que desea vender su carro", int)
+        if self._precio_cliente>50000000:
+            messagebox.showinfo(
+                    "No podemos",
+                    "El precio ingresado no es aceptado por el parqueadero, intente realizar otra oferta.",
+                )
+            return self.continuarVenta(vehiculo)
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
@@ -284,7 +292,7 @@ class VenderCarro(BaseFuncionalidad):
                 map(lambda x: x.getPrecioVenta()<=self._precio_final, self._parqueadero.getVehiculosVenta())
             )
             info_carros_venta = list(
-                map(lambda x: x.__str__, vehiculos_rango_precio)
+                map(lambda x: str(cast(Carro,x)), vehiculos_rango_precio)
             )
             self.field_frame = FieldFrame(
                 self.contenido,
@@ -346,6 +354,8 @@ class VenderCarro(BaseFuncionalidad):
             vehiculo.setDueno(None)
             cast(Carro, vehiculo).setPrecioVenta(50000000)
             self._parqueadero.agregarVehiculoVenta(vehiculo)
+            self.frame_botones = tk.Frame(self.contenido)
+            self.frame_botones.pack(side="bottom", fill="both", expand=True)
             self.btn_principal = tk.Button(
                 self.frame_botones, text="Continuar", command=lambda: mensaje_final()
             )

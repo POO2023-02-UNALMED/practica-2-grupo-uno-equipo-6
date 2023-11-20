@@ -44,7 +44,7 @@ class VentanaInicio(tk.Frame):
 
         msg_bienvenida = LabelAjustable(
             p3,
-            text="Bienvenido al Parqueadero. Aquí podrá guardar su carro o moto, comprar el carro que desee, o vender un carro de su propiedad, además de acceder a la administración del parqueadero.",
+            text="Bienvenido al Parqueadero. Aquí podrá guardar su(s) vehículo(s), sea carro y/o moto. Podrá obtener distintos servicios de revisión, de cambio de repuestos y más, además podrá comprar el carro que desee o vender uno de su propiedad. Asimismo se logrará acceder a la administración del parqueadero y ser manejado para realizar varios procesos por el encargado.",
         )
         msg_bienvenida.pack(expand=True, fill="x", padx=10, pady=10)
 
