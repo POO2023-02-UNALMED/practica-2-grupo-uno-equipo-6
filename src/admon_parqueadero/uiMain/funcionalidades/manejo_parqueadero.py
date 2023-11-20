@@ -143,7 +143,7 @@ class ManejoParqueadero(BaseFuncionalidad):
                     "Ver información de un cliente",
                 ]
             },
-            titulo="Parqueadero",
+            titulo="Parqueadero"
         )
         self.field_frame.pack()
         self.btn_principal.config(
@@ -360,6 +360,11 @@ class ManejoParqueadero(BaseFuncionalidad):
         self._parqueadero.agregarPlazas(plazas_carro_discapacitados, True, "Carro")
         self._parqueadero.agregarPlazas(plazas_moto, False, "Moto")
         self._parqueadero.agregarPlazas(plazas_moto_altocc, False, "Moto altoCC")
+        self.imprimir("Plazas agregadas:")
+        self.imprimir(f"\t- {plazas_carro} plaza(s) normales para carro")
+        self.imprimir(f"\t- {plazas_carro_discapacitados} plaza(s) para condición de discapacidad")
+        self.imprimir(f"\t- {plazas_moto} plaza(s) normales para moto")
+        self.imprimir(f"\t- {plazas_moto_altocc} plaza(s) para moto de altoCC")
         return funcion_manejo()
 
     # retirar un vehiculo
@@ -546,7 +551,8 @@ class ManejoParqueadero(BaseFuncionalidad):
 
     def _retirar_vehiculo(self, funcion_manejo: Callable[[], None]) -> None:
         self.field_frame.destroy()
-        placas = map(lambda e: e[1].getPlaca(), self.getBaseDatos().getVehiculosRegistrados().items())
+        vehiculos = filter(lambda e: e[1].estaParqueado(), self.getBaseDatos().getVehiculosRegistrados().items())
+        placas = map(lambda e: e[1].getPlaca(), vehiculos)
         self.field_frame = FieldFrame(
             self.contenido,
             "Criterio",

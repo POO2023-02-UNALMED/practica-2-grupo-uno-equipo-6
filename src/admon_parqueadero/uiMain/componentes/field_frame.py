@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import font
 from typing import Any, Callable, Literal, Optional, TypeVar, Union
 from admon_parqueadero.errores import ErrorNumeroEsperado, ErrorValorEsperado
+from admon_parqueadero.uiMain.componentes.combobox_ajustable import ComboboxAjustable
 
 
 T = TypeVar("T")
@@ -61,7 +62,7 @@ class FieldFrame(tk.Frame):
                 self._combobox_textvariables[criterio] = tk.StringVar(
                     value=FieldFrame._COMBOBOX_TEXTO
                 )
-                entrada = ttk.Combobox(
+                entrada = ComboboxAjustable(
                     frame_formulario,
                     values=opciones,
                     textvariable=self._combobox_textvariables[criterio],
