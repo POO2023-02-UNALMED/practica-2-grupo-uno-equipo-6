@@ -52,6 +52,9 @@ class BaseDatos:
         placa = placa.upper()
         return self._vehiculosRegistrados.get(placa)
 
+    def getVehiculosRegistrados(self) -> dict[str, Vehiculo]:
+        return self._vehiculosRegistrados
+
     def registrarVehiculo(self, vehiculo: Vehiculo) -> bool:
         if vehiculo.getPlaca() in self._vehiculosRegistrados:
             return False

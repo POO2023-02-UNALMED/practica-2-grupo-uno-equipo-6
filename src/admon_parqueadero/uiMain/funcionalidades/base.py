@@ -57,5 +57,7 @@ class BaseFuncionalidad(tk.Frame):
     def getParqueadero(self) -> Parqueadero:
         return self._parqueadero
 
-    def imprimir(self, s: str) -> None:
-        self.listbox.insert(tk.END, s)
+    def imprimir(self, *args: str) -> None:
+        s = " ".join(args)
+        for linea in s.splitlines():
+            self.listbox.insert(tk.END, linea)

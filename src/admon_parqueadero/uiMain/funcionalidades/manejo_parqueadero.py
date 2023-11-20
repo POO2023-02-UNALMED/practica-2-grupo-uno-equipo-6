@@ -319,7 +319,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             messagebox.showinfo("No hay mecanicos", "No hay mecanicos por bonificar")
             return funcion_manejo()
 
-        r = ""  # TODO: esto donde se imprime?
+        r = ""
         for mecanico in self._parqueadero.getMecanicos():
             salario_antes = mecanico.getSalario()
             nuevo_salario = salario_antes * porcentaje_salario
@@ -329,7 +329,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             mecanico.setComision(nueva_comision)
             r += f"{mecanico.getNombre}\nSalario: {salario_antes} -> {nuevo_salario}\nComisión: {comision_antes} -> {nueva_comision}\n"
         # mostrar r
-        messagebox.showinfo("Bonificaciones realizadas", r)
+        self.imprimir("Bonificaciones realizadas", r)
         return funcion_manejo()
 
     # agregar producto al almacen
@@ -380,14 +380,14 @@ class ManejoParqueadero(BaseFuncionalidad):
                         - datetime.combine(fecha_salida, hora_salida)
                     ).seconds / 3600
                     factura.agregarServicio("Parqueadero", horas)
-                    messagebox.showinfo("Su factura", factura.__str__())
+                    self.imprimir("Su factura:\n" + str(factura))
                     dueno.setFactura(None)
                     self._parqueadero.retirarVehiculo(vehiculo.getPlaca())
-                    messagebox.showinfo("Vehiculo retirado", "Vuelve pronto :)")
+                    self.imprimir("Vehiculo retirado", "Vuelve pronto :)")
                     return funcion_manejo()
         else:
-            messagebox.showerror(
-                "Error", "El vehiculo no se encuentra en el parqueadero"
+            self.imprimir(
+                "Error:", "El vehiculo no se encuentra en el parqueadero"
             )
             return funcion_manejo()
 
@@ -403,7 +403,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             else:
                 r += "En condición de discapacidad: no\n"
             if cliente.getFactura() is not None:
-                r += f"Se ha generado la siguiente factura para este cliente:\n{cliente.getFactura().__str__()}"  # TODO: a donde ¿?¿?¿?¿?¿?
+                r += f"Se ha generado la siguiente factura para este cliente:\n{cliente.getFactura()}"  # TODO: a donde ¿?¿?¿?¿?¿?
             messagebox.showinfo("Cliente", r)
             return funcion_manejo()
         else:
@@ -546,6 +546,7 @@ class ManejoParqueadero(BaseFuncionalidad):
 
     def _retirar_vehiculo(self, funcion_manejo: Callable[[], None]) -> None:
         self.field_frame.destroy()
+        placas = map(lambda e: e[1].getPlaca(), self.getBaseDatos().getVehiculosRegistrados().items())
         self.field_frame = FieldFrame(
             self.contenido,
             "Criterio",
@@ -553,6 +554,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             "Valor",
             None,
             None,
+            combobox={"Placa": list(placas)},
             titulo="Ingrese la placa del vehículo a retirar",
         )
         self.field_frame.pack()
