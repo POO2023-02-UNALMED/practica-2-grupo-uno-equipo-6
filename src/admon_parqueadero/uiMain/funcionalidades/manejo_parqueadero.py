@@ -1,7 +1,7 @@
 import tkinter as tk
-from datetime import date, time, datetime
+from datetime import datetime
 from tkinter import messagebox
-from typing import Any, Callable, Literal, Optional, Union
+from typing import Any, Callable, Literal
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
@@ -9,7 +9,6 @@ from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoPro
 from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
-from admon_parqueadero.gestorAplicacion.vehiculos.marcasMoto import MarcasMoto
 from admon_parqueadero.gestorAplicacion.vehiculos.tipo_vehiculo import TipoVehiculo
 from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
 from admon_parqueadero.uiMain.funcionalidades.base import BaseFuncionalidad
@@ -85,6 +84,9 @@ class ManejoParqueadero(BaseFuncionalidad):
                 },
                 titulo=f"Bienvenido {admin.getNombre()}\nSeleccione la parte del parqueadero a manejar",
             )
+        else:
+            messagebox.showerror("Error", "No hay administrador registrado en el sistema")
+            return self._inicio()
         self.field_frame.pack()
         self.btn_principal.config(text="Continuar", command=self._ingreso)
 
@@ -145,6 +147,7 @@ class ManejoParqueadero(BaseFuncionalidad):
         )
         self.field_frame.pack()
         self.btn_principal.config(
+            text="Continuar",
             command=lambda: self._manejo(self._manejo_parqueadero)
         )
 
@@ -169,6 +172,7 @@ class ManejoParqueadero(BaseFuncionalidad):
         )
         self.field_frame.pack()
         self.btn_principal.config(
+            text="Continuar",
             command=lambda: self._manejo(self._manejo_taller)
         )
 
@@ -186,6 +190,7 @@ class ManejoParqueadero(BaseFuncionalidad):
         )
         self.field_frame.pack()
         self.btn_principal.config(
+            text="Continuar",
             command=lambda: self._manejo(self._manejo_almacen)
         )
 
@@ -324,7 +329,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             mecanico.setComision(nueva_comision)
             r += f"{mecanico.getNombre}\nSalario: {salario_antes} -> {nuevo_salario}\nComisión: {comision_antes} -> {nueva_comision}\n"
         # mostrar r
-        messagebox.showinfo("Bonificaciones realizadas")
+        messagebox.showinfo("Bonificaciones realizadas", r)
         return funcion_manejo()
 
     # agregar producto al almacen
@@ -394,11 +399,13 @@ class ManejoParqueadero(BaseFuncionalidad):
         if cliente is not None:
             r += f"Nombre: {cliente.getNombre()}\nCédula: {str(cliente.getCedula())}\nCorreo: {cliente.getCorreo()}\nDirección: {cliente.getDireccion()}\nTeléfono: {str(cliente.getTelefono())}\n"
             if cliente.isDiscapacitado():
-                r += "En condición de discapacidad: si"
+                r += "En condición de discapacidad: si\n"
             else:
-                r += "En condición de discapacidad: no"
+                r += "En condición de discapacidad: no\n"
             if cliente.getFactura() is not None:
                 r += f"Se ha generado la siguiente factura para este cliente:\n{cliente.getFactura().__str__()}"  # TODO: a donde ¿?¿?¿?¿?¿?
+            messagebox.showinfo("Cliente", r)
+            return funcion_manejo()
         else:
             messagebox.showerror("Error", "El cliente no se encuentra registrado")
             return funcion_manejo()
@@ -465,6 +472,7 @@ class ManejoParqueadero(BaseFuncionalidad):
         r = ""  # donde se va a mostrar esto??
         for mecanico in self._parqueadero.getMecanicos():
             r += f"{mecanico.getNombre()}\nCédula: {str(mecanico.getCedula())}\nSalario: {str(mecanico.getSalario())}\nComisión: {str(mecanico.getComision())}\nServicios realizados: {str(mecanico.getServiciosRealizados())}\n"
+        messagebox.showinfo("Estadisticas de mecanicos", r)
         return funcion_manejo()
 
     def _bonificaciones_mecanicos(self, funcion_manejo: Callable[[], None]) -> None:
@@ -506,9 +514,15 @@ class ManejoParqueadero(BaseFuncionalidad):
 
     def _inventario_almacen(self, funcion_manejo: Callable[[], None]) -> None:
         almacen = self._parqueadero.getAlmacen()
-        r = ""  # TODO: en dondeee
+        d: dict[str, int] = {}
+        r = ""
         for producto in almacen.getInventario():
-            r += f"Tipo: {producto.getTipo().name.title()}\nEstado: {producto.getEstado().name.title}\nPrecio: {producto.getPrecio()}\n"
+            if producto.getTipo().name.title() not in d:
+                d[producto.getTipo().name.title()] = 1
+            d[producto.getTipo().name.title()] += 1
+        for key in d:
+            r+= f"Tipo de producto:{key}\nExistencias: {d[key]}\n"
+        messagebox.showinfo("Inventario", r)
         return funcion_manejo()
 
     def _agregar_plazas(self, funcion_manejo: Callable[[], None]) -> None:
