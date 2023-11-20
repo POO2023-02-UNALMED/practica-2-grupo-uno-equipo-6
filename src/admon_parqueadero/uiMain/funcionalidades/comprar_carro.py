@@ -46,7 +46,7 @@ class ComprarCarro(BaseFuncionalidad):
             
             self.colorSelected = self.field_frame.getValue('Color')
             self.MarcaSelected = self.field_frame.getValue('Marca')
-            self.precioMaximoInput = self.field_frame.getValueNumero('Precio maximo','int')
+            self.precioMaximoInput = self.field_frame.getValueNumero('Precio maximo',int)
             
             if (valorVehiculo < self.precioMaximoInput 
                 and color == self.colorSelected 
@@ -172,7 +172,7 @@ class ComprarCarro(BaseFuncionalidad):
             ["lista"],
             "",
             valores=[None],
-            habilitado=[None],
+            habilitado=None,
             combobox={"lista": self.listaCarros},
             titulo='Lista de carros disponibles'
         )

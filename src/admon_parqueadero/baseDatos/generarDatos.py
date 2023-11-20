@@ -278,7 +278,7 @@ class GenerarDatos:
                 parqueadero.getAlmacen().agregarProducto(producto)
             for carro in carros_venta:
                 parqueadero.agregarVehiculoVenta(carro)
-            for vehiculo in vehiculos_clientes:
+            for vehiculo in vehiculos_clientes: # TODO: se deben ingresar los vehiculos al parqueadero y generar la factura
                 self._base_datos.registrarVehiculo(vehiculo)
                 dueno = vehiculo.getDueno()
                 if dueno is not None:
