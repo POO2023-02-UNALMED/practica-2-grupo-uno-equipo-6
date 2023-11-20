@@ -1,4 +1,9 @@
 @echo off
 
 cd src
-python -m admon_parqueadero
+
+py -V && (
+    py -m admon_parqueadero
+) || (
+    python -m admon_parqueadero
+)
