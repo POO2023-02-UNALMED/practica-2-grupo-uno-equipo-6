@@ -147,6 +147,13 @@ class Parqueadero:
 
     def plazasDisponiblesPara(self, vehiculo: Vehiculo) -> list[Plaza]:
         plazasDisponibles: list[Plaza] = []
+        dueno = vehiculo.getDueno()
+        if dueno is not None:
+            if dueno.isDiscapacitado():
+                for p in self._plazas:
+                    if p.isDiscapacitado() and p.getEstado() == "Disponible":
+                        plazasDisponibles.append(p)
+                return plazasDisponibles
         tipo = ""
         if isinstance(vehiculo, Carro):
             tipo = "Carro"
@@ -158,7 +165,7 @@ class Parqueadero:
                 tipo = "Moto altoCC"
 
         for p in self._plazas:
-            if p.getTipo() == tipo and p.getEstado() == "Disponible":
+            if p.getTipo() == tipo and p.getEstado() == "Disponible" and not p.isDiscapacitado():
                 plazasDisponibles.append(p)
         return plazasDisponibles
 
@@ -175,14 +182,14 @@ class Parqueadero:
 
         # calcular el numero de plazas para discapacitados y altoCC (el 30 % de moto seran para altoCC y el 20 % de carro para discapacitados)
         numPlazasDiscapacitadoCarro = int(numPlazasCarro * 0.2)
-        numPlazasMotoAltoCCMotos = int(numPlazasMoto * 0.20)
+        numPlazasMotoAltoCCMotos = int(numPlazasMoto * 0.2)
 
         # instanciar las plazas tipo Carro
         for i in range(1, numPlazasCarro + 1):
             if i <= numPlazasDiscapacitadoCarro:
                 self._plazas.append(Plaza(i, True, "Carro", None))
-                continue
-            self._plazas.append(Plaza(i, False, "Carro", None))
+            else:
+                self._plazas.append(Plaza(i, False, "Carro", None))
 
         # instanciar las plazas tipo Moto
         for i in range(1, numPlazasMoto + 1):
@@ -190,5 +197,5 @@ class Parqueadero:
                 self._plazas.append(
                     Plaza(numPlazasCarro + i, False, "Moto altoCC", None)
                 )
-                continue
-            self._plazas.append(Plaza(numPlazasCarro + 1, False, "Moto", None))
+            else:
+                self._plazas.append(Plaza(numPlazasCarro + i, False, "Moto", None))

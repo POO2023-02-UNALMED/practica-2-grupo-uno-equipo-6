@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from typing import Any, Callable, cast
 
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
@@ -44,6 +45,7 @@ class FormularioVehiculo(tk.Frame):
             combobox={
                 "Placa": [*placas_vehiculos, "Registrar un vehículo"]
             },
+            titulo=f"Hola de nuevo {self._cliente.getNombre()}.\nSeleccione la placa del vehículo o registre uno nuevo"
         )
         self.field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
@@ -189,6 +191,8 @@ class FormularioVehiculo(tk.Frame):
 
         self._baseDatos.registrarVehiculo(vehiculo)
         self._cliente.agregarVehiculo(vehiculo)
+
+        messagebox.showinfo("Vehículo registrado", "Vehículo registrado exitosamente")
 
         self.destroy()
         self._f_final(vehiculo)

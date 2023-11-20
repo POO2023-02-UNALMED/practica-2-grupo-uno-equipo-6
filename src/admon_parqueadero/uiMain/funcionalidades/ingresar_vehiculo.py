@@ -66,6 +66,7 @@ class IngresarVehiculo(BaseFuncionalidad):
                 [str(dueno.getCedula()), vehiculo.getPlaca(), None],
                 ["Cédula", "Placa"],
                 combobox={"Plaza": list(plazas_disponibles)},
+                titulo="Seleccione una plaza"
             )
             self.field_frame.pack()
 
@@ -89,8 +90,6 @@ class IngresarVehiculo(BaseFuncionalidad):
         plaza = cast(Plaza, self.getParqueadero().buscarPlaza(plaza_num))
         self.getParqueadero().ingresarVehiculo(vehiculo, plaza)
         dueno = vehiculo.getDueno()
-
-        # TODO: Generar factura
 
         self.imprimir("Vehículo ingresado")
         
