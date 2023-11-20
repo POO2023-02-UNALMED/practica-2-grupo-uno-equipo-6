@@ -72,12 +72,12 @@ class VentanaInicio(tk.Frame):
                     ),
                 ],
                 "fotos": (
-                    "powerRanger1.png",
-                    "powerRanger2.png",
-                    "powerRanger4.png",
+                    "blanco2.png",
+                    "blancos.png",
+                    "blanco3.png",
                     # "300x300_azul.png",
                     "carnet1.png"
-                   
+                
                 ),
             },
             {
@@ -122,8 +122,8 @@ class VentanaInicio(tk.Frame):
                     ),
                 ],
                 "fotos": (
-                    "300x300_naranja.png",
                     "rojo1.png",
+                    "rojo2.png",
                     "300x300_naranja.png",
                     "300x300_naranja.png",
                 ),
@@ -266,11 +266,11 @@ class Imagenes(tk.Frame):
 
         self.imagenes = infinito(
             [  # TODO: agregar las 5 imagenes
-                "300x300_rojo.png",
+                "mecanico.png",
                 "Carro1.png",
-                "300x300_gris.png",
-                "300x300_verde.png",
-                "300x300_azul.png",
+                "cars1.png",
+                "cars2.png",
+                "ventaAuto.png",
             ]
         )
 
