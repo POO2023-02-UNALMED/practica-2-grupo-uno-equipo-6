@@ -118,7 +118,7 @@ class ventana_principal_usu(tk.Frame):
     def acerca_de(self) -> None:
         messagebox.showinfo(
             title="Información sobre los autores.",
-            message="Los autores de esta maravillosa aplicacion son:\n- Alejandro (Power ranger rojo)\n- Sofía (Power ranger rosada)\n- Katherine (Power ranger amarilla)\n- Sara (Power ranger blanca)\n- Sebastián (Power ranger azul)",
+            message="Los autores de esta maravillosa aplicacion son:\n- Alejandro (Power ranger rojo)\n- Sofía (Power ranger rosada)\n- Katherine (Power ranger negro)\n- Sara (Power ranger blanca)\n- Sebastián (Power ranger azul)",
         )
 
     def interfaz_inicio(self) -> None:
@@ -134,7 +134,7 @@ class ventana_principal_usu(tk.Frame):
         )
         texto_bienvenida.pack(side="top", padx=5, pady=5)
 
-        texto = "Para empezar a usar la aplicación y que se obtengan resultados satisfactorios seleccione una de las opciones listadas en el apartado Procesos y consultas, recomendamos empezar\
+        texto = "Para empezar a usar la aplicación seleccione una de las opciones listadas en el apartado Procesos y consultas, recomendamos empezar\
  ingresando un vehiculo que no se encuentre en el parqueadero. Esta aplicación le permitirá administrar y realizar servicios\
  varios asociados a un parqueadero con mayor comodidad puesto que solo debera precuparse por introducir los valores correctamente\
  ya que el programa se encargara del resto ;)"

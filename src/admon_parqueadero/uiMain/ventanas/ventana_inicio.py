@@ -124,8 +124,8 @@ class VentanaInicio(tk.Frame):
                 "fotos": (
                     "300x300_naranja.png",
                     "rojo1.png",
-                    "300x300_naranja.png",
-                    "300x300_naranja.png",
+                    "powerrojo2.png",
+                    "powerrojo3.png",
                 ),
             },
             {
@@ -138,10 +138,10 @@ class VentanaInicio(tk.Frame):
                     ),
                 ],
                 "fotos": (
-                    "300x300_gris.png",
-                    "300x300_gris.png",
-                    "300x300_gris.png",
-                    "300x300_gris.png",
+                    "powernegro3.png",
+                    "imagen01.png",
+                    "powernegro1.png",
+                    "powernegro2.png",
                 ),
             },
         ]
