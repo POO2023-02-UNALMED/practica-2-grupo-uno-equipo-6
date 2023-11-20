@@ -72,11 +72,12 @@ class VentanaInicio(tk.Frame):
                     ),
                 ],
                 "fotos": (
-                    "300x300_azul.png",
-                    "300x300_azul.png",
-                    "300x300_azul.png",
-                    "300x300_azul.png",
-                    # "imagen1.png",
+                    "powerRanger1.png",
+                    "powerRanger2.png",
+                    "powerRanger4.png",
+                    # "300x300_azul.png",
+                    "carnet1.png"
+                   
                 ),
             },
             {
@@ -89,9 +90,9 @@ class VentanaInicio(tk.Frame):
                     ),
                 ],
                 "fotos": (
-                    "300x300_verde.png",
-                    "300x300_verde.png",
-                    "300x300_verde.png",
+                    "powerAzul3.png",
+                    "azul22.png",
+                    "Azul3.png",
                     "300x300_verde.png",
                 ),
             },
@@ -105,10 +106,10 @@ class VentanaInicio(tk.Frame):
                     ),
                 ],
                 "fotos": (
-                    "300x300_rojo.png",
-                    "300x300_rojo.png",
-                    "300x300_rojo.png",
-                    "300x300_rojo.png",
+                    "powerRosa1.png",
+                    "imagen2sofi.png",
+                    "poweRosa3.png",
+                    "poweRosa4.png",
                 ),
             },
             {
@@ -122,7 +123,7 @@ class VentanaInicio(tk.Frame):
                 ],
                 "fotos": (
                     "300x300_naranja.png",
-                    "300x300_naranja.png",
+                    "rojo1.png",
                     "300x300_naranja.png",
                     "300x300_naranja.png",
                 ),
@@ -266,7 +267,7 @@ class Imagenes(tk.Frame):
         self.imagenes = infinito(
             [  # TODO: agregar las 5 imagenes
                 "300x300_rojo.png",
-                "300x300_naranja.png",
+                "Carro1.png",
                 "300x300_gris.png",
                 "300x300_verde.png",
                 "300x300_azul.png",

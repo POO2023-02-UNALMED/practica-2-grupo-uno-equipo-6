@@ -101,7 +101,7 @@ class ManejoParqueadero(BaseFuncionalidad):
     # metodo que recibe una funcion de tipo _manejo_... y ejecuta la opcion escogida para al final regresar a la funcion desde donde se llame el metodo
     def _manejo(self, funcion_manejo: Callable[[], None]) -> None:
         opcion = self.field_frame.getValue("Opciones")
-        funcionalidades = {
+        funcionalidades: dict[str, Callable] = {
             "Agregar carro para venta": self._agregar_carro_venta,
             "Agregar plazas": self._agregar_plazas,
             "Contratar vendedor": self._agregar_empleado,

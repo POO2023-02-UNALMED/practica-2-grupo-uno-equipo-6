@@ -97,7 +97,7 @@ class VenderCarro(BaseFuncionalidad):
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
-
+        self._vendedor = None
         self._vendedores_nombre = list(
             map(lambda x: x.getNombre().title(), self._parqueadero.getVendedores())
         )
@@ -143,10 +143,12 @@ class VenderCarro(BaseFuncionalidad):
     
 
     def continuarVenta(self, vehiculo: Vehiculo) -> None:
-        eleccion_vendedor = self._vendedores_nombre.index(
-            self.field_frame.getValue("Vendedor")
-        )
-        self._vendedor = self._parqueadero.getVendedores()[eleccion_vendedor]
+        if self._vendedor==None:
+    
+            eleccion_vendedor = self._vendedores_nombre.index(
+                self.field_frame.getValue("Vendedor")
+            )
+            self._vendedor = self._parqueadero.getVendedores()[eleccion_vendedor]
         mensaje = f"Hola, mi nombre es {self._vendedor.getNombre().title()} y voy a atenderlo el día de hoy."
 
         self.contenido.destroy()
@@ -180,6 +182,12 @@ class VenderCarro(BaseFuncionalidad):
 
     def escogerMecanico(self, vehiculo: Vehiculo):
         self._precio_cliente = self.field_frame.getValueNumero("Ingrese el precio por el que desea vender su carro", int)
+        if self._precio_cliente>50000000:
+            messagebox.showinfo(
+                    "No podemos",
+                    "El precio ingresado no es aceptado por el parqueadero, intente realizar otra oferta.",
+                )
+            return self.continuarVenta(vehiculo)
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
@@ -222,45 +230,43 @@ class VenderCarro(BaseFuncionalidad):
         #Cotizacion del parqueadero, le resta los productos malos al valor máximo que se paga por el carro
         self._productosMalos = self._mecanico.revisarVehiculo(vehiculo)
         self._precio_maximo = self.precioMaximo(vehiculo)
-        #if self._productosMalos:
-        #    for i in range(len(self._productosMalos)+1): #Genera error unhashable type: Producto
-        #        self._precio_maximo -= Almacen.cotizarProducto(self._productosMalos[i])
+        if self._productosMalos:
+            for i in range(len(self._productosMalos)-1): #Genera error unhashable type: Producto
+                self._precio_maximo -= Almacen.cotizarProducto(self._productosMalos[i].getTipo())
         
         self._mecanico.setServiciosRealizados(self._mecanico.getServiciosRealizados()+1)
-        self._cliente.getFactura().agregarServicio("Revision general", 1)
+        #self._cliente.getFactura().agregarServicio("Revision general", 1)
 
         if self._precio_cliente<=self._precio_maximo:
             self._precio_final=self._precio_cliente
         else:
             self._precio_final=self._precio_maximo
     
-        opcion = messagebox.showinfo("Saludo del mecánico", f"Hola, mi nombre es {self._mecanico.getNombre().title()} y voy a atenderlo el día de hoy.")
-        if opcion:
-            return self.terminar_venta(vehiculo)
-    
-    def terminar_venta(self, vehiculo:Vehiculo):
-        self.contenido.destroy()
-        self.contenido = tk.Frame(self.frame_contenido)
-        self.packContenido(self.contenido)
+        #messagebox.showinfo("Saludo del mecánico", f"Hola, mi nombre es {self._mecanico.getNombre().title()} y voy a atenderlo el día de hoy.")
+        
+        #return self.terminar_venta(vehiculo)
+        messagebox.showinfo("Oferta de venta", f"El parqueadero ha realizado la revisión del vehículo, y le presenta la siguiente oferta: Puede vender su vehículo por {self._precio_final} o puede cambiar su vehículo por uno disponible en el rango de precio.")
         opciones = [
             f"Aceptar la oferta de {self._precio_final}",
             "Cambiar por otro carro"
         ]
+        self.contenido.destroy()
+        self.contenido = tk.Frame(self.frame_contenido)
+        self.packContenido(self.contenido)
 
         self.field_frame = FieldFrame(
             self.contenido,
             "Criterio",
-            ["Escoja una opción"],
+            ["Seleccione una opción"],
             "Valores",
             None,
             None,
         combobox={
-            "Escoja una opción": opciones,
+            "Seleccione una opción": opciones,
         },
-        titulo=f"El parqueadero ha realizado la revisión del vehículo, y le presenta la siguiente oferta: \
-        1. Puede vender su vehículo por {self._precio_final}\
-        2. Puede cambiar su vehículo por uno disponible en el rango de precio.",
+        titulo="Seleccione la oferta que desea aceptar.",
         )
+        self.field_frame.pack()
         self.frame_botones = tk.Frame(self.contenido)
         self.frame_botones.pack(side="bottom", fill="both", expand=True)
         self.btn_principal = tk.Button(
@@ -275,7 +281,7 @@ class VenderCarro(BaseFuncionalidad):
 
 
     def finalizar_compra(self, vehiculo:Vehiculo):
-        eleccion = self.field_frame.getValue("Escoja una opción")
+        eleccion = self.field_frame.getValue("Seleccione una opción")
 
         if eleccion=="Cambiar por otro carro":
             self.contenido.destroy()
@@ -286,7 +292,7 @@ class VenderCarro(BaseFuncionalidad):
                 map(lambda x: x.getPrecioVenta()<=self._precio_final, self._parqueadero.getVehiculosVenta())
             )
             info_carros_venta = list(
-                map(lambda x: x.__str__, vehiculos_rango_precio)
+                map(lambda x: str(cast(Carro,x)), vehiculos_rango_precio)
             )
             self.field_frame = FieldFrame(
                 self.contenido,
@@ -299,6 +305,7 @@ class VenderCarro(BaseFuncionalidad):
                     "Seleccione el vehiculo de su preferencia": info_carros_venta,
                 },
             )
+            self.field_frame.pack()
             self.frame_botones = tk.Frame(self.contenido)
             self.frame_botones.pack(side="bottom", fill="both", expand=True)
             self.btn_principal = tk.Button(
@@ -326,12 +333,15 @@ class VenderCarro(BaseFuncionalidad):
                 "Valores",
                 None,
                 None,
-
+                {},
+                titulo = "Se ha finalizado la venta."
             )
+            self.field_frame.pack()
             productosNuevos = self._conseguir_repuestos(
                 vehiculo, self._productosMalos
             )
-            for i in range(len(self._productosMalos)):
+            if productosNuevos:
+                for i in range(len(self._productosMalos)):
                     self._mecanico.cambiar(
                         self._productosMalos[i], productosNuevos[i], vehiculo
                     )
@@ -344,10 +354,23 @@ class VenderCarro(BaseFuncionalidad):
             vehiculo.setDueno(None)
             cast(Carro, vehiculo).setPrecioVenta(50000000)
             self._parqueadero.agregarVehiculoVenta(vehiculo)
-            opcion = messagebox.showinfo("Venta finalizada", f"¡Felicidades! Se ha añadido el monto de {self._precio_final} a su cuenta.\
+            self.frame_botones = tk.Frame(self.contenido)
+            self.frame_botones.pack(side="bottom", fill="both", expand=True)
+            self.btn_principal = tk.Button(
+                self.frame_botones, text="Continuar", command=lambda: mensaje_final()
+            )
+            self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
+
+            self.btn_borrar = tk.Button(
+                self.frame_botones, text="Borrar", command=self.field_frame.borrar
+            )
+            self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
+            
+            def mensaje_final():
+                opcion = messagebox.showinfo("Venta finalizada", f"¡Felicidades! Se ha añadido el monto de {self._precio_final} a su cuenta.\
                                          Ha finalizado la venta de carro, ¡vuelva pronto!")
-            if opcion:
-                return self.finalizar()
+                if opcion:
+                    return self.finalizar()
             
 
 
@@ -373,11 +396,11 @@ class VenderCarro(BaseFuncionalidad):
         vehiculo.setDueno(None)
         cast(Carro, vehiculo).setPrecioVenta(50000000)
         self._parqueadero.agregarVehiculoVenta(vehiculo)
-        opcion = messagebox.showinfo("Cambio realizado", f"Hemos realizado el intercambio de carros, ¡Felicidades!\
+        messagebox.showinfo("Cambio realizado", f"Hemos realizado el intercambio de carros, ¡Felicidades!\
                             El excedente de {excedente} se ha añadido a su cuenta.\
                             Ha finalizado la venta, ¡vuelva pronto!")
-        if opcion:
-            return self.finalizar()
+        
+        return self.finalizar()
 
 
 
@@ -400,8 +423,4 @@ class VenderCarro(BaseFuncionalidad):
         return productos_vendidos
     
     def finalizar(self):
-        from admon_parqueadero.uiMain.ventanas.ventana_principal_usu import ventana_principal_usu
-
-        self.destroy()
-        self.master.config(menu=tk.Menu())
-        ventana_principal_usu(self.master).pack(side="top", fill="both", expand=True)
+        return self._configurar_ui(self._cliente)

@@ -13,7 +13,7 @@ from admon_parqueadero.uiMain.funcionalidades.comprar_carro import ComprarCarro
 from admon_parqueadero.uiMain.funcionalidades.manejo_parqueadero import (
     ManejoParqueadero,
 )
-from admon_parqueadero.uiMain.funcionalidades.generar_datos import GenerarDatos
+from admon_parqueadero.baseDatos.generarDatos import GenerarDatos
 from admon_parqueadero.uiMain.funcionalidades.ingresar_vehiculo import IngresarVehiculo
 from admon_parqueadero.uiMain.funcionalidades.registrar_cliente import RegistrarCliente
 from admon_parqueadero.uiMain.funcionalidades.registrar_vehiculo import (
@@ -42,6 +42,7 @@ class ventana_principal_usu(tk.Frame):
                 almacen=Almacen(200),
             )
             baseDatos.setParqueadero(parqueadero)
+            GenerarDatos(baseDatos)
         self._baseDatos = baseDatos
 
         def cerrar() -> None:
@@ -94,10 +95,6 @@ class ventana_principal_usu(tk.Frame):
         menu_funcionalidades_extra.add_command(
             label="Registrar Vehículo",
             command=lambda: self.cambiar_funcionalidad(RegistrarVehiculo),
-        )
-        menu_funcionalidades_extra.add_command(
-            label="Generar Datos de Prueba",
-            command=lambda: self.cambiar_funcionalidad(GenerarDatos),
         )
         menu_ayuda.add_command(label="Acerca de", command=self.acerca_de)
 

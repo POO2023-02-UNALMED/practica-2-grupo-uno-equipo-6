@@ -55,7 +55,7 @@ class FieldFrame(tk.Frame):
             tk.Label(frame_formulario, text=criterio, justify="left", anchor="w").grid(
                 row=i + 1, column=0, sticky="w"
             )
-
+            
             entrada: Union[tk.Entry, ttk.Combobox]
             if (opciones := combobox.get(criterio)) is not None:
                 self._combobox_textvariables[criterio] = tk.StringVar(
