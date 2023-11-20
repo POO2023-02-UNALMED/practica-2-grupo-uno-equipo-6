@@ -18,6 +18,7 @@ class BaseDatos:
         self._parqueadero: Optional[Parqueadero] = None
         self._clientesResgistrados: dict[int, Cliente] = {}
         self._vehiculosRegistrados: dict[str, Vehiculo] = {}
+        self.datosDePruebaGenerados = False
 
     @classmethod
     def leerDatos(cls) -> Optional[BaseDatos]:
