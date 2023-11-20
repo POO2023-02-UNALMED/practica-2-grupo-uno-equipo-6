@@ -64,6 +64,7 @@ class VenderCarro(BaseFuncionalidad):
             [str(vehiculo.getDueno().getCedula()), vehiculo.getPlaca(), None],
             ["Cédula", "Placa"],
             combobox={"Plaza": list(plazas_disponibles)},
+            titulo="Seleccione la plaza",
         )
         self.field_frame.pack()
 
@@ -163,15 +164,11 @@ class VenderCarro(BaseFuncionalidad):
             None,
             titulo=mensaje,
         )
-        def enviar_al_taller():
-            opcion = messagebox.showinfo("Revisión en el taller", "Su carro será revisado en el taller, y se le dará una oferta de compra.")
-            if opcion:
-                return self.escogerMecanico(vehiculo)
         self.field_frame.pack()
         self.frame_botones = tk.Frame(self.contenido)
         self.frame_botones.pack(side="bottom", fill="both", expand=True)
         self.btn_principal = tk.Button(
-            self.frame_botones, text="Continuar", command=lambda: enviar_al_taller()
+            self.frame_botones, text="Continuar", command=lambda: self.escogerMecanico(vehiculo)
         )
         self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
@@ -188,6 +185,8 @@ class VenderCarro(BaseFuncionalidad):
                     "El precio ingresado no es aceptado por el parqueadero, intente realizar otra oferta.",
                 )
             return self.continuarVenta(vehiculo)
+        self.imprimir("Su carro será revisado en el taller, y se le dará una oferta de compra.")
+
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
@@ -242,7 +241,7 @@ class VenderCarro(BaseFuncionalidad):
         else:
             self._precio_final=self._precio_maximo
     
-        #messagebox.showinfo("Saludo del mecánico", f"Hola, mi nombre es {self._mecanico.getNombre().title()} y voy a atenderlo el día de hoy.")
+        self.imprimir(f"Hola, mi nombre es {self._mecanico.getNombre().title()} y voy a atenderlo el día de hoy.")
         
         #return self.terminar_venta(vehiculo)
         messagebox.showinfo("Oferta de venta", f"El parqueadero ha realizado la revisión del vehículo, y le presenta la siguiente oferta: Puede vender su vehículo por {self._precio_final} o puede cambiar su vehículo por uno disponible en el rango de precio.")
@@ -288,11 +287,11 @@ class VenderCarro(BaseFuncionalidad):
             self.contenido = tk.Frame(self.frame_contenido)
             self.packContenido(self.contenido)
 
-            vehiculos_rango_precio = list(
-                map(lambda x: x.getPrecioVenta()<=self._precio_final, self._parqueadero.getVehiculosVenta())
+            self.vehiculos_rango_precio = list(
+                filter(lambda x: x.getPrecioVenta()<=self._precio_final, self._parqueadero.getVehiculosVenta())
             )
             info_carros_venta = list(
-                map(lambda x: str(cast(Carro,x)), vehiculos_rango_precio)
+                map(lambda x: x.getPlaca(), self.vehiculos_rango_precio)
             )
             self.field_frame = FieldFrame(
                 self.contenido,
@@ -317,11 +316,7 @@ class VenderCarro(BaseFuncionalidad):
                 self.frame_botones, text="Borrar", command=self.field_frame.borrar
             )
             self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
-            eleccionCarro = vehiculos_rango_precio.index(
-                self.field_frame.getValue("Seleccione el vehiculo de su preferencia")
-            )
-            self._carroNuevo = self._parqueadero.getVehiculosVenta()[eleccionCarro]
-            self._parqueadero.getVehiculosVenta().pop(eleccionCarro)
+            
         else: #Vender por el precio
             self.contenido.destroy()
             self.contenido = tk.Frame(self.frame_contenido)
@@ -375,9 +370,28 @@ class VenderCarro(BaseFuncionalidad):
 
 
     def cambiar_carro(self, vehiculo: Vehiculo):
-        self._carroNuevo.setDueno(self._cliente)
-        excedente = self._precio_final - self._carroNuevo.getPrecioVenta()
-        self._carroNuevo.setPrecioVenta(0)
+        eleccionCarro = self.field_frame.getValue("Seleccione el vehiculo de su preferencia") #Me da la placa del carro 
+        for carro in self.vehiculos_rango_precio:
+            if carro.getPlaca()==eleccionCarro:
+                carroNuevo = carro
+                break
+        
+        infoCarro = [
+            "Información sobre el carro escogido: ",
+            f"Placa: {carroNuevo.getPlaca()}",
+            f"Marca: {carroNuevo.getMarca()}",
+            f"Modelo: {carroNuevo.getModelo()}",
+            f"Color: {carroNuevo.getColor()}",
+            f"Precio de venta: {str(carroNuevo.getPrecioVenta())}",
+        ]
+        
+        for info in infoCarro:
+            self.imprimir(info)
+        carroNuevo.setDueno(self._cliente)
+        indiceCarroNuevo = self._parqueadero.getVehiculosVenta().index(carroNuevo)
+        self._parqueadero.getVehiculosVenta().pop(indiceCarroNuevo)
+        excedente = self._precio_final - carroNuevo.getPrecioVenta()
+        carroNuevo.setPrecioVenta(0)
         self._vendedor.setServiciosRealizados(self._vendedor.getServiciosRealizados()+1)
         #Arreglar los componentes malos 
         productosNuevos = self._conseguir_repuestos(

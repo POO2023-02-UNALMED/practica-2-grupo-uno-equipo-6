@@ -238,5 +238,7 @@ class ComprarCarro(BaseFuncionalidad):
         carro.setDueno(self.cliente)
         carro.setPrecioVenta(0)
         self.cliente.getVehiculos().append(carro)
+        indiceCarro = self._parqueadero.getVehiculosVenta().index(carro)
+        self._parqueadero.getVehiculosVenta().pop(indiceCarro)
         self.imprimir("¡Felicidades! Ha comprado el carro, esperamos que lo disfrute. Vuelva pronto.")
         return self._configurar_ui(self.cliente)

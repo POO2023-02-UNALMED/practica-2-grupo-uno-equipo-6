@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 from typing import Any, Callable, cast
 
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
@@ -32,7 +33,8 @@ class FormularioCarro(tk.Frame):
         self._configuracion_inicial()
 
     def _configuracion_inicial(self):
-        placas_vehiculos = map(lambda v: v.getPlaca(), self._cliente.getVehiculos())
+        carros_cliente = filter(lambda c: isinstance(c, Carro), self._cliente.getVehiculos())
+        placas_carros = map(lambda v: v.getPlaca(), carros_cliente)
 
         self.field_frame = FieldFrame(
             self,
@@ -42,7 +44,7 @@ class FormularioCarro(tk.Frame):
             [str(self._cliente.getCedula()), None],
             ["Cédula"],
             combobox={
-                "Placa": [*placas_vehiculos, "Registrar un vehículo"]
+                "Placa": [*placas_carros, "Registrar un vehículo"]
             },
         )
         self.field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
@@ -65,6 +67,9 @@ class FormularioCarro(tk.Frame):
         if eleccion_vehiculo == "Registrar un vehículo":
             self._configuracion_registro()
         else:
+            vehiculo_ = self._baseDatos.buscarVehiculoRegistrado(eleccion_vehiculo)
+            if vehiculo_ is None:
+                messagebox.showinfo("b","n")
             vehiculo = cast(Vehiculo, self._baseDatos.buscarVehiculoRegistrado(eleccion_vehiculo))
             self.destroy()
             self._f_final(vehiculo)
