@@ -96,10 +96,6 @@ class ventana_principal_usu(tk.Frame):
             label="Registrar Vehículo",
             command=lambda: self.cambiar_funcionalidad(RegistrarVehiculo),
         )
-        menu_funcionalidades_extra.add_command(
-            label="Generar Datos de Prueba",
-            command=lambda: self.cambiar_funcionalidad(GenerarDatos),
-        )
         menu_ayuda.add_command(label="Acerca de", command=self.acerca_de)
 
         self.master.config(menu=menu_bar)
