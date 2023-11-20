@@ -59,5 +59,6 @@ class BaseFuncionalidad(tk.Frame):
 
     def imprimir(self, *args: str) -> None:
         s = " ".join(args)
+        s = s.replace("\t", "    ")
         for linea in s.splitlines():
             self.listbox.insert(tk.END, linea)

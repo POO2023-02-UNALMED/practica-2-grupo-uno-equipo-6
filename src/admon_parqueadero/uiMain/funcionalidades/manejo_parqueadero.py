@@ -360,6 +360,11 @@ class ManejoParqueadero(BaseFuncionalidad):
         self._parqueadero.agregarPlazas(plazas_carro_discapacitados, True, "Carro")
         self._parqueadero.agregarPlazas(plazas_moto, False, "Moto")
         self._parqueadero.agregarPlazas(plazas_moto_altocc, False, "Moto altoCC")
+        self.imprimir("Plazas agregadas:")
+        self.imprimir(f"\t- {plazas_carro} plaza(s) normales para carro")
+        self.imprimir(f"\t- {plazas_carro_discapacitados} plaza(s) para condición de discapacidad")
+        self.imprimir(f"\t- {plazas_moto} plaza(s) normales para moto")
+        self.imprimir(f"\t- {plazas_moto_altocc} plaza(s) para moto de altoCC")
         return funcion_manejo()
 
     # retirar un vehiculo
