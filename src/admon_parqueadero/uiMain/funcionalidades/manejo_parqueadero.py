@@ -388,11 +388,11 @@ class ManejoParqueadero(BaseFuncionalidad):
                     self.imprimir("Su factura:\n" + str(factura))
                     dueno.setFactura(None)
                     self._parqueadero.retirarVehiculo(vehiculo.getPlaca())
-                    self.imprimir("Vehiculo retirado", "Vuelve pronto :)")
+                    self.imprimir("Vehiculo retirado, vuelve pronto :)")
                     return funcion_manejo()
         else:
             self.imprimir(
-                "Error:", "El vehiculo no se encuentra en el parqueadero"
+                "Error: El vehiculo no se encuentra en el parqueadero"
             )
             return funcion_manejo()
 

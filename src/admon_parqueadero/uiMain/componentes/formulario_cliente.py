@@ -86,7 +86,7 @@ class FormularioCliente(tk.Frame):
         cliente = Cliente(nombre, cedula, telefono, correo, direccion, discapacitado)
         self._baseDatos.registrarCliente(cliente)
 
-        self._imprimir("Cliente registrado", "Cliente registrado exitosamente")
+        self._imprimir("Cliente registrado exitosamente")
 
         self.destroy()
         self._f_final(cliente)
