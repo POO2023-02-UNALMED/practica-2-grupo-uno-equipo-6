@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase FormularioCliente que hereda de tk.Frame, 
+#esta sirve para solicitar los datos del cliente antes de iniciar cualquier funcionalidad, 
+#y verificar que se encuentra registrado o realizar el registro.
+#Componentes del módulo: FormularioCliente
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Callable

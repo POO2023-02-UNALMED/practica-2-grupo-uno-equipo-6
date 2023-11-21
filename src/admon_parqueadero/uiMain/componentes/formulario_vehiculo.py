@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase FormularioVehiculo que hereda de tk.Frame, 
+#esta sirve para solicitar al cliente información del vehículo que va a ingresar o hacer
+#uso de los servicios del parqueadero. Permite escoger entre carro o moto.
+#Componentes del módulo: FormularioVehiculo
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from typing import Any, Callable, cast
 

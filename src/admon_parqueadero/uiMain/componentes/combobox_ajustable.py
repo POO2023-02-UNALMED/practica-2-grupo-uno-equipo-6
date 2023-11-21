@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase combobox que hereda de ttk.Combobox, 
+#sirve para mostrar una lista de opciones, y ajusta de manera automatica 
+#su tamaño según la información que se le ingrese.
+#Componentes del módulo: Combobox
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from tkinter import ttk
 
