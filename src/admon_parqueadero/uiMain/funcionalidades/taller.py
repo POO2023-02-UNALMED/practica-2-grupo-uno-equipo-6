@@ -197,7 +197,6 @@ class Taller(BaseFuncionalidad):
 
     def _revision_general(self, vehiculo: Vehiculo, mecanico: Empleado) -> None:
         componentes_dañados = mecanico.revisarVehiculo(vehiculo)
-        print([*map(lambda x: x.getEstado(), componentes_dañados)])
         if len(componentes_dañados) != 0:
             r = ""  # para guardar los componentes que se van a arreglar
             for producto in componentes_dañados:
@@ -206,7 +205,6 @@ class Taller(BaseFuncionalidad):
                 vehiculo, componentes_dañados
             )
             if nuevos_componentes is not None:
-                print([*map(lambda x: x.getEstado(), nuevos_componentes)])
                 self.imprimir(f"Los siguentes componentes se arreglaran:\n{r}*Sonidos de mecanico*\nLos componentes de su vehículo han sido arreglados :)")
                 for i in range(len(componentes_dañados)):
                     mecanico.cambiar(
@@ -215,6 +213,11 @@ class Taller(BaseFuncionalidad):
                     mecanico.setServiciosRealizados(
                         mecanico.getServiciosRealizados() + 1
                     )
+                dueno = vehiculo.getDueno()
+                if dueno is not None:
+                    factura = dueno.getFactura()
+                    if factura is not None:    
+                        factura.agregarServicio("Revision general", 1)    
                 return self._taller(vehiculo)
             else:
                 self.imprimir("No contamos con los recursos suficientes para realizar este servicio :(")
