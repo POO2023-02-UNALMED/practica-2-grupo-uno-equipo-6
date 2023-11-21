@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase Cliente que hereda de Persona, 
+#esta sirve para instanciar clientes que van a interactuar con el parqueadero.
+#Componentes del módulo: Cliente
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
+
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Optional

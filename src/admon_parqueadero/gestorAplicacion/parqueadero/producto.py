@@ -1,3 +1,9 @@
+#Funcionalidad del modulo: Este modulo contiene todos los productos que se utilizan en
+#el parqueadero, que se guardan en la parte de almacen.
+#Componentes del modulo: Clase Producto.
+#Autores: Sebastian, Alejandro, Sofia, Sara, Katherine.
+
+
 from __future__ import annotations
 from typing import Optional
 

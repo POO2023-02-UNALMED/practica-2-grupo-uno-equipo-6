@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: Contiene la clase Empleado que 
+#es una subclase de Persona, se utiliza para crear instancias
+#de tipo Empleado que van a interactuar en el parqueadero
+# Componentes del módulo: Empleado
+# Autores: Katherine, Sofia, Sebastian, Alejandro, Sara
+
+
 from admon_parqueadero.gestorAplicacion.personas.persona import Persona
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado

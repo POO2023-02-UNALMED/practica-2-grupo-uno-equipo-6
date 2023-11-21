@@ -124,8 +124,11 @@ class FieldFrame(tk.Frame):
         
     def revisar(self) -> Optional[list[str]]:
         criterios = []
-        for criterio in self._entradas:
-            if self._entradas[criterio].get().isspace() or self._entradas[criterio].get() == "" or self._entradas[criterio].get() == "Seleccione una opción":
+        for criterio, entrada in self._entradas.items():
+            if entrada.cget("state") == "disabled":
+                continue
+            valor = entrada.get().strip()
+            if valor == "" or valor == FieldFrame._COMBOBOX_TEXTO:
                 criterios.append(criterio)
         if len(criterios) != 0:
             return criterios

@@ -1,3 +1,12 @@
+#Funcionalidad del módulo: contiene un enum 
+#de constantes equivalente a los productos de un vehiculo
+#tanto de carro como para moto
+#Componentes del módulo: TipoProducto
+#Autores: Sebastián, Alejandro, Sara, Sofía, Katherine.
+
+
+
+
 from enum import Enum, auto
 
 

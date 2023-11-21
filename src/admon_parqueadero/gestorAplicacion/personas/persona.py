@@ -1,3 +1,11 @@
+#Funcionalidad del módulo: Contiene la clase persona que se encarga de definir los 
+#atributos y sus respectivos metodos get y set para que 
+#estos puedan ser usados por otras clases, más específicamente 
+#la clase empleado y cliente quienes heredan de esta superclase
+#Componentes del módulo: Persona
+#Autores: Katherine, Sofia, Sebastián, Sara, Alejandro.
+
+
 class Persona:
     def __init__(
         self, nombre: str, cedula: int, telefono: int, correo: str, direccion: str

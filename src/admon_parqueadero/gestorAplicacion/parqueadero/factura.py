@@ -1,3 +1,8 @@
+#Funcionalidad del modulo: Este modulo contiene la clase Factura y su funcion es ofrecer facturacion a los clientes del parqueadero
+#Componentes del modulo: Clase Factura
+#Autores: Sara, Sofia, Sebastián, Alejandro, Katherine
+
+
 from __future__ import annotations
 
 from datetime import date, time, datetime

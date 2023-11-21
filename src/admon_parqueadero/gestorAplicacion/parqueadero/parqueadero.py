@@ -1,3 +1,9 @@
+#Funcionalidad del modulo: Este modulo contiene la clase Parqueadero y es el corazon del proyecto, en este modulo se encuentra contenido la estructura general
+#proyecto y todas las instancias.
+#Componentes del modulo: Clase Parqueadero.
+#Autores: Sebastian, Alejandro, Sofia, Sara, Katherine.
+
+
 from typing import Optional, Union
 from admon_parqueadero.gestorAplicacion.parqueadero.almacen import Almacen
 from admon_parqueadero.gestorAplicacion.parqueadero.plaza import Plaza

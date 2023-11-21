@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene un enum de con constantes del estado en 
+#que se encuentra un vehiculo luego de haber sido revisado por un mecanico
+#Componentes del módulo: TipoEstado
+#Autores: Sofía, Sebastián, Alejandro, Sara, Katherine.
+
+
+
 from __future__ import annotations
 
 from enum import Enum

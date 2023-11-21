@@ -1,3 +1,9 @@
+#Funcionalidad del modulo: Este modulo contiene la clase Plaza. Aqui se guardarán los vehiculos
+#cuando se genere el ingreso al parqueadero. Permite dividir las plazas totales en 4 subgrupos: 
+#Carro, Carro discapacidad, Moto altoCC y Moto bajoCC.
+#Componentes del modulo: Clase Plaza.
+#Autores: Sebastian, Alejandro.
+
 from __future__ import annotations
 
 from typing import Optional

@@ -1,3 +1,7 @@
+#Funcionalidad del módulo: contiene la clase Almacen que se encarga de guardar los productos destinados para la venta
+# Componentes del módulo: Almacen
+#Autores: Sofía, Sebastián, Katherine, Sara, Alejandro
+
 from typing import Optional
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
