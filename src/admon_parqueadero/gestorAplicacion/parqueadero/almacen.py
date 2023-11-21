@@ -4,11 +4,13 @@ from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoPro
 
 
 class Almacen:
-    _inventarioBase: dict[TipoProducto, float] = {}
 
     def __init__(self, capacidadMaxima: int) -> None:
         self._capacidadMaxima = capacidadMaxima
         self._inventario: list[Producto] = []
+        self._inventarioBase: dict[TipoProducto, float] = {}
+        self.inicializarInventarioBase()
+
 
     def setCapacidadMaxima(self, capMax: int) -> None:
         self._capacidadMaxima = capMax
@@ -22,13 +24,12 @@ class Almacen:
     def getInventario(self) -> list[Producto]:
         return self._inventario
 
-    @classmethod
-    def setInventarioBase(cls, inventarioBase: dict[TipoProducto, float]) -> None:
-        Almacen._inventarioBase = inventarioBase
+    def setInventarioBase(self, inventarioBase: dict[TipoProducto, float]) -> None:
+        self._inventarioBase = inventarioBase
 
-    @classmethod
-    def getInventarioBase(cls) -> dict[TipoProducto, float]:
-        return Almacen._inventarioBase
+    
+    def getInventarioBase(self) -> dict[TipoProducto, float]:
+        return self._inventarioBase
 
     def agregarProducto(self, producto: Producto) -> None:
         self._inventario.append(producto)
@@ -40,9 +41,8 @@ class Almacen:
                 return p
         return None
 
-    @classmethod
-    def cotizarProducto(cls, tipoProducto: TipoProducto) -> float:
-        return Almacen._inventarioBase.get(tipoProducto, 0)
+    def cotizarProducto(self, tipoProducto: TipoProducto) -> float:
+        return self._inventarioBase.get(tipoProducto, 0)
 
     def existeProducto(self, tipoProducto: TipoProducto) -> bool:
         for p in self._inventario:
@@ -50,19 +50,18 @@ class Almacen:
                 return True
         return False
 
-    @classmethod
-    def inicializarInventarioBase(cls) -> None:
-        Almacen._inventarioBase[TipoProducto.TRANSMISION] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.AMORTIGUADOR] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.LLANTA] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.BATERIA] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.ACELERADOR] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.RIN] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.PEDAL] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.ACEITE] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.CADENA] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.GASOLINA] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.MOTOR] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.FRENO] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.PEDALES] = 4000000.0
-        Almacen._inventarioBase[TipoProducto.LIQUIDOS] = 4000000.0
+    def inicializarInventarioBase(self) -> None:
+        self._inventarioBase[TipoProducto.TRANSMISION] = 4000000.0
+        self._inventarioBase[TipoProducto.AMORTIGUADOR] = 4000000.0
+        self._inventarioBase[TipoProducto.LLANTA] = 4000000.0
+        self._inventarioBase[TipoProducto.BATERIA] = 4000000.0
+        self._inventarioBase[TipoProducto.ACELERADOR] = 4000000.0
+        self._inventarioBase[TipoProducto.RIN] = 4000000.0
+        self._inventarioBase[TipoProducto.PEDAL] = 4000000.0
+        self._inventarioBase[TipoProducto.ACEITE] = 4000000.0
+        self._inventarioBase[TipoProducto.CADENA] = 4000000.0
+        self._inventarioBase[TipoProducto.GASOLINA] = 4000000.0
+        self._inventarioBase[TipoProducto.MOTOR] = 4000000.0
+        self._inventarioBase[TipoProducto.FRENO] = 4000000.0
+        self._inventarioBase[TipoProducto.PEDALES] = 4000000.0
+        self._inventarioBase[TipoProducto.LIQUIDOS] = 4000000.0

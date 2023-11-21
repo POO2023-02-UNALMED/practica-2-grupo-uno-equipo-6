@@ -127,19 +127,19 @@ class VenderCarro(BaseFuncionalidad):
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 
     def precioMaximo(self, vehiculo: Vehiculo):
-        #marca_carro_venta = vehiculo.getMarca
-        #if marca_carro_venta == MarcasCarro.TOYOTA:
-        #    self._precio_maximo = MarcasCarro.TOYOTA.value
-        #elif marca_carro_venta == MarcasCarro.RENAULT:
-        #    self._precio_maximo = MarcasCarro.RENAULT.value
-        #elif marca_carro_venta == MarcasCarro.MAZDA:
-        #    self._precio_maximo = MarcasCarro.MAZDA.value
-        #elif marca_carro_venta == MarcasCarro.KIA:
-        #    self._precio_maximo = MarcasCarro.KIA.value
-        #elif marca_carro_venta == MarcasCarro.CHEVROLET:
-        #    self._precio_maximo = MarcasCarro.CHEVROLET.value
+        marca_carro_venta = vehiculo.getMarca()
+        if marca_carro_venta == MarcasCarro.TOYOTA.name.title():
+            self._precio_maximo = MarcasCarro.TOYOTA.value
+        elif marca_carro_venta == MarcasCarro.RENAULT.name.title():
+            self._precio_maximo = MarcasCarro.RENAULT.value
+        elif marca_carro_venta == MarcasCarro.MAZDA.name.title():
+            self._precio_maximo = MarcasCarro.MAZDA.value
+        elif marca_carro_venta == MarcasCarro.KIA.name.title():
+            self._precio_maximo = MarcasCarro.KIA.value
+        elif marca_carro_venta == MarcasCarro.CHEVROLET.name.title():
+            self._precio_maximo = MarcasCarro.CHEVROLET.value
         #else:
-        self._precio_maximo = 50000000
+        #self._precio_maximo = 50000000
         return self._precio_maximo
     
 
@@ -158,7 +158,7 @@ class VenderCarro(BaseFuncionalidad):
         self.field_frame = FieldFrame(
             self.contenido,
             "Criterio",
-            ["Precio: "],
+            ["Precio"],
             "Valores",
             None,
             None,
@@ -178,8 +178,9 @@ class VenderCarro(BaseFuncionalidad):
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 
     def escogerMecanico(self, vehiculo: Vehiculo):
-        self._precio_cliente = self.field_frame.getValueNumero("Ingrese el precio por el que desea vender su carro", int)
-        if self._precio_cliente>50000000:
+        self._precio_cliente = self.field_frame.getValueNumero("Precio", int)
+        self._precio_maximo = self.precioMaximo(vehiculo)
+        if self._precio_cliente>self._precio_maximo:
             messagebox.showinfo(
                     "No podemos",
                     "El precio ingresado no es aceptado por el parqueadero, intente realizar otra oferta.",
@@ -228,10 +229,9 @@ class VenderCarro(BaseFuncionalidad):
 
         #Cotizacion del parqueadero, le resta los productos malos al valor máximo que se paga por el carro
         self._productosMalos = self._mecanico.revisarVehiculo(vehiculo)
-        self._precio_maximo = self.precioMaximo(vehiculo)
         if self._productosMalos:
             for i in range(len(self._productosMalos)-1): #Genera error unhashable type: Producto
-                self._precio_maximo -= Almacen.cotizarProducto(self._productosMalos[i].getTipo())
+                self._precio_maximo -= self._parqueadero.getAlmacen().cotizarProducto(self._productosMalos[i].getTipo())
         
         self._mecanico.setServiciosRealizados(self._mecanico.getServiciosRealizados()+1)
         #self._cliente.getFactura().agregarServicio("Revision general", 1)
