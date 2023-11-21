@@ -1,3 +1,11 @@
+#Funcionalidad del módulo: contiene la clase Deserializador, 
+#esta sirve para leer los datos que están guardados en la
+#base de datos. Se utilizó pickle para esto.
+#Componentes del módulo:  Deserializador
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
+
 from pathlib import Path
 import pickle
 

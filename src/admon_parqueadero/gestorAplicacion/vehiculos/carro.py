@@ -5,6 +5,7 @@
 from typing import Optional
 
 import random
+from admon_parqueadero.errores import ErrorLogicaIncorrecta
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.vehiculos.tipo_vehiculo import TipoVehiculo
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
@@ -69,18 +70,24 @@ class Carro(Vehiculo):
         return self._precioVenta
 
     def setPrecioVenta(self, precioVenta: float) -> None:
+        if precioVenta < 0:
+            raise ErrorLogicaIncorrecta("precioVenta no puede ser menor a 0")
         self._precioVenta = precioVenta
 
     def getTipo(self) -> str:
         return self._tipo.name
 
     def setTipo(self, tipo: TipoVehiculo) -> None:
+        if tipo == TipoVehiculo.ALTOCC or tipo == TipoVehiculo.NORMAL:
+            raise ErrorLogicaIncorrecta("tipo de carro no puede ser ALTOCC ni NORMAL")
         self._tipo = tipo
 
     def getPuestos(self) -> int:
         return self._puestos
 
     def setPuestos(self, puestos: int) -> None:
+        if puestos < 0:
+            raise ErrorLogicaIncorrecta("puestos no puede ser negativo")
         self._puestos = puestos
 
     def getMotor(self) -> Producto:

@@ -10,6 +10,7 @@ from tkinter import messagebox
 from typing import Any, Callable
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
+from admon_parqueadero.errores import ErrorObjetoInexistente
 
 from admon_parqueadero.uiMain.componentes.field_frame import FieldFrame
 
@@ -51,29 +52,32 @@ class FormularioCliente(tk.Frame):
         cedula = self.field_frame.getValueNumero("Cédula", int)
         cliente = self._baseDatos.buscarClienteRegistrado(cedula)
         if cliente is None:
-            self.field_frame.destroy()
-            self.field_frame = FieldFrame(
-                self.field_frame_container,
-                "Criterio",
-                [
-                    "Cédula",
-                    "Nombre",
-                    "Teléfono",
-                    "Correo",
-                    "Dirección",
-                    "En condición de discapacidad",
-                ],
-                "Valor",
-                [str(cedula), None, None, None, None, None],
-                ["Cédula"],
-                combobox={"En condición de discapacidad": ["Sí", "No"]},
-                titulo="Registro de usuario"
-            )
-            self.field_frame.pack()
+            try:
+                raise ErrorObjetoInexistente(f"cliente con cedula {cedula}")
+            finally:
+                self.field_frame.destroy()
+                self.field_frame = FieldFrame(
+                    self.field_frame_container,
+                    "Criterio",
+                    [
+                        "Cédula",
+                        "Nombre",
+                        "Teléfono",
+                        "Correo",
+                        "Dirección",
+                        "En condición de discapacidad",
+                    ],
+                    "Valor",
+                    [str(cedula), None, None, None, None, None],
+                    ["Cédula"],
+                    combobox={"En condición de discapacidad": ["Sí", "No"]},
+                    titulo="Registro de usuario"
+                )
+                self.field_frame.pack()
 
-            self.btn_principal.config(text="Registrarse")
-            self.btn_principal.config(command=self._registrar_usuario)
-            self.btn_borrar.config(command=self.field_frame.borrar)
+                self.btn_principal.config(text="Registrarse")
+                self.btn_principal.config(command=self._registrar_usuario)
+                self.btn_borrar.config(command=self.field_frame.borrar)
         else:
             self.destroy()
             self._f_final(cliente)

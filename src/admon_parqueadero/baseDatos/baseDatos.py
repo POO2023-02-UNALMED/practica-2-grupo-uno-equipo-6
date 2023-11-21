@@ -1,3 +1,11 @@
+#Funcionalidad del módulo: contiene la clase BaseDatos, 
+#esta sirve para manejar toda la persistencia, 
+#Aqui se encuentran métodos que se utilizan en otros lugares de la
+#aplicacion para buscar objetos y datos en la base de datos.
+#Componentes del módulo: BaseDatos
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 from __future__ import annotations
 from pathlib import Path
 from typing import Optional, cast
