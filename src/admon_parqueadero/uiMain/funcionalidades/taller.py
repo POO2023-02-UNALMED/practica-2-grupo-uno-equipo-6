@@ -113,12 +113,12 @@ class Taller(BaseFuncionalidad):
             "Cambio de deposito de gasolina",
             "Cambio de deposito de aceite",
             "Cambio de deposito de liquidos",
-            "Cambio de llantas",
-            "Cambio de rines",
+            "Cambio de llanta",
+            "Cambio de rin",
         ]
 
         if isinstance(vehiculo, Carro):
-            opciones.extend(["Cambio de pedal", "Cambio de amortiguadores"])
+            opciones.extend(["Cambio de pedal", "Cambio de amortiguador"])
             posicion_producto = [
                 "Delantera izq",
                 "Delantera der",
@@ -155,8 +155,8 @@ class Taller(BaseFuncionalidad):
         def cambio_estado(event: tk.Event) -> None:
             opcion = event.widget.get()
             if opcion in [
-                "Cambio de llantas",
-                "Cambio de rines",
+                "Cambio de llanta",
+                "Cambio de rin",
                 "Cambio de amortiguadores",
             ]:
                 self.field_frame.cambiar_estado(
@@ -197,19 +197,15 @@ class Taller(BaseFuncionalidad):
     def _revision_general(self, vehiculo: Vehiculo, mecanico: Empleado) -> None:
         componentes_dañados = mecanico.revisarVehiculo(vehiculo)
 
-        if componentes_dañados:
+        if len(componentes_dañados) != 0:
             r = ""  # para guardar los componentes que se van a arreglar
             for producto in componentes_dañados:
                 r += f"{producto.getTipo().__str__()}\n"
             nuevos_componentes = self._conseguir_repuestos(
                 vehiculo, componentes_dañados
             )
-
             if nuevos_componentes is not None:
-                messagebox.showinfo(
-                    "Los siguientes componentes se arreglaran",
-                    r,
-                )
+                self.imprimir(f"Los siguentes componentes se arreglaran:\n{r}*Sonidos de mecanico*\nLos componentes de su vehículo han sido arreglados :)")
                 for i in range(len(componentes_dañados)):
                     mecanico.cambiar(
                         componentes_dañados[i], nuevos_componentes[i], vehiculo
@@ -217,14 +213,12 @@ class Taller(BaseFuncionalidad):
                     mecanico.setServiciosRealizados(
                         mecanico.getServiciosRealizados() + 1
                     )
+                return self._taller(vehiculo)
             else:
-                messagebox.showinfo(
-                    "No podemos",
-                    "No contamos con los recursos suficientes para realizar el servicio :(",
-                )
+                self.imprimir("No contamos con los recursos suficientes para realizar este servicio :(")
                 return self._taller(vehiculo)
         else:
-            messagebox.showinfo("Que juicio", "Su vehiculo esta en perfecto estado")
+            self.imprimir("Su vehículo esta en perfecto estado")
             return self._taller(vehiculo)
 
     def _cambio_de(
@@ -233,7 +227,7 @@ class Taller(BaseFuncionalidad):
         almacen = self._parqueadero.getAlmacen()
         dueno = vehiculo.getDueno()
 
-        if nombre_producto == "llantas":
+        if nombre_producto == "llanta":
             # verificar para carro
             if isinstance(vehiculo, Carro):
                 posiciones = [
@@ -261,14 +255,10 @@ class Taller(BaseFuncionalidad):
                             mecanico.setServiciosRealizados(
                                 mecanico.getServiciosRealizados() + 1
                             )
-                            messagebox.showinfo(
-                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                            )
+                            self.imprimir(f"Se arreglara {nombre_producto.title()}")
+                            self.imprimir("*Sonidos de mecanico*", "Listo, como nuevo :)")
                 else:
-                    messagebox.showwarning(
-                        "No podemos",
-                        "No contamos con los recursos suficientes para realizar el servicio :(",
-                    )
+                    self.imprimir("No contamos con los recursos suficientes para realizar el servicio :(")
                     return self._taller(vehiculo)
             else:
                 # para moto
@@ -290,17 +280,13 @@ class Taller(BaseFuncionalidad):
                             mecanico.setServiciosRealizados(
                                 mecanico.getServiciosRealizados() + 1
                             )
-                            messagebox.showinfo(
-                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                            )
+                            self.imprimir(f"Se arreglara {nombre_producto.title()}")
+                            self.imprimir("*Sonidos de mecanico*", "Listo, como nuevo :)")
                 else:
-                    messagebox.showwarning(
-                        "No podemos",
-                        "No contamos con los recursos suficientes para realizar el servicio :(",
-                    )
+                    self.imprimir("No contamos con los recursos suficientes para realizar el servicio :(")
                     return self._taller(vehiculo)
                 
-        if nombre_producto == "rines":
+        if nombre_producto == "rin":
             # verificar para carro
             if isinstance(vehiculo, Carro):
                 posiciones = [
@@ -328,14 +314,10 @@ class Taller(BaseFuncionalidad):
                             mecanico.setServiciosRealizados(
                             mecanico.getServiciosRealizados() + 1
                             )
-                            messagebox.showinfo(
-                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                            )
+                            self.imprimir(f"Se arreglara {nombre_producto.title()}")
+                            self.imprimir("*Sonidos de mecanico*", "Listo, como nuevo :)")
                 else:
-                    messagebox.showwarning(
-                        "No podemos",
-                        "No contamos con los recursos suficientes para realizar el servicio :(",
-                    )
+                    self.imprimir("No contamos con los recursos suficientes para realizar el servicio :(")
                     return self._taller(vehiculo)
             else:
                 # para moto
@@ -357,14 +339,10 @@ class Taller(BaseFuncionalidad):
                             mecanico.setServiciosRealizados(
                                 mecanico.getServiciosRealizados() + 1
                             )
-                            messagebox.showinfo(
-                                "*Sonidos de mecanico*", "Listo, como nuevo :)"
-                            )
+                            self.imprimir(f"Se arreglara {nombre_producto.title()}")
+                            self.imprimir("*Sonidos de mecanico*", "Listo, como nuevo :)")
                 else:
-                    messagebox.showwarning(
-                        "No podemos",
-                        "No contamos con los recursos suficientes para realizar el servicio :(",
-                    )
+                    self.imprimir("No contamos con los recursos suficientes para realizar el servicio :(")
                     return self._taller(vehiculo)
 
         if nombre_producto == "amortiguadores":
@@ -388,12 +366,10 @@ class Taller(BaseFuncionalidad):
                         mecanico.setServiciosRealizados(
                             mecanico.getServiciosRealizados() + 1
                         )
-                        messagebox.showinfo("*Sonidos de mecanico*", "Listo, como nuevo :)")
+                        self.imprimir(f"Se arreglara {nombre_producto.title()}")
+                        self.imprimir("*Sonidos de mecanico*", "Listo, como nuevo :)")
             else:
-                messagebox.showwarning(
-                    "No podemos",
-                    "No contamos con los recursos suficientes para realizar el servicio :(",
-                )
+                self.imprimir("No contamos con los recursos suficientes para realizar el servicio :(")
                 return self._taller(vehiculo)
 
         # para el resto de productos
@@ -411,12 +387,10 @@ class Taller(BaseFuncionalidad):
                     )
                     mecanico.cambiar(producto_v, producto_n, vehiculo)
                     mecanico.setServiciosRealizados(mecanico.getServiciosRealizados() + 1)
-                    messagebox.showinfo("*Sonido de mecanico*", "Listo como nuevo :)")
+                    self.imprimir(f"Se arreglara {nombre_producto.title()}")
+                    self.imprimir("*Sonido de mecanico*", "Listo como nuevo :)")
         else:
-            messagebox.showwarning(
-                "No podemos",
-                "No contamos con los recursos suficientes para realizar el servicio :(",
-            )
+            self.imprimir("No contamos con los recursos suficientes para realizar el servicio :(",)
             return self._taller(vehiculo)
 
     def _conseguir_repuestos(
