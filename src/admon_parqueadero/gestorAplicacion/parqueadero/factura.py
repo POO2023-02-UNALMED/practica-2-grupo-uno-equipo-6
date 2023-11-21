@@ -101,7 +101,9 @@ class Factura:
     def __str__(self) -> str:
         servicios = ""
         for key in self._servicios:
-            servicios += f"{key}: {self._servicios.get(key)}\n"
+            valor = self._servicios.get(key)
+            if valor is not None:
+                servicios += f"{key}: {round(valor, 2)}\n"
         s = f"Factura N°{self._numeroFactura}        {self._fecha.strftime('%Y/%m/%d')}\nCliente: {self._cliente.getNombre()}\n"
         if len(servicios) > 0:
             s += f"Servicios:\n{servicios}"
