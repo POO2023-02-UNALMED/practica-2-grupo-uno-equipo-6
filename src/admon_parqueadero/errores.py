@@ -1,6 +1,3 @@
-from tkinter import messagebox
-
-
 class ErrorAplicacion(Exception):
     def __init__(self, msg: str) -> None:
         super().__init__(f"Manejo de errores de la aplicacion: {msg}")

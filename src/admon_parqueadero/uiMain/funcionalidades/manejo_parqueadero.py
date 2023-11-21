@@ -1,8 +1,9 @@
 import tkinter as tk
-from datetime import datetime
+from datetime import datetime, timedelta
 from tkinter import messagebox
 from typing import Any, Callable, Literal
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
+from admon_parqueadero.gestorAplicacion.parqueadero.factura import Factura
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
@@ -376,6 +377,11 @@ class ManejoParqueadero(BaseFuncionalidad):
             dueno = vehiculo.getDueno()
             if dueno is not None:
                 factura = dueno.getFactura()
+                if factura is None:
+                    factura = Factura(dueno)
+                    fecha = datetime.now() - timedelta(hours=1)
+                    factura.setFecha(fecha)
+                    factura.setHoraIngreso(fecha.time())
                 if factura is not None:
                     fecha_entrada = factura.getFecha()
                     hora_entrada = factura.getHoraIngreso()
