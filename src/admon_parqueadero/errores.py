@@ -1,3 +1,6 @@
+from tkinter import messagebox
+
+
 class ErrorAplicacion(Exception):
     def __init__(self, msg: str) -> None:
         super().__init__(f"Manejo de errores de la aplicacion: {msg}")
@@ -16,3 +19,4 @@ class ErrorNumeroEsperado(ErrorUsuario):
 class ErrorValorEsperado(ErrorUsuario):
     def __init__(self, msg: str) -> None:
         super().__init__(f"el valor para {msg} no puede estar vacío")
+        messagebox.showerror("Error valores esperados", f"Los siguienstes campos no pueden estar vacios:{msg}")

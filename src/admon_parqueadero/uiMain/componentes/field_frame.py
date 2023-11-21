@@ -89,6 +89,12 @@ class FieldFrame(tk.Frame):
         @arg criterio el criterio cuyo valor se quiere obtener
         @return el valor del criterio cuyo nombre es 'criterio'
         """
+        criterios_vacios = self.revisar()
+        if criterios_vacios is not None:
+            r = ""
+            for criterio in criterios_vacios:
+                r += f"\n{criterio}"
+            raise ErrorValorEsperado(r) 
         entrada = self._entradas[criterio]
         v = entrada.get().strip()
         if len(v) == 0 or (isinstance(entrada, ttk.Combobox) and v == FieldFrame._COMBOBOX_TEXTO):
@@ -116,4 +122,11 @@ class FieldFrame(tk.Frame):
         entrada = self._entradas[criterio]
         entrada.config(state=opcion)
         
-        
+    def revisar(self) -> Optional[list[str]]:
+        criterios = []
+        for criterio in self._entradas:
+            if self._entradas[criterio].get().isspace() or self._entradas[criterio].get() == "" or self._entradas[criterio].get() == "Seleccione una opción":
+                criterios.append(criterio)
+        if len(criterios) != 0:
+            return criterios
+        return None
