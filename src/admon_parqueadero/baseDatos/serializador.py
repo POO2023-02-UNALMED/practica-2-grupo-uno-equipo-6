@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase Serializador, 
+#esta sirve para escribir los datos que se desean guardar 
+#en la base de datos. Se utilizó pickle.
+#Componentes del módulo: Cliente
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 from pathlib import Path
 import pickle
 

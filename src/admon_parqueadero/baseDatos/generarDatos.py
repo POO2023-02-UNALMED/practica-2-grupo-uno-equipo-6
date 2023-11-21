@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase GenerarDatos, 
+#esta sirve para generar los datos de prueba que serán usados para
+#verificar la correcta ejecucion de la aplicacion.
+#Componentes del módulo: GenerarDatos
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 from typing import cast
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.parqueadero.producto  import Producto
