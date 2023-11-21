@@ -5,6 +5,7 @@
 #Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
 
 
+import random
 import tkinter as tk
 from datetime import datetime, timedelta
 from tkinter import messagebox
@@ -386,7 +387,8 @@ class ManejoParqueadero(BaseFuncionalidad):
                 factura = dueno.getFactura()
                 if factura is None:
                     factura = Factura(dueno)
-                    fecha = datetime.now() - timedelta(hours=1)
+                    horas = random.randint(1, 5)
+                    fecha = datetime.now() - timedelta(hours=horas)
                     factura.setFecha(fecha)
                     factura.setHoraIngreso(fecha.time())
                 if factura is not None:

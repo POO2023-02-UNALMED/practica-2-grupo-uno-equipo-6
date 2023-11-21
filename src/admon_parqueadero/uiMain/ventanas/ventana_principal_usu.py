@@ -38,7 +38,7 @@ class ventana_principal_usu(tk.Frame):
         self.pack()
         self.configurar_menu()
         self.interfaz_inicio()
-        baseDatos = BaseDatos.leerDatos()  # TODO: manejar errores de esto
+        baseDatos = BaseDatos.leerDatos()
         if baseDatos is None:
             # crear base de datos inicial
             baseDatos = BaseDatos()

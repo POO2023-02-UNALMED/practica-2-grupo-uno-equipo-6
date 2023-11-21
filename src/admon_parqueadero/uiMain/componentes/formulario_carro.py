@@ -107,7 +107,6 @@ class FormularioCarro(tk.Frame):
         modelo = self.field_frame.getValue("Modelo")
 
         if self._baseDatos.buscarVehiculoRegistrado(placa) is not None:
-            # TODO: Considerar mover esto a baseDatos.registrarVehiculo o al contructor de Vehiculo
             raise ErrorUsuario(f"Vehiculo con placa {placa} ya registrado")
 
         self.field_frame.destroy()
