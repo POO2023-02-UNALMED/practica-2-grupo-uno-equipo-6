@@ -1,3 +1,7 @@
+#Funcionalidad del modulo: Contiene la clase Taller que ofrece servicios de mecanica a los vehiculos del parqueadero.
+#Componentes del modulo: Clase Taller.
+#Autores: Sebastián. 
+
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Optional, cast

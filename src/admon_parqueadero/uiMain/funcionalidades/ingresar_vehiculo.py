@@ -1,3 +1,8 @@
+#Funcionalidad del módulo: contiene la implementación de la funcionalidad ingresar vehículo
+#Componentes del módulo: IngresarVehiculo
+#Autores: Alejandro, Sebastián
+
+
 import tkinter as tk
 from typing import Any, cast
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
