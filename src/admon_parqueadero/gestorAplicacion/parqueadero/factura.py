@@ -25,7 +25,7 @@ class Factura:
         cliente.setFactura(self)
         self._precioTotal = 0
         self._servicios: dict[str, float] = {}
-        self._valorServicios: dict[str, float] = {"Revision general": 100000, "Cambio": 50000, "Parqueadero": 1}
+        self._valorServicios: dict[str, float] = {"Revision general": 100000, "Cambio": 50000, "Parqueadero": 4000}
 
     def getNumeroFactura(self) -> int:
         return self._numeroFactura

@@ -169,7 +169,7 @@ class Taller(BaseFuncionalidad):
             ]:
                 self.field_frame.cambiar_estado(
                     "Escoja el producto a arreglar", "readonly"
-                )  # TODO: implementar que se borre la seleccion en curso
+                )
             else:
                 self.field_frame.cambiar_estado(
                     "Escoja el producto a arreglar", "disabled"

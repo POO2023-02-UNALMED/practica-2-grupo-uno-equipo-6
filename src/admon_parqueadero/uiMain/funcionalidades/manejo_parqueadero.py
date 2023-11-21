@@ -424,7 +424,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             else:
                 r += "En condición de discapacidad: no\n"
             if cliente.getFactura() is not None:
-                r += f"Se ha generado la siguiente factura para este cliente:\n{cliente.getFactura()}\n"  # TODO: a donde ¿?¿?¿?¿?¿?
+                r += f"Se ha generado la siguiente factura para este cliente:\n{cliente.getFactura()}\n"
             vehiculos = cliente.getVehiculos()
             if len(vehiculos) > 0:
                 r += "Vehiculos del cliente:\n"

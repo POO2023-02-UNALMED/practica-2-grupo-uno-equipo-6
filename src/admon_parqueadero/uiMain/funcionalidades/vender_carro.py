@@ -94,8 +94,6 @@ class VenderCarro(BaseFuncionalidad):
         plaza = cast(Plaza, self.getParqueadero().buscarPlaza(plaza_num))
         self.getParqueadero().ingresarVehiculo(self._vehiculo, plaza)
 
-        # TODO: Generar factura
-
         self.imprimir("Vehículo ingresado")
         self._configurar_ui(self._vehiculo.getDueno())
     
