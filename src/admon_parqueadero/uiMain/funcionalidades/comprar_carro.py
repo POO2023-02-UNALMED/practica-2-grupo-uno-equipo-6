@@ -240,7 +240,7 @@ class ComprarCarro(BaseFuncionalidad):
     def finalizar_venta(self, carro: Carro):
         seleccion = self.field_frame.getValue("¿Desea comprar este carro?")
         if seleccion == "No":
-            return self.pregunta_filtro()
+            return self.EscogerVendedor()
 
         carro.setDueno(self.cliente)
         carro.setPrecioVenta(0)
