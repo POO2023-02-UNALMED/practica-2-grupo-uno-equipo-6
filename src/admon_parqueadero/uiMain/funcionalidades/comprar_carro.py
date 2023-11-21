@@ -110,7 +110,7 @@ class ComprarCarro(BaseFuncionalidad):
         self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
         self.btn_borrar = tk.Button(
-            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+            self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
          
@@ -148,7 +148,7 @@ class ComprarCarro(BaseFuncionalidad):
         self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
         self.btn_borrar = tk.Button(
-            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+            self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
         self.imprimir("Seleccione el color y marca que desea, y si necesita que esté adecuado para discapacidad.")
@@ -184,7 +184,7 @@ class ComprarCarro(BaseFuncionalidad):
         )
         self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
         self.btn_borrar = tk.Button(
-            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+            self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
         self.imprimir("Seleccione una placa de la lista de carros disponibles, y se le mostrarán las demás características del carro.")
@@ -229,7 +229,7 @@ class ComprarCarro(BaseFuncionalidad):
         )
         self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
         self.btn_borrar = tk.Button(
-            self.frame_botones, text="Borrar", command=self.field_frame.borrar
+            self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 

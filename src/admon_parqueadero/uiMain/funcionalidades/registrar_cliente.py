@@ -32,7 +32,7 @@ class RegistrarCliente(BaseFuncionalidad):
         self.btn_principal.grid(row=0, column=0)
 
         self.btn_borrar = tk.Button(
-            self.botones, text="Borrar", command=self.field_frame.borrar
+            self.botones, text="Borrar", command=lambda: self.field_frame.borrar()
         )
         self.btn_borrar.grid(row=0, column=1)
 
@@ -68,7 +68,7 @@ class RegistrarCliente(BaseFuncionalidad):
             self.btn_principal.grid(row=0, column=0)
 
             self.btn_borrar = tk.Button(
-                self.botones, text="Borrar", command=self.field_frame.borrar
+                self.botones, text="Borrar", command=lambda: self.field_frame.borrar()
             )
             self.btn_borrar.grid(row=0, column=1)
         else:

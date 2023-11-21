@@ -80,7 +80,7 @@ class IngresarVehiculo(BaseFuncionalidad):
             self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
             self.btn_borrar = tk.Button(
-                self.frame_botones, text="Borrar", command=self.field_frame.borrar
+                self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
             )
             self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 
