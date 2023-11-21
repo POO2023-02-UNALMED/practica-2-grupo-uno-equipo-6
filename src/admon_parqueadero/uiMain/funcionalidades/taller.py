@@ -3,6 +3,7 @@ from tkinter import messagebox
 from typing import Any, Optional, cast
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
+from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
@@ -196,7 +197,7 @@ class Taller(BaseFuncionalidad):
 
     def _revision_general(self, vehiculo: Vehiculo, mecanico: Empleado) -> None:
         componentes_dañados = mecanico.revisarVehiculo(vehiculo)
-
+        print([*map(lambda x: x.getEstado(), componentes_dañados)])
         if len(componentes_dañados) != 0:
             r = ""  # para guardar los componentes que se van a arreglar
             for producto in componentes_dañados:
@@ -205,6 +206,7 @@ class Taller(BaseFuncionalidad):
                 vehiculo, componentes_dañados
             )
             if nuevos_componentes is not None:
+                print([*map(lambda x: x.getEstado(), nuevos_componentes)])
                 self.imprimir(f"Los siguentes componentes se arreglaran:\n{r}*Sonidos de mecanico*\nLos componentes de su vehículo han sido arreglados :)")
                 for i in range(len(componentes_dañados)):
                     mecanico.cambiar(
@@ -401,7 +403,7 @@ class Taller(BaseFuncionalidad):
         dueno = vehiculo.getDueno()
 
         for p in productos:
-            if almacen.existeProducto(p.getTipo()):
+            if almacen.existeProducto(p.getTipo()) and p.getEstado() != TipoEstado.MAL_ESTADO:
                 n_producto = almacen.conseguirProducto(p.getTipo())
                 if n_producto is not None and dueno is not None:
                     factura = dueno.getFactura()
