@@ -121,7 +121,7 @@ class VentanaInicio(tk.Frame):
                     ),
                 ],
                 "fotos": (
-                    "300x300_naranja.png",
+                    "rojo2.png",
                     "rojo1.png",
                     "powerrojo2.png",
                     "powerrojo3.png",
