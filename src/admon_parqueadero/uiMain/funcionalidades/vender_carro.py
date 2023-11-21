@@ -362,8 +362,7 @@ class VenderCarro(BaseFuncionalidad):
             self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
             
             def mensaje_final():
-                opcion = messagebox.showinfo("Venta finalizada", f"¡Felicidades! Se ha añadido el monto de {self._precio_final} a su cuenta.\
-                                         Ha finalizado la venta de carro, ¡vuelva pronto!")
+                opcion = messagebox.showinfo("Venta finalizada", f"¡Felicidades! Se ha añadido el monto de {self._precio_final} a su cuenta. Ha finalizado la venta de carro, ¡vuelva pronto!")
                 if opcion:
                     return self.finalizar()
             
@@ -410,9 +409,7 @@ class VenderCarro(BaseFuncionalidad):
         vehiculo.setDueno(None)
         cast(Carro, vehiculo).setPrecioVenta(50000000)
         self._parqueadero.agregarVehiculoVenta(vehiculo)
-        messagebox.showinfo("Cambio realizado", f"Hemos realizado el intercambio de carros, ¡Felicidades!\
-                            El excedente de {excedente} se ha añadido a su cuenta.\
-                            Ha finalizado la venta, ¡vuelva pronto!")
+        messagebox.showinfo("Cambio realizado", f"Hemos realizado el intercambio de carros, ¡Felicidades! El excedente de {excedente} se ha añadido a su cuenta. Ha finalizado la venta, ¡vuelva pronto!")
         
         return self.finalizar()
 

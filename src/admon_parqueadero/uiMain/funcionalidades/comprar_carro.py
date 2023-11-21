@@ -117,12 +117,12 @@ class ComprarCarro(BaseFuncionalidad):
     def EscogerVehiculo (self):
         if self.vendedorSelected == None:
             self.vendedorSelected = self.field_frame.getValue('Vendedor')
+            self.imprimir(f"""Hola, te habla {self.vendedorSelected}
+            """)
         
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
-        mensajeVendedor = f"""Hola, te habla {self.vendedorSelected}
-        """
         self.field_frame = FieldFrame(
         self.contenido,
         "Criterio",
@@ -135,7 +135,7 @@ class ComprarCarro(BaseFuncionalidad):
             "Marca":list(self._vehiculos_marca),
             "Adecuado Discapacidad": ['Si','No']
             }
-        ,titulo=mensajeVendedor
+        ,titulo="Seleccione las características que desea en su carro nuevo."
         )
         self.field_frame.pack()
         
@@ -151,6 +151,7 @@ class ComprarCarro(BaseFuncionalidad):
             self.frame_botones, text="Borrar", command=self.field_frame.borrar
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
+        self.imprimir("Seleccione el color y marca que desea, y si necesita que esté adecuado para discapacidad.")
         
         
     def ListaVehiculo (self):
@@ -168,12 +169,12 @@ class ComprarCarro(BaseFuncionalidad):
         self.field_frame = FieldFrame(
             self.contenido,
             "",
-            ["lista"],
+            ["Carros disponibles"],
             "",
             valores=[None],
             habilitado=None,
-            combobox={"lista": self.listaCarros},
-            titulo='Lista de carros disponibles'
+            combobox={"Carros disponibles": self.listaCarros},
+            titulo='Lista de carros disponibles con las carácteristicas seleccionadas'
         )
         self.field_frame.pack()
         self.frame_botones = tk.Frame(self.contenido)
@@ -186,9 +187,10 @@ class ComprarCarro(BaseFuncionalidad):
             self.frame_botones, text="Borrar", command=self.field_frame.borrar
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
+        self.imprimir("Seleccione una placa de la lista de carros disponibles, y se le mostrarán las demás características del carro.")
     
     def seleccionar_carro(self):
-        self.seleccion_carro = self.field_frame.getValue("lista")
+        self.seleccion_carro = self.field_frame.getValue("Carros disponibles")
 
         for carro in self.all_vehiculo:
             if self.seleccion_carro == carro.getPlaca():
