@@ -3,6 +3,7 @@ from tkinter import messagebox
 from typing import Any, Optional, cast
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
+from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
@@ -196,7 +197,6 @@ class Taller(BaseFuncionalidad):
 
     def _revision_general(self, vehiculo: Vehiculo, mecanico: Empleado) -> None:
         componentes_dañados = mecanico.revisarVehiculo(vehiculo)
-
         if len(componentes_dañados) != 0:
             r = ""  # para guardar los componentes que se van a arreglar
             for producto in componentes_dañados:
@@ -213,6 +213,11 @@ class Taller(BaseFuncionalidad):
                     mecanico.setServiciosRealizados(
                         mecanico.getServiciosRealizados() + 1
                     )
+                dueno = vehiculo.getDueno()
+                if dueno is not None:
+                    factura = dueno.getFactura()
+                    if factura is not None:    
+                        factura.agregarServicio("Revision general", 1)    
                 return self._taller(vehiculo)
             else:
                 self.imprimir("No contamos con los recursos suficientes para realizar este servicio :(")
