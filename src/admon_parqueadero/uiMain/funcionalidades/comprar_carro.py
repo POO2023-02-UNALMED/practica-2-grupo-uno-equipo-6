@@ -168,15 +168,9 @@ class ComprarCarro(BaseFuncionalidad):
         self.packContenido(self.contenido)
         self.field_frame = FieldFrame(
             self.contenido,
-<<<<<<< Updated upstream
-            "",
-            ["Carros disponibles"],
-            "",
-=======
             "Criterio",
             ["lista"],
             "Valor",
->>>>>>> Stashed changes
             valores=[None],
             habilitado=None,
             combobox={"Carros disponibles": self.listaCarros},
