@@ -35,9 +35,8 @@ class ComprarCarro(BaseFuncionalidad):
     def _configurar_ui(self, cliente: Cliente) -> None:
         self.cliente = cliente
         self.nombreCliente = cliente.getNombre()
-        self._vendedores_nombre = list(
-            map(lambda x: x.getNombre().title(), self._parqueadero.getVendedores())
-        )
+        self._vendedores = self._parqueadero.getVendedores()
+        self._vendedores_nombre = list(map(lambda v: v.getNombre(), self._vendedores))
         
         self._vehiculos_color = list(
             map(lambda x: x.getColor().title(), self._parqueadero.getVehiculosVenta())
@@ -86,6 +85,9 @@ class ComprarCarro(BaseFuncionalidad):
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
 
     def pregunta_filtro(self) -> None:
+        nombre_vendedor = self.field_frame.getValue("Vendedor")
+        self.vendedorSelected = self._vendedores[self._vendedores_nombre.index(nombre_vendedor)]
+        self.imprimir(f"Hola mi nombre es {self.vendedorSelected.getNombre()}, selecciona la característica por la cual desea buscar su vehículo")
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
@@ -225,5 +227,6 @@ class ComprarCarro(BaseFuncionalidad):
         self.cliente.getVehiculos().append(carro)
         indiceCarro = self._parqueadero.getVehiculosVenta().index(carro)
         self._parqueadero.getVehiculosVenta().pop(indiceCarro)
+        self.vendedorSelected.setServiciosRealizados(self.vendedorSelected.getServiciosRealizados() + 1)
         self.imprimir("¡Felicidades! Ha comprado el carro, esperamos que lo disfrute. Vuelva pronto.")
         return self._configurar_ui(self.cliente)
