@@ -66,6 +66,7 @@ class FormularioCliente(tk.Frame):
 
             self.btn_principal.config(text="Registrarse")
             self.btn_principal.config(command=self._registrar_usuario)
+            self.btn_borrar.config(command=self.field_frame.borrar)
         else:
             self.destroy()
             self._f_final(cliente)
