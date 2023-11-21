@@ -403,7 +403,7 @@ class Taller(BaseFuncionalidad):
         dueno = vehiculo.getDueno()
 
         for p in productos:
-            if almacen.existeProducto(p.getTipo()) and p.getEstado() != TipoEstado.MAL_ESTADO:
+            if almacen.existeProducto(p.getTipo()):
                 n_producto = almacen.conseguirProducto(p.getTipo())
                 if n_producto is not None and dueno is not None:
                     factura = dueno.getFactura()
