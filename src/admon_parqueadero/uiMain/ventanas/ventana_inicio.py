@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase VentanaInicio que hereda de tk.Frame, 
+#esta sirve para generar la primera ventana que aparece cuando el usuario abre el programa,
+#contiene información sobre la aplicación y los autores.
+#Componentes del módulo: Ventana Inicio
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 from importlib.abc import Traversable
 from importlib.resources import as_file
 from collections.abc import Callable, Iterable, Iterator

@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase ventana_principal_usu que hereda de tk.Frame, 
+#esta sirve para hacer uso de todas las funcionalidades, y acceder a informacion básica de la 
+#aplicación y los autores.
+#Componentes del módulo: ventana_principal_usuario
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Type
