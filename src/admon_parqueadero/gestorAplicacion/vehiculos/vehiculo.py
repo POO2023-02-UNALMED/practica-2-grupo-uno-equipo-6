@@ -6,6 +6,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Optional
 
+from admon_parqueadero.errores import ErrorLogicaIncorrecta
+
 if TYPE_CHECKING:
     from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
     from admon_parqueadero.gestorAplicacion.parqueadero.plaza import Plaza
@@ -38,6 +40,9 @@ class Vehiculo:
         return self._plaza
 
     def setPlaza(self, plaza: Optional[Plaza]) -> None:
+        if plaza is not None and (dueno := self.getDueno()) is not None:
+            if plaza.isDiscapacitado() and not dueno.isDiscapacitado():
+                raise ErrorLogicaIncorrecta("una plaza para personas en condicion de discapacidad no puede ser asignada a un vehiculo cuyo dueño no esta en condicion de discapacidad")
         self._plaza = plaza
 
     def getMarca(self) -> str:

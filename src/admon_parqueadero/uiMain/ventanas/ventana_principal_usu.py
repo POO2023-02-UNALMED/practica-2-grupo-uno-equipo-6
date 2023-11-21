@@ -27,7 +27,7 @@ from admon_parqueadero.uiMain.funcionalidades.registrar_vehiculo import (
     RegistrarVehiculo,
 )
 
-from admon_parqueadero.errores import ErrorUsuario
+from admon_parqueadero.errores import ErrorLogicaIncorrecta, ErrorObjetoInexistente, ErrorUsuario
 
 
 class ventana_principal_usu(tk.Frame):
@@ -169,5 +169,11 @@ class ventana_principal_usu(tk.Frame):
     def mostrar_error(self, exc, error, tb):
         if isinstance(error, ErrorUsuario):
             self.funcionalidad.imprimir(str(error))
+        elif isinstance(error, ErrorObjetoInexistente):
+            msg = str(error)
+            msg += "\nSe le redirecciono al formulario de registro"
+            messagebox.showwarning(title="Objeto no encontrado", message=msg)
+        elif isinstance(error, ErrorLogicaIncorrecta):
+            messagebox.showerror(title="Error interno del sistema", message=str(error))
         else:
             messagebox.showerror(title="Ha ocurrido un error", message=str(error))

@@ -3,6 +3,7 @@ import tkinter as tk
  
 from typing import Any, cast, Literal
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
+from admon_parqueadero.errores import ErrorObjetoVacio
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
 from admon_parqueadero.gestorAplicacion.vehiculos.coloresVehiculo import ColoresVehiculo
 from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
@@ -137,8 +138,10 @@ class ComprarCarro(BaseFuncionalidad):
             self.vehiculos = filter(lambda v: v.isDiscapacitado(), self.vehiculos)
         self.vehiculos = list(self.vehiculos)
         if len(self.vehiculos) == 0:
-            self.imprimir("No se encontraron carros con las caracteristicas especificadas")
-            return self.pregunta_filtro()
+            try:
+                raise ErrorObjetoVacio("No se encontraron carros con las caracteristicas especificadas")
+            finally:
+                return self.pregunta_filtro()
         self.placas = map(lambda p: p.getPlaca(), self.vehiculos)
         self.field_frame.destroy()
         self.field_frame = FieldFrame(self.contenido, "Criterio", ["Placa"], "Valor", None, None, {"Placa": list(self.placas)}, titulo= "Seleccione la placa del vehiculo gustado")
@@ -155,8 +158,10 @@ class ComprarCarro(BaseFuncionalidad):
             self.vehiculos = filter(lambda v: v.isDiscapacitado(), self.vehiculos)
         self.vehiculos = list(self.vehiculos)
         if len(self.vehiculos) == 0:
-            self.imprimir("No se encontraron carros con las caracteristicas especificadas")
-            return self.pregunta_filtro()
+            try:
+                raise ErrorObjetoVacio("No se encontraron carros con las caracteristicas especificadas")
+            finally:
+                return self.pregunta_filtro()
         self.placas = map(lambda v: v.getPlaca(), self.vehiculos)
         self.field_frame.destroy()
         self.field_frame = FieldFrame(self.contenido, "Criterio", ["Placa"], "Valor", None, None, {"Placa": [*self.placas]}, titulo= "Seleccione la placa del vehiculo gustado")
@@ -173,8 +178,10 @@ class ComprarCarro(BaseFuncionalidad):
             self.vehiculos = filter(lambda v: v.isDiscapacitado(), self.vehiculos)
         self.vehiculos = list(self.vehiculos)
         if len(self.vehiculos) == 0:
-            self.imprimir("No se encontraron carros con las caracteristicas especificadas")
-            return self.pregunta_filtro()
+            try:
+                raise ErrorObjetoVacio("No se encontraron carros con las caracteristicas especificadas")
+            finally:
+                return self.pregunta_filtro()
         self.placas = map(lambda v: v.getPlaca(), self.vehiculos)
         self.field_frame.destroy()
         self.field_frame = FieldFrame(self.contenido, "Criterio", ["Placa"], "Valor", None, None, {"Placa": [*self.placas]}, titulo= "Seleccione la placa del vehiculo gustado")

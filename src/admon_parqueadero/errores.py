@@ -20,6 +20,7 @@ class ErrorValorEsperado(ErrorUsuario):
     def __init__(self, msg: str) -> None:
         super().__init__(f"el valor para {msg} no puede estar vacío")
 
+
 class ErroresVacios(ErrorUsuario):
     def __init__(self, msg: str) -> None:
         super().__init__(msg)
@@ -35,10 +36,11 @@ class ErrorObjetoVacio(ErrorObjeto):
         super().__init__(f"el objeto {msg} se ecuentra vacio")
 
 
-class ErrorNoneObject(ErrorObjeto):
+class ErrorLogicaIncorrecta(ErrorObjeto):
     def __init__(self, msg: str) -> None:
-        super().__init__(f"el objeto es {msg}")
+        super().__init__(f"logica incorrecta: {msg}")
+
 
 class ErrorObjetoInexistente(ErrorObjeto):
     def __init__(self, msg: str) -> None:
-        super().__init__(msg)
+        super().__init__(f"objeto no encontrado: {msg}")
