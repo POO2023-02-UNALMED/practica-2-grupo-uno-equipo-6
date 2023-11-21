@@ -2,6 +2,7 @@
 #Alejandro
 
 import random
+from admon_parqueadero.errores import ErrorLogicaIncorrecta
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_producto import TipoProducto
@@ -40,6 +41,8 @@ class Moto(Vehiculo):
         return self._tipo
 
     def setTipo(self, tipo: TipoVehiculo) -> None:
+        if tipo == TipoVehiculo.AUTOMATICO or tipo == TipoVehiculo.MECANICO:
+            raise ErrorLogicaIncorrecta("tipo de moto no puede ser AUTOMATICO ni MECANICO")
         self._tipo = tipo
 
     def getLlantas(self) -> list[Producto]:
