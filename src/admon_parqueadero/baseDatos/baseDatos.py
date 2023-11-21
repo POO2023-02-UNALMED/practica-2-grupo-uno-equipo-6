@@ -58,7 +58,7 @@ class BaseDatos:
     def registrarVehiculo(self, vehiculo: Vehiculo) -> bool:
         if vehiculo.getPlaca() in self._vehiculosRegistrados:
             return False
-        self._vehiculosRegistrados[vehiculo.getPlaca()] = vehiculo
+        self._vehiculosRegistrados[vehiculo.getPlaca().upper()] = vehiculo
         return True
 
     def hayClientesRegistrados(self) -> bool:

@@ -47,6 +47,7 @@ class FormularioCarro(tk.Frame):
             combobox={
                 "Placa": [*placas_carros, "Registrar un vehículo"]
             },
+            titulo="Seleccione el vehículo que desea vender"
         )
         self.field_frame.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
@@ -68,9 +69,6 @@ class FormularioCarro(tk.Frame):
         if eleccion_vehiculo == "Registrar un vehículo":
             self._configuracion_registro()
         else:
-            vehiculo_ = self._baseDatos.buscarVehiculoRegistrado(eleccion_vehiculo)
-            if vehiculo_ is None:
-                messagebox.showinfo("b","n")
             vehiculo = cast(Vehiculo, self._baseDatos.buscarVehiculoRegistrado(eleccion_vehiculo))
             self.destroy()
             self._f_final(vehiculo)

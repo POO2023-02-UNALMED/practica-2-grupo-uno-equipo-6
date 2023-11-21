@@ -168,9 +168,15 @@ class ComprarCarro(BaseFuncionalidad):
         self.packContenido(self.contenido)
         self.field_frame = FieldFrame(
             self.contenido,
+<<<<<<< Updated upstream
             "",
             ["Carros disponibles"],
             "",
+=======
+            "Criterio",
+            ["lista"],
+            "Valor",
+>>>>>>> Stashed changes
             valores=[None],
             habilitado=None,
             combobox={"Carros disponibles": self.listaCarros},
@@ -190,22 +196,23 @@ class ComprarCarro(BaseFuncionalidad):
         self.imprimir("Seleccione una placa de la lista de carros disponibles, y se le mostrarán las demás características del carro.")
     
     def seleccionar_carro(self):
-        self.seleccion_carro = self.field_frame.getValue("Carros disponibles")
-
-        for carro in self.all_vehiculo:
-            if self.seleccion_carro == carro.getPlaca():
-                carroComprado = carro
-        infoCarro = [
-            "Información sobre el carro escogido: ",
-            f"Placa: {carroComprado.getPlaca()}",
-            f"Marca: {carroComprado.getMarca()}",
-            f"Modelo: {carroComprado.getModelo()}",
-            f"Color: {carroComprado.getColor()}",
-            f"Precio de venta: {str(carroComprado.getPrecioVenta())}",
-        ]
+        self.seleccion_carro = self.field_frame.getValue("lista")
         
-        for info in infoCarro:
-            self.imprimir(info)
+        placas_carro_venta = map(lambda x: x.getPlaca().upper(), self._parqueadero.getVehiculosVenta())
+        carroComprado = self._parqueadero.getVehiculosVenta()[[*placas_carro_venta].index(self.seleccion_carro)]
+        
+        if carroComprado is not None: #manejar error?
+            infoCarro = [
+                "Información sobre el carro escogido: ",
+                f"Placa: {carroComprado.getPlaca()}",
+                f"Marca: {carroComprado.getMarca()}",
+                f"Modelo: {carroComprado.getModelo()}",
+                f"Color: {carroComprado.getColor()}",
+                f"Precio de venta: {str(carroComprado.getPrecioVenta())}",
+            ]
+        
+            for info in infoCarro:
+                self.imprimir(info) 
         
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)

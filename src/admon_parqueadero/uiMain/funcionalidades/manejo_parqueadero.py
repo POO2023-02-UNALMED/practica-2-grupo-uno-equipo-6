@@ -328,7 +328,7 @@ class ManejoParqueadero(BaseFuncionalidad):
             comision_antes = mecanico.getComision()
             nueva_comision = comision_antes * porcentaje_comision
             mecanico.setComision(nueva_comision)
-            r += f"{mecanico.getNombre}\nSalario: {salario_antes} -> {nuevo_salario}\nComisión: {comision_antes} -> {nueva_comision}\n"
+            r += f"{mecanico.getNombre()}\nSalario: {salario_antes} -> {nuevo_salario}\nComisión: {comision_antes} -> {nueva_comision}\n"
         # mostrar r
         self.imprimir("Bonificaciones realizadas", r)
         return funcion_manejo()
