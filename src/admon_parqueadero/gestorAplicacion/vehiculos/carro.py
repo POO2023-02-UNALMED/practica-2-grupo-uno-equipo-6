@@ -140,6 +140,7 @@ class Carro(Vehiculo):
         self._amortiguadores = amortiguadores
 
     def __str__(self) -> str:
+        placa = self.getPlaca()
         marca = self.getMarca().title()
         modelo = self.getModelo().title()
         color = self.getColor().title()
@@ -147,8 +148,8 @@ class Carro(Vehiculo):
         puestos = self.getPuestos()
         if self._precioVenta != 0:  # para los carros para venta se imprime su valor
             precioVenta = round(self.getPrecioVenta(), 2)
-            return f"{marca} {modelo} {color}\n{tipo} {puestos} puestos\nPrecio: {precioVenta}"
-        return f"{marca} {modelo} {color}\n{tipo} {puestos} puestos\n"
+            return f"{placa} {marca} {modelo} {color}\n{tipo} {puestos} puestos\nPrecio: {precioVenta}"
+        return f"{placa} {marca} {modelo} {color}\n{tipo} {puestos} puestos\n"
 
     # metodo que crea cuatro Productos tipo llanta y los agrega al array self._llantas
     def _inicializarLlantas(self) -> None:

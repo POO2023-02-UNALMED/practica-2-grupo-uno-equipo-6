@@ -19,4 +19,26 @@ class ErrorNumeroEsperado(ErrorUsuario):
 class ErrorValorEsperado(ErrorUsuario):
     def __init__(self, msg: str) -> None:
         super().__init__(f"el valor para {msg} no puede estar vacío")
-        messagebox.showerror("Error valores esperados", f"Los siguienstes campos no pueden estar vacios:{msg}")
+
+class ErroresVacios(ErrorUsuario):
+    def __init__(self, msg: str) -> None:
+        super().__init__(msg)
+
+
+class ErrorObjeto(ErrorAplicacion):
+    def __init__(self, msg: str) -> None:
+        super().__init__(f"error de objeto: {msg}")
+
+
+class ErrorObjetoVacio(ErrorObjeto):
+    def __init__(self, msg: str) -> None:
+        super().__init__(f"el objeto {msg} se ecuentra vacio")
+
+
+class ErrorNoneObject(ErrorObjeto):
+    def __init__(self, msg: str) -> None:
+        super().__init__(f"el objeto es {msg}")
+
+class ErrorObjetoInexistente(ErrorObjeto):
+    def __init__(self, msg: str) -> None:
+        super().__init__(msg)

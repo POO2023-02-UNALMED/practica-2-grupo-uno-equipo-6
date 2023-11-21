@@ -1,8 +1,11 @@
+from time import sleep
 import tkinter as tk
  
-from typing import Any, cast
+from typing import Any, cast, Literal
 from admon_parqueadero.baseDatos.baseDatos import BaseDatos
 from admon_parqueadero.gestorAplicacion.vehiculos.carro import Carro
+from admon_parqueadero.gestorAplicacion.vehiculos.coloresVehiculo import ColoresVehiculo
+from admon_parqueadero.gestorAplicacion.vehiculos.marcasCarro import MarcasCarro
 from admon_parqueadero.uiMain.funcionalidades.base import BaseFuncionalidad
 from admon_parqueadero.gestorAplicacion.personas.empleado import Empleado
 from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
@@ -29,35 +32,6 @@ class ComprarCarro(BaseFuncionalidad):
         )
         formulario.pack(anchor="s", fill="both", expand=True, ipadx=15, ipady=5)
 
-    def filtrar (self):
-        #! TODO : falta calcular los datos None en caso de no querer llenar un campo pueda obtener igual la lista de datos  Undefined 
-        self.listaCarros = []
-        
-        if self.DiscapacidadA == 'Si':
-            lista_aux = [vehiculo for vehiculo in self.all_vehiculo if vehiculo.isDiscapacitado() is True ]    
-        elif self.DiscapacidadA == 'No':
-            lista_aux = [vehiculo for vehiculo in self.all_vehiculo if vehiculo.isDiscapacitado() is False ]
-        else :
-            lista_aux = [] 
-        
-        for vehiculo in lista_aux:
-            color = vehiculo.getColor()
-            marca = vehiculo.getMarca()
-            valorVehiculo = vehiculo.getPrecioVenta()
-            
-            self.colorSelected = self.field_frame.getValue('Color')
-            self.MarcaSelected = self.field_frame.getValue('Marca')
-            self.precioMaximoInput = self.field_frame.getValueNumero('Precio maximo',int)
-            
-            if (valorVehiculo < self.precioMaximoInput 
-                and color == self.colorSelected 
-                    and marca == self.MarcaSelected) :
-                option=vehiculo.getPlaca() 
-                self.listaCarros.append(option)
-        self.listaCarros.append('No se encontraron registros') if len(self.listaCarros) == 0 else self.listaCarros
-
-
-
     def _configurar_ui(self, cliente: Cliente) -> None:
         self.cliente = cliente
         self.nombreCliente = cliente.getNombre()
@@ -65,15 +39,12 @@ class ComprarCarro(BaseFuncionalidad):
             map(lambda x: x.getNombre().title(), self._parqueadero.getVendedores())
         )
         
-       
-        self.all_vehiculo = [vehiculo for vehiculo in self._parqueadero.getVehiculosVenta() ]
-        
         self._vehiculos_color = list(
-            map(lambda x: x.getColor().title(), self.all_vehiculo)
+            map(lambda x: x.getColor().title(), self._parqueadero.getVehiculosVenta())
         )
         
         self._vehiculos_marca = list(
-            map(lambda x: x.getMarca().title(), self.all_vehiculo)
+            map(lambda x: x.getMarca().title(), self._parqueadero.getVehiculosVenta())
         )
         
         self.EscogerVendedor()
@@ -105,7 +76,7 @@ class ComprarCarro(BaseFuncionalidad):
         self.frame_botones.pack(side="bottom", fill="both", expand=True)
         
         self.btn_principal = tk.Button(
-            self.frame_botones, text="Continuar", command=lambda: self.EscogerVehiculo()
+            self.frame_botones, text="Continuar", command=lambda: self.pregunta_filtro()
         )
         self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
@@ -113,37 +84,19 @@ class ComprarCarro(BaseFuncionalidad):
             self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
-         
-    def EscogerVehiculo (self):
-        if self.vendedorSelected == None:
-            self.vendedorSelected = self.field_frame.getValue('Vendedor')
-            self.imprimir(f"""Hola, te habla {self.vendedorSelected}
-            """)
-        
+
+    def pregunta_filtro(self) -> None:
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
         self.packContenido(self.contenido)
-        self.field_frame = FieldFrame(
-        self.contenido,
-        "Criterio",
-        [ "Color","Marca", "Precio maximo","Adecuado Discapacidad"],
-        "Valor",
-        [None, None, None,None],
-        None,
-        combobox={
-            "Color": list(self._vehiculos_color),
-            "Marca":list(self._vehiculos_marca),
-            "Adecuado Discapacidad": ['Si','No']
-            }
-        ,titulo="Seleccione las características que desea en su carro nuevo."
-        )
+
+        self.field_frame = FieldFrame(self.contenido, "Criterio", ["Filtro"], "Valor", None, None, {"Filtro": ["Color", "Marca", "Precio máximo"]}, titulo="Seleccione por que criterio quiere buscar su vehiculo")
         self.field_frame.pack()
-        
         self.frame_botones = tk.Frame(self.contenido)
         self.frame_botones.pack(side="bottom", fill="both", expand=True)
         
         self.btn_principal = tk.Button(
-            self.frame_botones, text="Continuar", command=lambda: self.ListaVehiculo()
+            self.frame_botones, text="Continuar", command=lambda: self.eleccion_filtro()
         )
         self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
 
@@ -151,62 +104,91 @@ class ComprarCarro(BaseFuncionalidad):
             self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
         )
         self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
-        self.imprimir("Seleccione el color y marca que desea, y si necesita que esté adecuado para discapacidad.")
-        
-        
-    def ListaVehiculo (self):
-        self.colorSelected = self.field_frame.getValue('Color') 
-        self.precioMaximoInput = self.field_frame.getValueNumero('Precio maximo', float) 
-        self.MarcaSelected = self.field_frame.getValue('Marca') 
-        self.DiscapacidadA = self.field_frame.getValue('Adecuado Discapacidad') 
-        self.filtrar()
-        if self.listaCarros[0]=='No se encontraron registros':
-            self.imprimir("No se encontraron carros con esas características")
-            return self.EscogerVehiculo()
-        self.contenido.destroy()
-        self.contenido = tk.Frame(self.frame_contenido)
-        self.packContenido(self.contenido)
-        self.field_frame = FieldFrame(
-            self.contenido,
-            "Criterio",
-            ["lista"],
-            "Valor",
-            valores=[None],
-            habilitado=None,
-            combobox={"Carros disponibles": self.listaCarros},
-            titulo='Lista de carros disponibles con las carácteristicas seleccionadas'
-        )
+
+    def eleccion_filtro(self) -> None:
+        criterio = self.field_frame.getValue("Filtro")
+        if criterio == "Color":
+            return self.EscogerVehiculo("Color")
+        elif criterio == "Marca":
+            return self.EscogerVehiculo("Marca")
+        else:
+            return self.EscogerVehiculo("Precio")
+            
+    def EscogerVehiculo(self, criterio: Literal["Color", "Marca", "Precio"]) -> None:
+        self.field_frame.destroy()
+        if criterio == "Marca":
+            self.field_frame = FieldFrame(self.contenido, "Criterio", ["Marca"], "Valor", None, None, {"Marca": [m.name.title() for m in MarcasCarro]}, titulo="Seleccione una marca")
+            self.field_frame.pack()
+            self.btn_principal.config(command=lambda: self.eleccion_marca())
+        elif criterio == "Color":
+            self.field_frame = FieldFrame(self.contenido, "Criterio", ["Color"], "Valor", None, None, {"Color": ColoresVehiculo.lista()}, titulo="Seleccione un color")
+            self.field_frame.pack()
+            self.btn_principal.config(command=lambda: self.eleccion_color())
+        else:
+            self.field_frame = FieldFrame(self.contenido, "Criterio", ["Precio máximo"], "Valor", None, None, titulo="Ingrese el precio máximo")
+            self.field_frame.pack()
+            self.btn_principal.config(command=lambda: self.eleccion_precio())
+
+
+    def eleccion_marca(self):
+        marca = self.field_frame.getValue("Marca")
+        self.vehiculos = filter(lambda v: v.getMarca().upper() == marca.upper(), self._parqueadero.getVehiculosVenta())
+        if self.cliente.isDiscapacitado():
+            self.vehiculos = filter(lambda v: v.isDiscapacitado(), self.vehiculos)
+        self.vehiculos = list(self.vehiculos)
+        if len(self.vehiculos) == 0:
+            self.imprimir("No se encontraron carros con las caracteristicas especificadas")
+            return self.pregunta_filtro()
+        self.placas = map(lambda p: p.getPlaca(), self.vehiculos)
+        self.field_frame.destroy()
+        self.field_frame = FieldFrame(self.contenido, "Criterio", ["Placa"], "Valor", None, None, {"Placa": list(self.placas)}, titulo= "Seleccione la placa del vehiculo gustado")
         self.field_frame.pack()
-        self.frame_botones = tk.Frame(self.contenido)
-        self.frame_botones.pack(side="bottom", fill="both", expand=True)
-        self.btn_principal = tk.Button(
-            self.frame_botones, text="Seleccionar Vehiculo", command=lambda: self.seleccionar_carro()
-        )
-        self.btn_principal.pack(side="left", fill="both", expand=True, padx=15)
-        self.btn_borrar = tk.Button(
-            self.frame_botones, text="Borrar", command=lambda: self.field_frame.borrar()
-        )
-        self.btn_borrar.pack(side="right", fill="both", expand=True, padx=15)
-        self.imprimir("Seleccione una placa de la lista de carros disponibles, y se le mostrarán las demás características del carro.")
+        self.btn_principal.config(command= lambda: self.seleccionar_carro())
+        for vehiculo in self.vehiculos:
+            self.imprimir(str(vehiculo))
+            self.imprimir()
+
+    def eleccion_color(self) -> None:
+        color = self.field_frame.getValue("Color")
+        self.vehiculos = filter(lambda v: v.getColor() == color, self._parqueadero.getVehiculosVenta())
+        if self.cliente.isDiscapacitado():
+            self.vehiculos = filter(lambda v: v.isDiscapacitado(), self.vehiculos)
+        self.vehiculos = list(self.vehiculos)
+        if len(self.vehiculos) == 0:
+            self.imprimir("No se encontraron carros con las caracteristicas especificadas")
+            return self.pregunta_filtro()
+        self.placas = map(lambda v: v.getPlaca(), self.vehiculos)
+        self.field_frame.destroy()
+        self.field_frame = FieldFrame(self.contenido, "Criterio", ["Placa"], "Valor", None, None, {"Placa": [*self.placas]}, titulo= "Seleccione la placa del vehiculo gustado")
+        self.field_frame.pack()
+        self.btn_principal.config(command= lambda: self.seleccionar_carro())
+        for vehiculo in self.vehiculos:
+            self.imprimir(str(vehiculo))
+            self.imprimir()
+
+    def eleccion_precio(self) -> None:
+        precio = self.field_frame.getValueNumero("Precio máximo", float)
+        self.vehiculos = filter(lambda v: v.getPrecioVenta() <= precio, self._parqueadero.getVehiculosVenta())
+        if self.cliente.isDiscapacitado():
+            self.vehiculos = filter(lambda v: v.isDiscapacitado(), self.vehiculos)
+        self.vehiculos = list(self.vehiculos)
+        if len(self.vehiculos) == 0:
+            self.imprimir("No se encontraron carros con las caracteristicas especificadas")
+            return self.pregunta_filtro()
+        self.placas = map(lambda v: v.getPlaca(), self.vehiculos)
+        self.field_frame.destroy()
+        self.field_frame = FieldFrame(self.contenido, "Criterio", ["Placa"], "Valor", None, None, {"Placa": [*self.placas]}, titulo= "Seleccione la placa del vehiculo gustado")
+        self.field_frame.pack()
+        self.btn_principal.config(command= lambda: self.seleccionar_carro())
+        for vehiculo in self.vehiculos:
+            self.imprimir(str(vehiculo))
+            self.imprimir()
     
     def seleccionar_carro(self):
-        self.seleccion_carro = self.field_frame.getValue("lista")
+        self.seleccion_carro = self.field_frame.getValue("Placa")
         
         placas_carro_venta = map(lambda x: x.getPlaca().upper(), self._parqueadero.getVehiculosVenta())
         carroComprado = self._parqueadero.getVehiculosVenta()[[*placas_carro_venta].index(self.seleccion_carro)]
-        
-        if carroComprado is not None: #manejar error?
-            infoCarro = [
-                "Información sobre el carro escogido: ",
-                f"Placa: {carroComprado.getPlaca()}",
-                f"Marca: {carroComprado.getMarca()}",
-                f"Modelo: {carroComprado.getModelo()}",
-                f"Color: {carroComprado.getColor()}",
-                f"Precio de venta: {str(carroComprado.getPrecioVenta())}",
-            ]
-        
-            for info in infoCarro:
-                self.imprimir(info) 
         
         self.contenido.destroy()
         self.contenido = tk.Frame(self.frame_contenido)
@@ -236,7 +218,7 @@ class ComprarCarro(BaseFuncionalidad):
     def finalizar_venta(self, carro: Carro):
         seleccion = self.field_frame.getValue("¿Desea comprar este carro?")
         if seleccion == "No":
-            return self.EscogerVehiculo()
+            return self.pregunta_filtro()
 
         carro.setDueno(self.cliente)
         carro.setPrecioVenta(0)
