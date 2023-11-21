@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase RegistrarVehiculo que hereda de BaseFuncionalidad, 
+#esta sirve para registrar los datos de un nuevo vehiculo, 
+#la encontramos en Otras Funcionalidades.
+#Componentes del módulo: RegistrarVehiculo
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any

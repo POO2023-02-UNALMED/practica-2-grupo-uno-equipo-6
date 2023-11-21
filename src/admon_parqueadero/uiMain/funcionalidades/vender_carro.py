@@ -1,5 +1,6 @@
-# Funcionalidad del módulo: Contiene la clase venderCarro que se encarga de vender un carro desde la vista
-#del administrador, pero que al momento de ejecutar la funcionalidad por el usuario este tendrá la vista de comprar un carro
+# Funcionalidad del módulo: Contiene la clase VenderCarro, que hereda de BaseFuncionalidad,
+#permite que el cliente le venda un vehiculo al parqueadero, sea por dinero o cambiar por otro
+#carro que se encuentre disponible para la venta.
 #Componentes del módulo: VenderCarro
 #Autores: Sara
 

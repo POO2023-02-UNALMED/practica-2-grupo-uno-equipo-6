@@ -1,5 +1,8 @@
-#Funcionalidad del modulo: Contiene la clase Taller que ofrece servicios de mecanica a los vehiculos del parqueadero.
-#Componentes del modulo: Clase Taller.
+#Funcionalidad del modulo: Contiene la clase Taller que hereda de BaseFuncionalidad,
+#que ofrece servicios de mecanica a los vehiculos del parqueadero.
+#Para hacer uso de esta funcionalidad debe estar ingresado el vehiculo en el parqueadero.
+#Se puede realizar una revision general, o cambiar componentes según la eleccion del cliente.
+#Componentes del modulo: Taller.
 #Autores: Sebastián. 
 
 import tkinter as tk

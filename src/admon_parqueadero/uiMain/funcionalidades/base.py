@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase BaseFuncionalidad que hereda de tk.Frame, 
+#esta sirve para generar una base con los métodos e información que se utilizan
+#en varias o todas las funcionalidades.
+#Componentes del módulo: BaseFuncionalidad
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from tkinter import font
 from typing import Any, cast

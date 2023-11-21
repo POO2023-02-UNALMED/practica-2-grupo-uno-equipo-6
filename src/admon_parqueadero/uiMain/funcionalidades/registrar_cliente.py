@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase RegistrarCliente que hereda de BaseFuncionalidad, 
+#esta sirve para registrar los datos de un nuevo cliente, 
+#la encontramos en Otras Funcionalidades.
+#Componentes del módulo: RegistrarCliente
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any

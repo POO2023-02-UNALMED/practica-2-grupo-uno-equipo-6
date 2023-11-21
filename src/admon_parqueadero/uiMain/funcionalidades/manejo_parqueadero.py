@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase ManejoParqueadero que hereda de BaseFuncionalidad, 
+#esta sirve para que el administrador pueda gestionar las diferentes partes del parqueadero.
+#Se encuentran divididas en taller, parqueadero y almacen.
+#Componentes del módulo: ManejoParqueadero
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from datetime import datetime, timedelta
 from tkinter import messagebox

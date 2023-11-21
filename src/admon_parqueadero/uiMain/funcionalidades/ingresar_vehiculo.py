@@ -1,4 +1,7 @@
-#Funcionalidad del módulo: contiene la implementación de la funcionalidad ingresar vehículo
+#Funcionalidad del módulo: contiene la clase IngresarVehiculo, que hereda de BaseFuncionalidad,
+#Aquí se encuentra la implementación de la funcionalidad ingresar vehículo.
+#Inicia solicitando los datos del cliente, en caso de que no se encuentre registrado,
+#se pide registrarse, se pide informacion del vehículo y se genera la factura de ingreso.
 #Componentes del módulo: IngresarVehiculo
 #Autores: Alejandro, Sebastián
 

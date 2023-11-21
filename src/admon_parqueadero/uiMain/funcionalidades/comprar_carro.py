@@ -1,3 +1,16 @@
+#Funcionalidad del módulo: contiene la clase ComprarCarro que hereda de BaseFuncionalidad, 
+#esta sirve para que el usuario pueda comprar un carro
+#Al instanciar esta clase, se genera el formulario del cliente, luego 
+#inicia con conifgurar_ui, que permite generar listas de datos que se utilizarán más adelante.
+#Luego, se solicita escoger un vendedor y se realiza un filtro de los vehiculos,
+#según las características solicitadas por el cliente. Se le enseña al cliente los carros con sus específicaciones, 
+# y se le pide al cliente escoger, o regresar al formulario de filtro. 
+#Cuando el cliente selecciona un carro, se le cambian los atributos necesarios, se quita de la lista de
+#carros para vender, y se añade a la lista de vehiculos del cliente. 
+#Componentes del módulo: ComprarCarro
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 from time import sleep
 import tkinter as tk
  
