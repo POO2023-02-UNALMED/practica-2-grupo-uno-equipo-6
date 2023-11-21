@@ -75,7 +75,6 @@ class VentanaInicio(tk.Frame):
                     "blanco2.png",
                     "blancos.png",
                     "blanco3.png",
-                    # "300x300_azul.png",
                     "carnet1.png"
                 
                 ),
@@ -93,7 +92,7 @@ class VentanaInicio(tk.Frame):
                     "powerAzul3.png",
                     "azul22.png",
                     "Azul3.png",
-                    "300x300_verde.png",
+                    "sebas.png",
                 ),
             },
             {
