@@ -1,3 +1,7 @@
+#Funcionalidad del módulo: contiene la clase Vehiculo que sirve de clase padre para Moto y Carro
+#Componentes del módulo: Vehiculo
+#Autores: Alejandro
+ 
 from __future__ import annotations
 
 from typing import TYPE_CHECKING, Optional
