@@ -1,3 +1,6 @@
+#Sebastián
+#Alejandro
+
 import random
 from admon_parqueadero.gestorAplicacion.parqueadero.producto import Producto
 from admon_parqueadero.gestorAplicacion.parqueadero.tipo_estado import TipoEstado
@@ -6,7 +9,7 @@ from admon_parqueadero.gestorAplicacion.personas.cliente import Cliente
 from admon_parqueadero.gestorAplicacion.vehiculos.tipo_vehiculo import TipoVehiculo
 from admon_parqueadero.gestorAplicacion.vehiculos.vehiculo import Vehiculo
 
-
+# Clase que instancia una Moto.
 class Moto(Vehiculo):
     def __init__(
         self,

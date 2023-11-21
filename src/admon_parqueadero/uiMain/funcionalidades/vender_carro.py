@@ -1,3 +1,8 @@
+# Funcionalidad del módulo: Contiene la clase venderCarro que se encarga de vender un carro desde la vista
+#del administrador, pero que al momento de ejecutar la funcionalidad por el usuario este tendrá la vista de comprar un carro
+#Componentes del módulo: VenderCarro
+#Autores: Sara
+
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Optional, cast

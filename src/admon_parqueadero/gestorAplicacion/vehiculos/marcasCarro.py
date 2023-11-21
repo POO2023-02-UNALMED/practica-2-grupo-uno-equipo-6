@@ -1,3 +1,5 @@
+#Funcionalidad del módulo: contiene un enum con las marcas de carros aceptadas en el parqueadero,
+
 from enum import Enum
 
 

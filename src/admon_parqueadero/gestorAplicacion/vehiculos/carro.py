@@ -1,3 +1,7 @@
+#Funcionalidad del módulo: contiene la clase Carro que representa un carro de la vida real
+#Componentes del módulo: Carro
+#Autores: Alejandro, Sebastián
+
 from typing import Optional
 
 import random

@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase FormularioCarro que hereda de tk.Frame, 
+#esta sirve para solicitar al usuario la información sobre el carro que desea ingresar.
+#Componentes del módulo: FormularioCarro
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
+
 import tkinter as tk
 from tkinter import messagebox
 from typing import Any, Callable, cast

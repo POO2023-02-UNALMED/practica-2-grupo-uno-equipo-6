@@ -1,3 +1,10 @@
+#Funcionalidad del módulo: contiene la clase FieldFrame que hereda de tk.Frame, 
+#esta sirve para generar formularios de informacion que se le 
+#solicita al usuario.
+#Componentes del módulo: FieldFrame
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter import font

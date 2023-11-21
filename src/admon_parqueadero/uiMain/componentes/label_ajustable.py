@@ -1,3 +1,11 @@
+#Funcionalidad del módulo: contiene la clase LabelAjustable que hereda de tk.Label, 
+#esta sirve para colocar un texto en la pantalla, y la diferencia con el label
+#normal es que este se ajusta al tamaño de la pantalla, segun si se encuentra en
+#pantalla completa o la ventana es pequeña.
+#Componentes del módulo: LabelAjustable
+#Autores: Sofia, Sara, Alejandro, Sebastián, Katherine
+
+
 import tkinter as tk
 from typing import Any
 
